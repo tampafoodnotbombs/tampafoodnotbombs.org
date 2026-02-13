@@ -33,7 +33,7 @@
             height: auto;
         }
         .shadow {
-            --shadow-color: oklch(from antiquewhite calc(1 - l) c 180deg);
+            max-width: 100%;
             --shadow-color: hwb(from antiquewhite 200deg b w);
             filter: drop-shadow(2px 5px 5px var(--shadow-color));
         }
@@ -48,7 +48,7 @@
                     text-align: left;
                 }
             }
-            border: 10px solid transparent;
+            border: 8px solid transparent;
             border-image: url("static/images/paperedge.svg") 50 round;
             background-clip: padding-box;
         }
@@ -75,6 +75,7 @@
             text-align: center;
             ul {
                 display: flex;
+                flex-wrap: wrap;
                 padding: 0;
                 justify-content: center;
                 li {
