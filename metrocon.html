@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tampa Food Not Bombs - Metrocon</title>
+  <link rel="stylesheet" href="static/css/metrocon.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body>
+  <main id="fnb" class="w-[100wh] h-[100vh] relative">
+    <div class="w-full h-full bg-green-800/40  relative z-0">
+      <section id="header" class="w-full h-full flex flex-col items-center justify-center gap-4">
+        <h1 class="text-5xl text-white text-center">Tampa Food Not Bombs  at <br/> Metrocon 2026</h1>
+      </section>
+
+      <div draggable="true" class="window-comp flex flex-col items-start justify-start 
+      p-1 bg-gray-100 shadow-lg absolute left-[1rem] top-[1rem] z-10 h-[400px] w-[300px]">
+        <div class="w-full bg-[#110174] flex flex-row gap-1 h-[20px] absolute"></div>
+      </div>
+
+
+
+    </div>
+  </main>
+</body>
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+<script>
+  const { createApp, ref } = Vue
+
+  const draggable_elements = document.getElementsByClassName('window-comp')
+  console.log(draggable_elements)
+  for(element of draggable_elements) {
+
+    const drag_element = (elmnt) => {
+      let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+      if (elmnt) {
+        elmnt.onmousedown = dragMouseDown;
+      } else {
+        document.onmousedown = dragMouseDown;
+      }
+
+      function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // get the mouse cursor position at startup:
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves:
+        document.onmousemove = elementDrag;
+      }
+
+      function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // set the element's new position:
+        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+      }
+
+      function closeDragElement() {
+        // stop moving when mouse button is released:
+        document.onmouseup = null;
+        document.onmousemove = null;
+      }
+    }
+
+    drag_element(element);  
+  }
+
+  createApp({
+    setup() {
+      const data = ref({
+        nav: [
+          { name: 'Home', href: '/' },
+          { name: 'About', href: '/about' },
+          { name: 'Events', href: '/events' },
+          { name: 'Contact', href: '/contact' },
+        ]
+      })
+      return {
+        data
+      }
+    }
+  }).mount('#fnb')
+
+</script>

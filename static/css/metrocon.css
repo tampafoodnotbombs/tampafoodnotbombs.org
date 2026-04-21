@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'Sketchy';
+    src: url('../fonts/sketchy-font/Sketchy-1jX4.ttf')  format('truetype');
+}
+@font-face {
+    font-family: 'Witcher';
+    src: url('../fonts/witcher-handwriting-font/WitcherhandwritingRegular-jEDW9.otf')  format('opentype'),
+        url('../fonts/witcher-handwriting-font/WitcherHandwritingRegular-GO5vO.ttf')  format('truetype');
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  box-sizing: border-box;
+  background-image: url('../images/carrots_bg.webp');   
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+body {
+    font-family: 'Witcher';
+}
+
+h1, h2 {
+    font-family: 'Sketchy';
+}
