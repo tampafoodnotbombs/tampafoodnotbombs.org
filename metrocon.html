@@ -7,88 +7,148 @@
   <title>Tampa Food Not Bombs - Metrocon</title>
   <link rel="stylesheet" href="static/css/metrocon.css">
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style>
+   .window-comp{
+      z-index: 9;
+      background-color: #f1f1f1;
+      border: 1px solid #d3d3d3;
+    }
+
+    .window-header {
+      cursor: move;
+      color: #fff;
+    }
+    .window-btn {
+      border-radius: 1px;
+    }
+  </style>
 </head>
 <body>
-  <main id="fnb" class="w-[100wh] h-[100vh] relative">
-    <div class="w-full h-full bg-green-800/40  relative z-0">
-      <section id="header" class="w-full h-full flex flex-col items-center justify-center gap-4">
-        <h1 class="text-5xl text-white text-center">Tampa Food Not Bombs  at <br/> Metrocon 2026</h1>
-      </section>
+  <main id="fnb" class="w-[100wh] h-[100vh]">
 
-      <div draggable="true" class="window-comp flex flex-col items-start justify-start 
-      p-1 bg-gray-100 shadow-lg absolute left-[1rem] top-[1rem] z-10 h-[400px] w-[300px]">
-        <div class="w-full bg-[#110174] flex flex-row gap-1 h-[20px] absolute"></div>
+    <div id="window" class="window-comp absolute text-center z-9  w-[200px] top-[20rem] left-[1rem]">
+      <div id="windowheader" class="window-header flex flex-row items-start justify-end z-10 bg-[#110174] h-[40x] ">
+        <div class="w-[62px] h-[25px] flex flex-row justify-end items-start p-[2px] m-0">
+          <div class="window-btn w-[15px] h-[15px] mx-[1px] pb-1 inset-shadow-xl flex flex-col justify-center items-center bg-neutral-200 text-neutral-800">
+            _
+          </div>
+          <div class="window-btn w-[15px] h-[15px] mx-[1px] inset-shadow-xl flex flex-col justify-center items-center bg-neutral-200 text-neutral-800">
+           ❒︎
+          </div>
+          <div class="window-btn w-[15px] h-[15px] mx-[1px] inset-shadow-xl flex flex-col justify-center items-center bg-neutral-200 text-neutral-800">
+            ×
+          </div>
+        </div>
       </div>
+     <div class="window-body flex flex-col text-start items-start p-[10px]">
+      <p class="text-[18px]">Metrocon 2026</p>
+      <p class="text-[12px]">Tampa Food Not Bombs will be at Metrocon 2026! Come find us in the Artist Alley, where we'll 
+        have zines, stickers, and more available for purchase. All proceeds go towards supporting
+         our mission of providing free food to those in need and advocating for social justice.</p>
+     </div>
+    </div> 
+
+    <div id="window2" class="window-comp absolute text-center z-9  w-[200px] top-[10vh] left-[80vw]">
+      <div id="window2header" class="window-header flex flex-row items-start justify-end z-10 bg-[#110174] h-[40x] ">
+        <div class="w-[62px] h-[25px] flex flex-row justify-end items-start p-[2px] m-0">
+          <div class="window-btn w-[15px] h-[15px] mx-[1px] pb-1 inset-shadow-xl flex flex-col justify-center items-center bg-neutral-200 text-neutral-800">
+            _
+          </div>
+          <div class="window-btn w-[15px] h-[15px] mx-[1px] inset-shadow-xl flex flex-col justify-center items-center bg-neutral-200 text-neutral-800">
+           ❒︎
+          </div>
+          <div class="window-btn w-[15px] h-[15px] mx-[1px] inset-shadow-xl flex flex-col justify-center items-center bg-neutral-200 text-neutral-800">
+            ×
+          </div>
+        </div>
+      </div>
+     <div class="window-body flex flex-col text-start items-start p-[10px]">
+      <p class="text-[18px]">Who we are</p>
+      <p class="text-[12px]">Tampa FNB provides mutual aid survival programs assisting the houseless and hungry, and stands in opposition to the violence of war and poverty.</p>
+     </div>
+    </div> 
+
+    <div id="window3" class="window-comp absolute text-center z-9  w-[200px] top-[40vh] left-[50vw]">
+      <div id="window3header" class="window-header flex flex-row items-start justify-end z-10 bg-[#110174] h-[40x] ">
+        <div class="w-[62px] h-[25px] flex flex-row justify-end items-start p-[2px] m-0">
+          <div class="window-btn w-[15px] h-[15px] mx-[1px] pb-1 inset-shadow-xl flex flex-col justify-center items-center bg-neutral-200 text-neutral-800">
+            _
+          </div>
+          <div class="window-btn w-[15px] h-[15px] mx-[1px] inset-shadow-xl flex flex-col justify-center items-center bg-neutral-200 text-neutral-800">
+           ❒︎
+          </div>
+          <div class="window-btn w-[15px] h-[15px] mx-[1px] inset-shadow-xl flex flex-col justify-center items-center bg-neutral-200 text-neutral-800">
+            ×
+          </div>
+        </div>
+      </div>
+     <div class="window-body flex flex-col text-start items-start p-[10px]">
+      <p class="text-[18px]">We're Tampa Food Not Bombs</p>
+      <p class="text-[12px]">Tampa FNB 
+        
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
 
 
-    </div>
+      </p>
+     </div>
+    </div> 
+
   </main>
-</body>
-<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-<script>
-  const { createApp, ref } = Vue
+  <script>
 
-  const draggable_elements = document.getElementsByClassName('window-comp')
-  console.log(draggable_elements)
-  for(element of draggable_elements) {
+    /* 
+        I ripped the foundation for this straight up from W3Schools: https://www.w3schools.com/howto/howto_js_draggable.asp
+    */
 
-    const drag_element = (elmnt) => {
-      let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-      if (elmnt) {
-        elmnt.onmousedown = dragMouseDown;
-      } else {
-        document.onmousedown = dragMouseDown;
-      }
+  const draggable_elements = document.querySelectorAll('.window-comp');
 
-      function dragMouseDown(e) {
-        e = e || window.event;
-        e.preventDefault();
-        // get the mouse cursor position at startup:
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        document.onmouseup = closeDragElement;
-        // call a function whenever the cursor moves:
-        document.onmousemove = elementDrag;
-      }
+  const dragElement = (elmnt) => {
 
-      function elementDrag(e) {
-        e = e || window.event;
-        e.preventDefault();
-        // calculate the new cursor position:
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        // set the element's new position:
-        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-      }
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
-      function closeDragElement() {
-        // stop moving when mouse button is released:
-        document.onmouseup = null;
-        document.onmousemove = null;
-      }
+    const dragMouseDown = (e) => {
+      e = e || window.event;
+      e.preventDefault();
+      // get the mouse cursor position at startup:
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      document.onmouseup = closeDragElement;
+      // call a function whenever the cursor moves:
+      document.onmousemove = elementDrag;
     }
 
-    drag_element(element);  
+    const elementDrag = (e) => {
+      e = e || window.event;
+      e.preventDefault();
+      // calculate the new cursor position:
+      pos1 = pos3 - e.clientX;
+      pos2 = pos4 - e.clientY;
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      // set the element's new position:
+      elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+      elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+    }
+
+    const closeDragElement = () => {
+      /* stop moving when mouse button is released:*/
+      document.onmouseup = null;
+      document.onmousemove = null;
+    }
+
+      if (elmnt.querySelector('.window-header')) {
+      /* if present, the header is where you move the DIV from:*/
+      elmnt.querySelector('.window-header').onmousedown = dragMouseDown;
+    } else {
+      /* otherwise, move the DIV from anywhere inside the DIV:*/
+      elmnt.onmousedown = dragMouseDown;
+    }
   }
 
-  createApp({
-    setup() {
-      const data = ref({
-        nav: [
-          { name: 'Home', href: '/' },
-          { name: 'About', href: '/about' },
-          { name: 'Events', href: '/events' },
-          { name: 'Contact', href: '/contact' },
-        ]
-      })
-      return {
-        data
-      }
-    }
-  }).mount('#fnb')
-
+  draggable_elements.forEach(el => {
+    dragElement(el);
+  });
 </script>
+</body>
+</html>
