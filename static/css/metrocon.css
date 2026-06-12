@@ -22,7 +22,7 @@ html, body {
 /* Small screens body */
 @media (max-width: 640px) {
     body {
-        background-position: right;
+        background-position: 50%;
     }
 }
 
