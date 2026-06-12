@@ -16,9 +16,17 @@ html, body {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  background-repeat: no-repeat;
+  /* background-repeat: no-repeat; */
  
 }
+/* Small screens body */
+@media (max-width: 640px) {
+    body {
+        background-position: right;
+    }
+}
+
+
 body {
     font-family: 'Witcher';
     overflow-y: scroll;
