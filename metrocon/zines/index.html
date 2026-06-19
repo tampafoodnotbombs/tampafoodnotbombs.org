@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tampa Food Not Bombs - Metrocon</title>
+  <link rel="stylesheet" href="../../static/css/metrocon.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+</head>
+<body>
+  <main id="fnb" class="w-[100wh] h-[100vh] flex flex-col lg:block gap-4 lg:gap-0 ">
+    <div id="ctr-inf_scroll" class="top-0 absolute relative overflow-hidden h-[5rem] w-[100vw] z-10">`
+      <div id="scroll-one" class="scroll fixed flex items-center jusifty-around w-fit-content text-2xl">
+        <div class="item cursor-pointer">
+          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
+        </div>
+        <div class="counter-item item"></div>
+        <div class="item cursor-pointer">
+          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
+        </div>
+        <div class="counter-item item"></div>
+        <div class="item cursor-pointer">
+          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
+        </div>
+        <div class="counter-item item"></div>
+        <div class="item cursor-pointer">
+          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
+        </div>
+      </div>
+       <div id="scroll-two" class="scroll fixed cursor-pointer flex items-center jusifty-around w-fit-content ">
+        <div class="item cursor-pointer">
+          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
+        </div>
+        <div class="counter-item item"></div>
+        <div class="item cursor-pointer">
+          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
+        </div>
+        <div class="counter-item item"></div>
+        <div class="item cursor-pointer">
+          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
+        </div>
+        <div class="counter-item item"></div>
+        <div class="item cursor-pointer">
+          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
+        </div>
+        <div class="counter-item item"></div>
+        <div class="item cursor-pointer">
+          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
+        </div>
+      </div>
+      <a href="https://metroconventions.com/" target="_blank" class="fade"></a>
+    </div>
+  </main>
+<script>
+
+
+    // Countdown to July 31, 2026
+  let init_countdown = () => {
+
+    console.log('Countdown set ... :)')
+
+    let countdownDate = new Date("July 31, 2026 00:00:00").getTime();
+    let x = setInterval(() => {
+      let now = new Date().getTime();
+      let distance = countdownDate - now;
+
+      let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
+          hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Countdown items have class of "item"
+      let countdownItems = document.querySelectorAll('.counter-item');
+      countdownItems.forEach((item, index) => {
+        item.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      });
+
+    }, 1000);
+  }
+  init_countdown();
+  init_truncate_text = () => {
+    console.log('Truncate text set ... :)')
+    
+    let line_clamps = document.querySelectorAll('.line-clamp');
+    let read_more_btns = document.querySelectorAll('.read_more_btn');
+
+    read_more_btns.forEach((btn, index) => {
+      btn.onclick = () => {
+        line_clamps[index].classList.toggle('line-clamp');
+        btn.textContent = line_clamps[index].classList.contains('line-clamp') ? 'Read More' : 'Read Less';
+      }
+    });
+
+    
+  }
+  init_truncate_text();
+</script>
+</body>
+</html>

@@ -36,3 +36,155 @@ body {
 h1, h2 {
     font-family: 'Sketchy';
 }
+
+   .window-comp{
+      z-index: 9;
+      background-color: #f1f1f1;
+      border: 1px solid #d3d3d3;
+    }
+
+    .window-header {
+      cursor: move;
+      color: #fff;
+    }
+    .window-btn {
+      border-radius: 1px;
+    }
+
+#ctr-inf_scroll {
+    width: 100%;
+ 
+    font-family: Montserrat;
+    position: fixed;
+    overflow: hidden;
+    white-space: nowrap;
+    background: #000;
+    color: #fff;
+}
+#ctr-inf_scroll .scroll {
+    top: 0;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: fit-content;
+    white-space: nowrap;
+    animation: loop 40s linear infinite;
+}
+#ctr-inf_scroll .scroll#scroll-two {
+  transform:translateX(100%);
+  animation-delay: -20s;
+
+} 
+.fade {
+    width: 100%;
+    position: absolute;
+    background: linear-gradient(
+        90deg,
+        #000,
+        transparent 30%,
+        transparent 90%,
+        #000
+    );
+    inset: 0;
+    pointer-events: none;
+}
+@keyframes loop {
+    0% {transform: translateX(100%);}
+    100% {transform: translateX(-100%);}
+}
+.item {
+    display: flex;
+    align-items: center;
+    gap: 0 0.2rem;
+    color: #e2e8f0;
+    font-size: 2rem;
+    font-family: 'Sketchy';
+    padding: 0.7rem 1rem;
+    margin: 0rem 1rem;
+    border-radius: 0.4rem;
+    white-space: nowrap;
+    box-shadow:
+    0 0.1rem 0.2rem #00000033,
+    0 0.1rem 0.5rem #0000004d,
+    0 0.2rem 1.5rem #00000066,
+}
+
+/* Modals */
+  /* The Modal (background) */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+  /* Modal Content/Box */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+
+  /* The Close Button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+.truncate {
+  width: 280px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 12; /* Show exactly 12 lines */
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}
+
+/* Scrollbar */
+/* width */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #dedede; 
+  border-radius: 0px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #928d8d; 
+  border-radius: 0px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+#wndw-books-resources {
+  z-index: 1 !important;
+}
