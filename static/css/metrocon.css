@@ -10,15 +10,22 @@
 html, body {
   margin: 0;
   padding: 0;
-  height: 100vh;
+  min-height: 100vh;
   box-sizing: border-box;
-  background-image: url('../images/gator_bg.jpg');   
+  overflow: scroll;
+}
+#fnb, #fnb-zines {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  /* background-repeat: no-repeat; */
- 
 }
+#fnb {
+  background-image: url('../images/gator_bg.jpg');   
+}
+#fnb-zines {
+  background-image: url('https://res.cloudinary.com/dpxmyueqi/image/upload/q_auto/f_auto/v1782001822/zines_wallpaper_ihtwcm.jpg'); 
+}
+
 /* Small screens body */
 @media (max-width: 640px) {
     body {

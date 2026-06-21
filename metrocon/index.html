@@ -7,58 +7,31 @@
   <title>Tampa Food Not Bombs - Metrocon</title>
   <link rel="stylesheet" href="../static/css/metrocon.css">
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script> 
+  <script src="https://unpkg.com/vue@3.5.38/dist/vue.global.prod.js"></script> 
 </head>
-<body>
-  <main id="fnb" class="w-[100wh] h-[100vh] flex flex-col lg:block gap-4 lg:gap-0 ">
-    <div id="ctr-inf_scroll" class="top-0 absolute relative overflow-hidden h-[5rem] w-[100vw] z-10">`
-      <div id="scroll-one" class="scroll fixed flex items-center jusifty-around w-fit-content text-2xl">
-        <div class="item cursor-pointer">
-          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
-        </div>
-        <div class="counter-item item"></div>
-        <div class="item cursor-pointer">
-          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
-        </div>
-        <div class="counter-item item"></div>
-        <div class="item cursor-pointer">
-          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
-        </div>
-        <div class="counter-item item"></div>
-        <div class="item cursor-pointer">
-          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
-        </div>
-      </div>
-       <div id="scroll-two" class="scroll fixed cursor-pointer flex items-center jusifty-around w-fit-content ">
-        <div class="item cursor-pointer">
-          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
-        </div>
-        <div class="counter-item item"></div>
-        <div class="item cursor-pointer">
-          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
-        </div>
-        <div class="counter-item item"></div>
-        <div class="item cursor-pointer">
-          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
-        </div>
-        <div class="counter-item item"></div>
-        <div class="item cursor-pointer">
-          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
-        </div>
-        <div class="counter-item item"></div>
-        <div class="item cursor-pointer">
-          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
+<body id="fnb">
+  <main  class="h-full w-full flex flex-col lg:block gap-4 lg:gap-0 ">
+    <!-- Infinite Scroll -->
+    <div id="ctr-inf_scroll" class="top-0 absolute relative overflow-hidden h-[5rem] w-[100vw] z-10">
+      <div v-for="(unit, index) in state.inf_scroll.units" :id="unit.id" :class="unit.class">
+        <div v-for="counter in unit.count" class="flex flex-row">
+          <div class="item cursor-pointer">
+            <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
+          </div>
+          <div class="counter-item item"></div>
         </div>
       </div>
       <a href="https://metroconventions.com/" target="_blank" class="fade"></a>
     </div>
 
+    <!-- Main Logo -->
     <div class="mx-auto flex flex-col gap-4 p-4 z-10 h-[350px] w-[350px] justify-center items-center translate-y-[6rem]">
       <img src="../static/images/foodnotbombslogo.png" alt="" class="w-full h-full object-contain">
     </div>
     <h1 class="text-xl lg:text-3xl text-white text-center mx-auto translate-y-[8rem]">Tampa Food Not Bombs</h1>
     <p class="text-lg lg:text-xl text-white text-center mx-auto translate-y-[8.5rem]">Meet us @ Booth V712!</p>
 
+    <!-- Social Links -->
     <div class="lg:absolute grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 gap-4 lg:left-[2vw] lg:top-[10vh] mt-[10rem] xl:mt-0 mx-auto p-4">
       <a v-for="link in state.social_links"
          :href="link.url"
@@ -124,7 +97,12 @@
       </div>
       <div v-if="window.type === 'books_resources'" class="window-body flex flex-col text-start items-start p-[10px] gap-2 h-[700px] overflow-y-scroll">
         <p class="text-[18px]">Books & Resources</p>
-        <p class="text-[16px] mb-2">Books</p>
+        <p class="text-[16px] mb-2">
+          Books
+          <a href="zines/index.html">
+            <span class="text-sm">(Check out our zines ->)</span>
+          </a>
+        </p>
         <ul>
           <li v-for="book in window.books">
             <a 
@@ -138,6 +116,9 @@
             </a>
           </li>
         </ul>
+        <a href="zines/index.html">
+          <span class="text-sm">(Check out our zines ->)</span>
+        </a>
         <p class="text-[16px] mt-4 mb-2">Podcasts</p>
         <ul>
           <li v-for="podcast in window.podcasts">
@@ -154,25 +135,8 @@
         </ul>
       </div>
     </div> 
-    <!-- <div id="wndw-who-we-are" class="window-comp absolute text-center z-9  w-[200px] top-[10vh] left-[80vw]">
-      <div id="wndw-who-we-are-header" class="window-header flex flex-row items-start justify-end z-10 bg-[#110174] h-[40x] ">
-        <div class="w-[62px] h-[25px] flex flex-row justify-end items-start p-[2px] m-0">
-          <div class="window-btn w-[15px] h-[15px] mx-[1px] pb-1 inset-shadow-xl flex flex-col justify-center items-center bg-neutral-200 text-neutral-800">
-            _
-          </div>
-          <div class="window-btn w-[15px] h-[15px] mx-[1px] inset-shadow-xl flex flex-col justify-center items-center bg-neutral-200 text-neutral-800">
-           ❒︎
-          </div>
-          <div class="window-btn w-[15px] h-[15px] mx-[1px] inset-shadow-xl flex flex-col justify-center items-center bg-neutral-200 text-neutral-800">
-            ×
-          </div>
-        </div>
-      </div>
-     <div class="window-body flex flex-col text-start items-start p-[10px]">
-      <p class="text-[18px]">Who we are</p>
-      <p class="text-[12px]">Tampa FNB provides mutual aid survival programs assisting the houseless and hungry, and stands in opposition to the violence of war and poverty.</p>
-     </div>
-    </div>  -->
+  
+    </main>
 
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script>
@@ -183,6 +147,20 @@
 
         // State
         const state = reactive({
+          inf_scroll: {
+            units: [
+              {
+                id: `scroll-one`,
+                class: `scroll fixed flex items-center jusifty-around w-fit-content text-2xl`,
+                count: 5
+              },
+              {
+                id: `scroll-two`,
+                class: `scroll fixed cursor-pointer flex items-center jusifty-around w-fit-content`,
+                count: 5
+              }
+            ],
+          },
           social_links: [
             {
               title: `Support us on Venmo`,
@@ -231,6 +209,14 @@
                   our mission of providing free food to those in need and advocating for social justice.</p>
               `,
            },
+      //      {
+      //       id: `who-we-are`,
+      //       class: `w-[200px] top-[10vh] left-[80vw]`,
+      //       type: `info`,
+      //       content: `
+      //        <p class="text-[18px]">Who we are</p>
+      // <p class="text-[12px]">Tampa FNB provides mutual aid survival programs assisting the houseless and hungry, and stands in opposition to the violence of war and poverty.</p>`
+      //      },
            {
             id: `about`,
             class: `w-[95vw] lg:w-[300px] 3xl:top-[25rem] lg:left-[1vw]`,
@@ -373,135 +359,133 @@
         */
 
           // Draggable Windows
-      let init_draggable_windows = () => {
-        console.log('Draggable windows set ... :)')
+        let init_draggable_windows = () => {
+          console.log('Draggable windows set ... :)')
 
-        const draggable_elements = document.querySelectorAll('.window-comp'), 
-          dragElement = (elmnt) => {
+          const draggable_elements = document.querySelectorAll('.window-comp'), 
+            dragElement = (elmnt) => {
 
-          let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
-          const dragMouseDown = (e) => {
-            e = e || window.event;
-            e.preventDefault();
-            // get the mouse cursor position at startup:
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            document.onmouseup = closeDragElement;
-            // call a function whenever the cursor moves:
-            document.onmousemove = elementDrag;
+            const dragMouseDown = (e) => {
+              e = e || window.event;
+              e.preventDefault();
+              // get the mouse cursor position at startup:
+              pos3 = e.clientX;
+              pos4 = e.clientY;
+              document.onmouseup = closeDragElement;
+              // call a function whenever the cursor moves:
+              document.onmousemove = elementDrag;
+            }
+
+            const elementDrag = (e) => {
+              e = e || window.event;
+              e.preventDefault();
+              // calculate the new cursor position:
+              pos1 = pos3 - e.clientX;
+              pos2 = pos4 - e.clientY;
+              pos3 = e.clientX;
+              pos4 = e.clientY;
+              // set the element's new position:
+              elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+              elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+            }
+
+            const closeDragElement = () => {
+              /* stop moving when mouse button is released:*/
+              document.onmouseup = null;
+              document.onmousemove = null;
+            }
+
+              if (elmnt.querySelector('.window-header')) {
+              /* if present, the header is where you move the DIV from:*/
+              elmnt.querySelector('.window-header').onmousedown = dragMouseDown;
+            } else {
+              /* otherwise, move the DIV from anywhere inside the DIV:*/
+              elmnt.onmousedown = dragMouseDown;
+            }
           }
-
-          const elementDrag = (e) => {
-            e = e || window.event;
-            e.preventDefault();
-            // calculate the new cursor position:
-            pos1 = pos3 - e.clientX;
-            pos2 = pos4 - e.clientY;
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            // set the element's new position:
-            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-          }
-
-          const closeDragElement = () => {
-            /* stop moving when mouse button is released:*/
-            document.onmouseup = null;
-            document.onmousemove = null;
-          }
-
-            if (elmnt.querySelector('.window-header')) {
-            /* if present, the header is where you move the DIV from:*/
-            elmnt.querySelector('.window-header').onmousedown = dragMouseDown;
-          } else {
-            /* otherwise, move the DIV from anywhere inside the DIV:*/
-            elmnt.onmousedown = dragMouseDown;
-          }
-        }
-        draggable_elements.forEach(el => {
-          dragElement(el);
-        });
-
-      }  
-     
-
-        // Countdown to July 31, 2026
-      let init_countdown = () => {
-
-        console.log('Countdown set ... :)')
-
-        let countdownDate = new Date("July 31, 2026 00:00:00").getTime();
-        let x = setInterval(() => {
-          let now = new Date().getTime();
-          let distance = countdownDate - now;
-
-          let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
-              hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-              minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-              seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-          // Countdown items have class of "item"
-          let countdownItems = document.querySelectorAll('.counter-item');
-          countdownItems.forEach((item, index) => {
-            item.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+          draggable_elements.forEach(el => {
+            dragElement(el);
           });
 
-        }, 1000);
-      }
+        }  
       
-      // Insta previews:
-      let init_insta_previews = () => {
-        console.log('Insta previews set ... :)')
+
+          // Countdown to July 31, 2026
+        let init_countdown = () => {
+
+          console.log('Countdown set ... :)')
+
+          let countdownDate = new Date("July 31, 2026 00:00:00").getTime();
+          let x = setInterval(() => {
+            let now = new Date().getTime();
+            let distance = countdownDate - now;
+
+            let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
+                hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+                minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+                seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Countdown items have class of "item"
+            let countdownItems = document.querySelectorAll('.counter-item');
+            countdownItems.forEach((item, index) => {
+              item.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            });
+
+          }, 1000);
+        }
         
-        // Grab all the modals
-        let modals = document.querySelectorAll('.modal');
-        let btns = document.querySelectorAll('[id^="btn-insta-"]');
-        let spans = document.querySelectorAll('.close');
+        // Insta previews:
+        let init_insta_previews = () => {
+          console.log('Insta previews set ... :)')
+          
+          // Grab all the modals
+          let modals = document.querySelectorAll('.modal');
+          let btns = document.querySelectorAll('[id^="btn-insta-"]');
+          let spans = document.querySelectorAll('.close');
 
-        console.log('spans', spans)
-
-        btns.forEach((btn, index) => {
-          btn.onclick = () => {
-            modals[index].style.display = "block";
-          }
-        });
-
-        spans.forEach((span, index) => {
-          span.onclick = () => {
-            modals[index].style.display = "none";
-          }
-        });
-
-        window.onclick = (event) => {
-          modals.forEach((modal) => {
-            if (event.target == modal) {
-              modal.style.display = "none";
+          btns.forEach((btn, index) => {
+            btn.onclick = () => {
+              modals[index].style.display = "block";
             }
           });
-        };
+
+          spans.forEach((span, index) => {
+            span.onclick = () => {
+              modals[index].style.display = "none";
+            }
+          });
+
+          window.onclick = (event) => {
+            modals.forEach((modal) => {
+              if (event.target == modal) {
+                modal.style.display = "none";
+              }
+            });
+          };
+          
+
+        }
         
 
-      }
-      
+        // truncate text in windows
+        let init_truncate_text = () => {
+          console.log('Truncate text set ... :)')
+          
+          let line_clamps = document.querySelectorAll('.line-clamp');
+          let read_more_btns = document.querySelectorAll('.read_more_btn');
 
-      // truncate text in windows
-      init_truncate_text = () => {
-        console.log('Truncate text set ... :)')
+          read_more_btns.forEach((btn, index) => {
+            btn.onclick = () => {
+              line_clamps[index].classList.toggle('line-clamp');
+              btn.textContent = line_clamps[index].classList.contains('line-clamp') ? 'Read More' : 'Read Less';
+            }
+          });
+
+          
+        }
         
-        let line_clamps = document.querySelectorAll('.line-clamp');
-        let read_more_btns = document.querySelectorAll('.read_more_btn');
-
-        read_more_btns.forEach((btn, index) => {
-          btn.onclick = () => {
-            line_clamps[index].classList.toggle('line-clamp');
-            btn.textContent = line_clamps[index].classList.contains('line-clamp') ? 'Read More' : 'Read Less';
-          }
-        });
-
-        
-      }
-      
 
 
         // Lifecycle Hooks
@@ -520,6 +504,6 @@
     }
   }).mount('#fnb');
 
-</script>
+</script> 
 </body>
 </html>

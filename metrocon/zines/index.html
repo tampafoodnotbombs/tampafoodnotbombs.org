@@ -4,98 +4,399 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tampa Food Not Bombs - Metrocon</title>
+  <title>Tampa Food Not Bombs - Zines</title>
   <link rel="stylesheet" href="../../static/css/metrocon.css">
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
+  <script src="https://unpkg.com/vue@3.5.38/dist/vue.global.prod.js"></script> 
+  <style>
+    .library_card {
+      max-width: 370px !important;
+      width: 370px !important;
+    }
+  </style>
 </head>
-<body>
-  <main id="fnb" class="w-[100wh] h-[100vh] flex flex-col lg:block gap-4 lg:gap-0 ">
-    <div id="ctr-inf_scroll" class="top-0 absolute relative overflow-hidden h-[5rem] w-[100vw] z-10">`
-      <div id="scroll-one" class="scroll fixed flex items-center jusifty-around w-fit-content text-2xl">
-        <div class="item cursor-pointer">
-          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
-        </div>
-        <div class="counter-item item"></div>
-        <div class="item cursor-pointer">
-          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
-        </div>
-        <div class="counter-item item"></div>
-        <div class="item cursor-pointer">
-          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
-        </div>
-        <div class="counter-item item"></div>
-        <div class="item cursor-pointer">
-          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
-        </div>
-      </div>
-       <div id="scroll-two" class="scroll fixed cursor-pointer flex items-center jusifty-around w-fit-content ">
-        <div class="item cursor-pointer">
-          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
-        </div>
-        <div class="counter-item item"></div>
-        <div class="item cursor-pointer">
-          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
-        </div>
-        <div class="counter-item item"></div>
-        <div class="item cursor-pointer">
-          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
-        </div>
-        <div class="counter-item item"></div>
-        <div class="item cursor-pointer">
-          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
-        </div>
-        <div class="counter-item item"></div>
-        <div class="item cursor-pointer">
-          <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
+<body id="fnb-zines">
+  <main class="w-[100wh] h-[100vh] flex flex-col lg:block gap-4 lg:gap-0 overflow-hidden relative">
+    <!-- Infinite Scroll -->
+    <div id="ctr-inf_scroll" class="top-0 absolute relative overflow-hidden h-[5rem] w-[100vw] z-10">
+      <div v-for="(unit, index) in state.inf_scroll.units" :id="unit.id" :class="unit.class">
+        <div v-for="counter in unit.count" class="flex flex-row">
+          <div class="item cursor-pointer">
+            <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
+          </div>
+          <div class="counter-item item"></div>
         </div>
       </div>
       <a href="https://metroconventions.com/" target="_blank" class="fade"></a>
     </div>
-  </main>
-<script>
 
+    <div class="w-full h-[100vh] lg:h-[80vh]   flex flex-col md:flex-row gap-4 pt-10 absolute bottom-[-2rem] z-10">
+      <div class="w-full h-full md:w-1/5 flex flex-col p-2 lg:p-4 relative">
+        <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001822/everythings_fun_with_a_library_card_y15vqy.png" alt="Library Card" class="library_card absolute top-0 left-0 z-10">
+        <div class="absolute top-[100px] flex flex-col z-20 px-4 pt-10">
+          <a href="https://tampafoodnotbombs.org/metrocon/" class="text-bold uppercase -rotate-2 text-red-900 hover:text-red-600 mb-3">
+            <- back to Food Not Bombs - MetroCon 
+          </a>
+        </div>
+      </div>
+      <div class="w-full md:w-4/5 h-[100vh] lg:h-auto flex flex-col overflow-y-scroll rounded-md ">
+        <div class="w-full h-full grid grid-cols-1 md:grid-cols-3">
+          <div 
+            v-for="(zine, a) in state.zines" 
+            style="background-image: url('https://res.cloudinary.com/dpxmyueqi/image/upload/q_auto/f_auto/v1782001822/shelf_slot_ecqflv.webp');"
+            class="w-full h-full flex flex-col justify-end items-end bg-cover bg-no-repeat">
+              <button
+                :style="`background-image: url('${zine.img}');`"
+                class="w-[150px] mx-auto cursor-pointer h-[350px] md:h-[85%] bg-contain bg-no-repeat bg-center mb-[10px] flex flex-col justify-end items-end"
+                @click="open_zine(zine, a)">
+                <span v-if="zine.shelf == 'palestine'" class="text-4xl">🇵🇸</span>
+              </button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
 
-    // Countdown to July 31, 2026
-  let init_countdown = () => {
-
-    console.log('Countdown set ... :)')
-
-    let countdownDate = new Date("July 31, 2026 00:00:00").getTime();
-    let x = setInterval(() => {
-      let now = new Date().getTime();
-      let distance = countdownDate - now;
-
-      let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
-          hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      // Countdown items have class of "item"
-      let countdownItems = document.querySelectorAll('.counter-item');
-      countdownItems.forEach((item, index) => {
-        item.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-      });
-
-    }, 1000);
-  }
-  init_countdown();
-  init_truncate_text = () => {
-    console.log('Truncate text set ... :)')
+    <div v-if="state.modal.open"  class="absolute relative fixed top-0 left-0 right-0 w-full h-full flex items-center justify-center bg-black/80 z-10 p-[8%]">
+     <div class="w-full h-full flex flex-col justify-center items-center absolute top-0 left-0 right-0 bottom-0 z-10"
+      @click="close_zine()"
+     >
+     </div>
+     <div class="w-[85%] h-[85%] absolute top-[4rem] rounded bg-center bg-contain bg-no-repeat no-repeat z-20 flex flex-row justify-end items-end" :style="`background-image: url('${state.modal.zine.img_open}');`">
+      <div class="flex flex-col w-1/2 justify-start h-full px-5 pe-[10%] gap-2">
+        <div class="w-full h-[40px] flex flex-row justify-end items-end mb-20">
+          <button aria-label="Close" @click="close_zine()" class="cursor-pointer">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 6L18 18M6 18L18 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+       
+        <h2 class="text-neutral-900 text-2xl mb-4">{{ state.modal.zine?.title }}</h2>
+        <p class="text-neutral-800 mb-8">{{ state.modal.zine?.author }}</p>
+        <div class="w-full flex flex-row gap-3">
+          <a :href="state.modal.zine?.print" target="_blank" class="text-indigo-200 me-5">{{ state.modal.zine?.label }}
+            Download
+            <!-- Download symbol svg -->
+            <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17 17H17.01M17.4 14H18C18.9319 14 19.3978 14 19.7654 14.1522C20.2554 14.3552 20.6448 14.7446 20.8478 15.2346C21 15.6022 21 16.0681 21 17C21 17.9319 21 18.3978 20.8478 18.7654C20.6448 19.2554 20.2554 19.6448 19.7654 19.8478C19.3978 20 18.9319 20 18 20H6C5.06812 20 4.60218 20 4.23463 19.8478C3.74458 19.6448 3.35523 19.2554 3.15224 18.7654C3 18.3978 3 17.9319 3 17C3 16.0681 3 15.6022 3.15224 15.2346C3.35523 14.7446 3.74458 14.3552 4.23463 14.1522C4.60218 14 5.06812 14 6 14H6.6M12 15V4M12 15L9 12M12 15L15 12" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+          </a>
+          <a :href="state.modal.zine?.link" target="_blank" class="text-indigo-200"> 
+            Read Online/Learn More ->
+          </a>
+        </div>
+         <div class="flex flex-1"></div>
+      </div>
+     </div>
+    </div>
     
-    let line_clamps = document.querySelectorAll('.line-clamp');
-    let read_more_btns = document.querySelectorAll('.read_more_btn');
+    <!-- <div v-if="state.modal.open"  class=" absolute fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-55">
+            <div class="modal-content bg-white p-4 rounded">
+              <button @click="state.modal.open = false" class="absolute top-2 right-2">Close</button>
+              <img :src="state.modal.zine?.img" alt="Zine Image" class="max-w-full max-h-full">
+            </div>
+          </div> -->
 
-    read_more_btns.forEach((btn, index) => {
-      btn.onclick = () => {
-        line_clamps[index].classList.toggle('line-clamp');
-        btn.textContent = line_clamps[index].classList.contains('line-clamp') ? 'Read More' : 'Read Less';
-      }
-    });
+ </main>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script>
 
-    
-  }
-  init_truncate_text();
-</script>
+    const { createApp, ref, reactive, onMounted, onUnmounted, nextTick } = Vue
+    createApp({
+      setup() {
+        
+        // State
+        const state = reactive({
+          inf_scroll: {
+            units: [
+              {
+                id: `scroll-one`,
+                class: `scroll fixed flex items-center jusifty-around w-fit-content text-2xl`,
+                count: 5
+              },
+              {
+                id: `scroll-two`,
+                class: `scroll fixed cursor-pointer flex items-center jusifty-around w-fit-content`,
+                count: 5
+              }
+            ],
+          },
+          social_links: [
+            {
+              title: `Support us on Venmo`,
+              class: `text-indigo-200`,
+              url: `https://venmo.com/tfnbfondos`,
+              label: `@TFNBFondos`,  
+              svg: {
+                html: `<svg class="niftybutton-ven" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="display: block; fill: rgb(195, 161, 246); width: 58px; height: 58px; color: rgb(195, 161, 246);" width="58" height="58" role="img"><path d="M21.428 4.4c.77 1.281 1.119 2.601 1.119 4.27 0 5.32-4.541 12.23-8.227 17.08H6.15L2.776 5.563l7.37-.7 1.792 14.362c1.65-2.67 3.815-6.648 3.815-9.52 0-1.594-.273-2.678-.7-3.57z" fill="#000000" style="fill: rgb(195, 161, 246);"></path></svg>`
+              }
+            },
+            {
+              title: `Support us on Cashapp`,
+              class: `text-indigo-200`,
+              url: `https://cash.app/$TFNBFondos`,
+              label: `$TFNBFondos`,  
+              svg: {
+                html: `<svg class="niftybutton-cashapp" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="display: block; fill: rgb(195, 161, 246); width: 58px; height: 58px; color: rgb(195, 161, 246);" width="58" height="58" role="img"><path d="M21.428 4.4c.77 1.281 1.119 2.601 1.119 4.27 0 5.32-4.541 12.23-8.227 17.08H6.15L2.776 5.563l7.37-.7 1.792 14.362c1.65-2.67 3.815-6.648 3.815-9.52 0-1.594-.273-2.678-.7-3.57z" fill="#000000" style="fill: rgb(195, 161, 246);"></path></svg>`
+              } 
+            },
+            {
+              title: `Find us on Instagram`,
+              class: `text-indigo-200`,
+              url: `https://www.instagram.com/tampafoodnotbombs`,
+              label: `@tampafoodnotbombs`,  
+              svg: {
+                html: `<svg id="instagram" fill="rgb(217, 50, 117)" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="58px" height="58px" viewBox="0 0 169.063 169.063" xml:space="preserve"><g><path d="M122.406,0H46.654C20.929,0,0,20.93,0,46.655v75.752c0,25.726,20.929,46.655,46.654,46.655h75.752
+                          c25.727,0,46.656-20.93,46.656-46.655V46.655C169.063,20.93,148.133,0,122.406,0z M154.063,122.407
+                          c0,17.455-14.201,31.655-31.656,31.655H46.654C29.2,154.063,15,139.862,15,122.407V46.655C15,29.201,29.2,15,46.654,15h75.752
+                          c17.455,0,31.656,14.201,31.656,31.655V122.407z"></path><path d="M84.531,40.97c-24.021,0-43.563,19.542-43.563,43.563c0,24.02,19.542,43.561,43.563,43.561s43.563-19.541,43.563-43.561
+                          C128.094,60.512,108.552,40.97,84.531,40.97z M84.531,113.093c-15.749,0-28.563-12.812-28.563-28.561
+                          c0-15.75,12.813-28.563,28.563-28.563s28.563,12.813,28.563,28.563C113.094,100.281,100.28,113.093,84.531,113.093z"></path><path d="M129.921,28.251c-2.89,0-5.729,1.17-7.77,3.22c-2.051,2.04-3.23,4.88-3.23,7.78c0,2.891,1.18,5.73,3.23,7.78
+                          c2.04,2.04,4.88,3.22,7.77,3.22c2.9,0,5.73-1.18,7.78-3.22c2.05-2.05,3.22-4.89,3.22-7.78c0-2.9-1.17-5.74-3.22-7.78
+                          C135.661,29.421,132.821,28.251,129.921,28.251z"></path></g></svg>`
+              }
+            }
+          ],
+          modal: {
+            open: false,
+            zine: null,
+            zine_bg: null
+          },
+          zines: [
+            {
+              title: `WTF is Mutual Aid @MC`,
+              author: `Oh Shit! What Now? ATX`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001824/zine_1_ohej5d.webp`,
+              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_1_open_xcnhgn.png`,
+              link: `https://www.ohshitwhatnow.org/category/resource-guides/`,
+              print: `https://www.ohshitwhatnow.org/wp-content/uploads/2017/08/wtfismutualaid.pdf`,
+              shelf: `zines`,
+            },
+             {
+              title: `11 Reasons I’m Wearing a Mask in 2025 @MC`,
+              author: `Violet B. Fox`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001823/zine_2_sdcfen.webp`,
+              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001827/zine_2_open_ctacss.png`,
+              link: `https://violetbfox.info/11reasons/`,
+              print: `https://drive.google.com/file/d/174tIwsjyrWaeI2RRxBhMTqa-oNiYReBt/view`,
+              shelf: `zines`,
+            },
+            {
+              title: `How to Do a Guerrilla Sharing @MC`,
+              author: `Food Not Bombs`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001823/zine_3_vk5hvj.webp`,
+              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001827/zine_3_open_at3ssu.png`,
+              link: `https://theanarchistlibrary.org/library/food-not-bombs-how-to-do-a-guerilla-sharing.lt.pdf`,
+              print: `https://theanarchistlibrary.org/library/food-not-bombs-how-to-do-a-guerilla-sharing.lt.pdf`,
+              shelf: `zines`,
+            },
+            {
+              title: `Mutual Aid, The commons, and the Revolutionary Abolition of Capitalism @MC`,
+              author: `Crimethinc`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001822/zine_4_nuzj4i.webp`,
+              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_4_open_s6pmyk.png`,
+              link: `https://crimethinc.com/zines/mutual-aid-the-commons-and-the-revolutionary-abolition-of-capitalism`,
+              print: `https://cdn.crimethinc.com/assets/zines/mutual-aid-the-commons-and-the-revolutionary-abolition-of-capitalism/mutual-aid-the-commons-and-the-revolutionary-abolition-of-capitalism_print_black_and_white.pdf`,
+              shelf: `zines`,
+            },
+            {
+              title: `Food is the First Frontier of The Israeli-Palestinian Conflict @MC`,
+              author: `Carly Graf`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001822/zine_5_o9ka0w.webp`,
+              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_5_open_tsn1o8.png`,
+              link: `https://perma.cc/HVB3-8X7J`,
+              print: `https://static1.squarespace.com/static/667ca6a15f58f502d2f31024/t/67e1c99fb4ffe12130c46ed3/1742850467364/food-booklet.pdf`,
+              shelf: `zines`,  
+            },
+            {
+              title: `12 Things to Do Instead of Calling the Cops @MC`,
+              author: `Mayday Collective Washtenaw, Solidarity & Defense`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001824/zine_6_b6dta5.webp`,
+              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_6_open_fvuuaj.png`,
+              link: `https://www.facebook.com/MayDayCollectiveWashtenaw`,
+              print: `https://files.sproutdistro.com/12things-print.pdf `,
+              shelf: `zines`,
+            },
+            {
+              title: `Sex Education in Gaza`,
+              author: `Pleasure Pie`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001827/zine_7_dz7hpu.webp`,
+              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_7_open_pysjup.png`,
+              link: `https://www.pleasurepie.org/printables.html`,
+              print: `https://www.pleasurepie.org/uploads/4/0/9/8/40981383/sex_ed_in_gaza_zine__2_.pdf`,
+              shelf: `palestine`,
+            },
+            {
+              title: `A Care Centered Guide to Digitally Archiving Palestine`,
+              author: `Librarians with Palestine`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001822/zine_8_sfdq3i.webp`,
+              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001827/zine_8_open_vuw2yb.png`,
+              link: `https://librarianswithpalestine.org/`,
+              print: `https://librarianswithpalestine.org/wp-content/uploads/2024/06/LAPCareZineWeb.pdf`,
+              shelf: `palestine`,
+            },
+            {
+              title: `To The World, A Comic from Gaza`,
+              author: `Jehad Abu Dayya, Esraa Al-Banna`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001822/zine_9_nyjb3t.webp`,
+              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_9_open_lck8v0.png`,
+              link: ``,
+              print: ``,
+              shelf: `palestine`,  
+            },
+            {
+              title: `Free Palestine: Resources Inside`,
+              author: `Various`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001823/zine_10_qiz7fu.webp`,
+              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_10_open_zdqcew.png`,
+              link: `https://www.pleasurepie.org/articles/free-zines-about-palestine`,
+              print: `https://www.pleasurepie.org/uploads/4/0/9/8/40981383/free_palestine_resources_zine_tc_2023.pdf`,
+              shelf: `palestine`,
+            },
+            {
+              title: `Why We Mask`,
+              author: `Laurel Lynn Leake, 2025`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001823/zine_11_louvjc.webp`,
+              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_11_open_me5tvg.png`,
+              link: `https://laurel-lynn-leake.itch.io/why-we-mask/devlog/941782/why-we-mask-2025-edition`,
+              print: `https://laurel-lynn-leake.itch.io/why-we-mask/purchase`,
+              shelf: `zines`,
+            },
+            {
+              title: `Mutual Aid: A Primer`,
+              author: `@Slybadges`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001824/zine_12_nbjh8d.webp`,
+              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_12_open_yh1du4.png`,
+              link: `https://www.instagram.com/slybadges/`,
+              print: ``,
+              shelf: `zines`,
+            },
+            {
+              title: `12 Children's Books That Celebrate the Spirit of Mutual Aid`,
+              author: `Decolonization Coven`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001824/zine_13_jrdqua.webp`,
+              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_13_open_cytzrf.png`,
+              link: ``,
+              print: `https://www.dropbox.com/scl/fi/ko5ygz8fon7bsrsl5p1ou/Childrens-Book-Zine.pdf?rlkey=7976ewb2doofmjmpynaixqjoh&st=2pioybg1&e=1&dl=0`,
+              shelf: `decolonization_coven`,
+            },
+ 
+            {
+              title: `I Don’t Bash Back, I Shoot First`,
+              author: `The Zine Squatte Shoppe`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001824/zine_14_gmygy4.webp`,
+              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_14_open_oqxq3v.png`,
+              link: `https://zinesquatteshoppe.noblogs.org/i-dont-bash-back-i-shoot-first-on-queer-gangs`,
+              print: `https://zinesquatteshoppe.noblogs.org/files/2025/07/i-dont-bash-back-print.pdf`,
+              shelf: `zines`,
+            },
+            {
+              title: `7 Myths about Police`,
+              author: `Crimethinc`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001824/zine_15_jrnmef.webp`,
+              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_15_open_o1nzfc.png`,
+              link: `https://crimethinc.com/zines/seven-myths-about-the-police`,
+              print: `https://cdn.crimethinc.com/assets/zines/seven-myths-about-the-police/seven-myths-about-the-police_print_black_and_white.pdf`,
+              shelf: `zines`,
+            },
+                       // {
+            //   title: `Building Community`,
+            //   author: `Decolonization Coven`,
+            //   img: `../../static/images/zines/shelf/zine_16.webp`,
+            // 
+            //   link: ``,
+            //   print: ``,
+            //   shelf: `decolonization_coven`,
+            // },
+            // {
+            //   title: `Dirt Cheap`,
+            //   author: `Decolonization Coven`,
+            //   img: `../../static/images/zines/shelf/zine_17.webp`,
+            //   link: ``,
+            //   print: ``,
+            //   shelf: `decolonization_coven`,
+            // },
+            // {
+            //   title: `Sisters? Not Yet! A Beginner’s Guide to White Feminism (And why it is a problem)`,
+            //   author: `Decolonization Coven`,
+            //   img: `../../static/images/zines/shelf/zine_18.webp`,
+            //   link: ``,
+            //   print: ``,
+            //   shelf: `decolonization_coven`,
+            // },
+          ]
+        })
+
+        // Methods/Functions
+          // Countdown to July 31, 2026
+        let init_countdown = () => {
+
+          console.log('Countdown set ... :)')
+
+          let countdownDate = new Date("July 31, 2026 00:00:00").getTime();
+          let x = setInterval(() => {
+            let now = new Date().getTime();
+            let distance = countdownDate - now;
+
+            let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
+                hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+                minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+                seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Countdown items have class of "item"
+            let countdownItems = document.querySelectorAll('.counter-item');
+            countdownItems.forEach((item, index) => {
+              item.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            });
+
+          }, 1000);
+        }
+        
+        // truncate text in windows
+        let init_truncate_text = () => {
+          console.log('Truncate text set ... :)')
+          
+          let line_clamps = document.querySelectorAll('.line-clamp');
+          let read_more_btns = document.querySelectorAll('.read_more_btn');
+
+          read_more_btns.forEach((btn, index) => {
+            btn.onclick = () => {
+              line_clamps[index].classList.toggle('line-clamp');
+              btn.textContent = line_clamps[index].classList.contains('line-clamp') ? 'Read More' : 'Read Less';
+            }
+          });
+
+          
+        }
+        
+        let open_zine = (zine, index) => {
+          state.modal.zine = zine;
+
+          nextTick(() => {
+            state.modal.open = true;
+          });
+        }
+
+        let close_zine = () => {
+          state.modal.open = false;
+        }
+
+        // Lifecycle Hooks
+        onMounted(() => {
+          console.log('Mounted ... :)');
+          init_countdown();
+          init_truncate_text();
+        });
+
+
+      return {
+        state,
+        open_zine,
+        close_zine,
+      };
+    }
+  }).mount('#fnb-zines');
+
+  </script>
+  
 </body>
 </html>
