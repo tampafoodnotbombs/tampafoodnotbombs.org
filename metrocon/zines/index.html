@@ -89,27 +89,26 @@
     </div>
 
     <div v-if="state.modal.open"  class="absolute relative fixed top-0 left-0 right-0 w-full h-full flex items-center justify-center bg-black/80 z-10 p-[8%]">
-     <div class="w-full h-full flex flex-col justify-center items-center absolute top-0 left-0 right-0 bottom-0 z-10"
+      <button aria-label="Close" @click="close_zine()" class="cursor-pointer absolute top-4 right-4">
+            <span class="text-lg text-white lowercase">x</span>
+          </button>
+      <div class="w-full h-full flex flex-col justify-center items-center relative absolute top-0 left-0 right-0 bottom-0 z-10"
       @click="close_zine()"
      >
+      
      </div>
-     <div class="w-[85%] h-[85%] absolute top-[4rem] rounded bg-center bg-contain bg-no-repeat no-repeat z-20 flex flex-row justify-end items-end" :style="`background-image: url('${state.modal.zine.img_open}');`">
-      <div class="flex flex-col w-1/2 justify-start h-full px-5 pe-[10%] gap-2">
-        <div class="w-full h-[40px] flex flex-row justify-end items-end mb-20">
-          <button aria-label="Close" @click="close_zine()" class="cursor-pointer">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 6L18 18M6 18L18 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-        </div>
-       
-        <h2 class="text-neutral-900 text-2xl mb-4">{{ state.modal.zine?.title }}</h2>
-        <p class="text-neutral-800 mb-8">{{ state.modal.zine?.author }}</p>
-        <div class="w-full flex flex-row gap-3">
-          <a :href="state.modal.zine?.print" target="_blank" class="text-indigo-200 me-5">{{ state.modal.zine?.label }}
+     <div class="w-[85%] h-[85%] overflow-y-scroll lg:overflow-hidden absolute top-[4rem] rounded bg-center bg-contain bg-no-repeat no-repeat z-20 flex flex-col lg:flex-row justify-end items-end" :style="`background-image: url('${state.modal.zine.img_open}');`">
+      <div class="flex flex-col w-full lg:w-1/2 justify-start h-full lg:px-5 lg:pe-[10%] gap-2">
+       <div class="lg:hidden w-2/3 p-2">
+        <img :src="state.modal.zine?.img" :alt="state.modal.zine?.title" class="w-full h-auto rounded-md object-cover object-center" />
+       </div>
+        <h2 class="text-white lg:text-neutral-900 text-2xl mb-4 w-4/5 mt-2 lg:mt-8">{{ state.modal.zine?.title }}</h2>
+        <p class="text-white lg:text-neutral-800 mb-8">{{ state.modal.zine?.author }}</p>
+        <div class="w-full flex flex-row gap-2">
+          <a :href="state.modal.zine?.print" target="_blank" class="text-indigo-200 me-2">{{ state.modal.zine?.label }}
             Download
             <!-- Download symbol svg -->
-            <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17 17H17.01M17.4 14H18C18.9319 14 19.3978 14 19.7654 14.1522C20.2554 14.3552 20.6448 14.7446 20.8478 15.2346C21 15.6022 21 16.0681 21 17C21 17.9319 21 18.3978 20.8478 18.7654C20.6448 19.2554 20.2554 19.6448 19.7654 19.8478C19.3978 20 18.9319 20 18 20H6C5.06812 20 4.60218 20 4.23463 19.8478C3.74458 19.6448 3.35523 19.2554 3.15224 18.7654C3 18.3978 3 17.9319 3 17C3 16.0681 3 15.6022 3.15224 15.2346C3.35523 14.7446 3.74458 14.3552 4.23463 14.1522C4.60218 14 5.06812 14 6 14H6.6M12 15V4M12 15L9 12M12 15L15 12" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+            <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17 17H17.01M17.4 14H18C18.9319 14 19.3978 14 19.7654 14.1522C20.2554 14.3552 20.6448 14.7446 20.8478 15.2346C21 15.6022 21 16.0681 21 17C21 17.9319 21 18.3978 20.8478 18.7654C20.6448 19.2554 20.2554 19.6448 19.7654 19.8478C19.3978 20 18.9319 20 18 20H6C5.06812 20 4.60218 20 4.23463 19.8478C3.74458 19.6448 3.35523 19.2554 3.15224 18.7654C3 18.3978 3 17.9319 3 17C3 16.0681 3 15.6022 3.15224 15.2346C3.35523 14.7446 3.74458 14.3552 4.23463 14.1522C4.60218 14 5.06812 14 6 14H6.6M12 15V4M12 15L9 12M12 15L15 12" :stroke="`${screen_width > 768 ? '#000000' : '#ffffff'}`" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
           </a>
           <a :href="state.modal.zine?.link" target="_blank" class="text-indigo-200"> 
             Read Online/Learn More ->
@@ -125,11 +124,17 @@
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script>
 
-    const { createApp, ref, reactive, onMounted, onUnmounted, nextTick } = Vue
+    const { createApp, ref, reactive, onMounted, onUnmounted, nextTick, watch } = Vue
     createApp({
       setup() {
         
         // State
+        const screen_width = ref(window.innerWidth)
+        onUnmounted(() => {
+          window.removeEventListener('resize', () => {
+            screen_width.value = window.innerWidth
+          })
+        })
         const state = reactive({
           inf_scroll: {
             units: [
@@ -191,7 +196,7 @@
               title: `WTF is Mutual Aid @MC`,
               author: `Oh Shit! What Now? ATX`,
               img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001824/zine_1_ohej5d.webp`,
-              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_1_open_xcnhgn.png`,
+              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_1_open_xcnhgn.png' : ''}`,
               link: `https://www.ohshitwhatnow.org/category/resource-guides/`,
               print: `https://www.ohshitwhatnow.org/wp-content/uploads/2017/08/wtfismutualaid.pdf`,
               shelf: `zines`,
@@ -200,7 +205,7 @@
               title: `11 Reasons I’m Wearing a Mask in 2025 @MC`,
               author: `Violet B. Fox`,
               img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001823/zine_2_sdcfen.webp`,
-              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001827/zine_2_open_ctacss.png`,
+              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001827/zine_2_open_ctacss.png' : ''}`,
               link: `https://violetbfox.info/11reasons/`,
               print: `https://drive.google.com/file/d/174tIwsjyrWaeI2RRxBhMTqa-oNiYReBt/view`,
               shelf: `zines`,
@@ -209,7 +214,7 @@
               title: `How to Do a Guerrilla Sharing @MC`,
               author: `Food Not Bombs`,
               img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001823/zine_3_vk5hvj.webp`,
-              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001827/zine_3_open_at3ssu.png`,
+              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001827/zine_3_open_at3ssu.png' : ''}`,
               link: `https://theanarchistlibrary.org/library/food-not-bombs-how-to-do-a-guerilla-sharing.lt.pdf`,
               print: `https://theanarchistlibrary.org/library/food-not-bombs-how-to-do-a-guerilla-sharing.lt.pdf`,
               shelf: `zines`,
@@ -218,7 +223,7 @@
               title: `Mutual Aid, The commons, and the Revolutionary Abolition of Capitalism @MC`,
               author: `Crimethinc`,
               img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001822/zine_4_nuzj4i.webp`,
-              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_4_open_s6pmyk.png`,
+              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_4_open_s6pmyk.png' : ''}`,
               link: `https://crimethinc.com/zines/mutual-aid-the-commons-and-the-revolutionary-abolition-of-capitalism`,
               print: `https://cdn.crimethinc.com/assets/zines/mutual-aid-the-commons-and-the-revolutionary-abolition-of-capitalism/mutual-aid-the-commons-and-the-revolutionary-abolition-of-capitalism_print_black_and_white.pdf`,
               shelf: `zines`,
@@ -227,7 +232,7 @@
               title: `Food is the First Frontier of The Israeli-Palestinian Conflict @MC`,
               author: `Carly Graf`,
               img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001822/zine_5_o9ka0w.webp`,
-              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_5_open_tsn1o8.png`,
+              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_5_open_tsn1o8.png' : ''}`,
               link: `https://perma.cc/HVB3-8X7J`,
               print: `https://static1.squarespace.com/static/667ca6a15f58f502d2f31024/t/67e1c99fb4ffe12130c46ed3/1742850467364/food-booklet.pdf`,
               shelf: `zines`,  
@@ -236,7 +241,7 @@
               title: `12 Things to Do Instead of Calling the Cops @MC`,
               author: `Mayday Collective Washtenaw, Solidarity & Defense`,
               img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001824/zine_6_b6dta5.webp`,
-              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_6_open_fvuuaj.png`,
+              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_6_open_fvuuaj.png' : ''}`,
               link: `https://www.facebook.com/MayDayCollectiveWashtenaw`,
               print: `https://files.sproutdistro.com/12things-print.pdf `,
               shelf: `zines`,
@@ -245,7 +250,7 @@
               title: `Sex Education in Gaza`,
               author: `Pleasure Pie`,
               img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001827/zine_7_dz7hpu.webp`,
-              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_7_open_pysjup.png`,
+              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_7_open_pysjup.png' : ''}`,
               link: `https://www.pleasurepie.org/printables.html`,
               print: `https://www.pleasurepie.org/uploads/4/0/9/8/40981383/sex_ed_in_gaza_zine__2_.pdf`,
               shelf: `palestine`,
@@ -254,7 +259,7 @@
               title: `A Care Centered Guide to Digitally Archiving Palestine`,
               author: `Librarians with Palestine`,
               img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001822/zine_8_sfdq3i.webp`,
-              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001827/zine_8_open_vuw2yb.png`,
+              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001827/zine_8_open_vuw2yb.png' : ''}`,
               link: `https://librarianswithpalestine.org/`,
               print: `https://librarianswithpalestine.org/wp-content/uploads/2024/06/LAPCareZineWeb.pdf`,
               shelf: `palestine`,
@@ -263,7 +268,7 @@
               title: `To The World, A Comic from Gaza`,
               author: `Jehad Abu Dayya, Esraa Al-Banna`,
               img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001822/zine_9_nyjb3t.webp`,
-              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_9_open_lck8v0.png`,
+              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_9_open_lck8v0.png' : ''}`,
               link: ``,
               print: ``,
               shelf: `palestine`,  
@@ -272,7 +277,7 @@
               title: `Free Palestine: Resources Inside`,
               author: `Various`,
               img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001823/zine_10_qiz7fu.webp`,
-              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_10_open_zdqcew.png`,
+              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_10_open_zdqcew.png' : ''}`,
               link: `https://www.pleasurepie.org/articles/free-zines-about-palestine`,
               print: `https://www.pleasurepie.org/uploads/4/0/9/8/40981383/free_palestine_resources_zine_tc_2023.pdf`,
               shelf: `palestine`,
@@ -281,7 +286,7 @@
               title: `Why We Mask`,
               author: `Laurel Lynn Leake, 2025`,
               img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001823/zine_11_louvjc.webp`,
-              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_11_open_me5tvg.png`,
+              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_11_open_me5tvg.png' : ''}`,
               link: `https://laurel-lynn-leake.itch.io/why-we-mask/devlog/941782/why-we-mask-2025-edition`,
               print: `https://laurel-lynn-leake.itch.io/why-we-mask/purchase`,
               shelf: `zines`,
@@ -290,7 +295,7 @@
               title: `Mutual Aid: A Primer`,
               author: `@Slybadges`,
               img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001824/zine_12_nbjh8d.webp`,
-              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_12_open_yh1du4.png`,
+              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_12_open_yh1du4.png' : ''}`,
               link: `https://www.instagram.com/slybadges/`,
               print: ``,
               shelf: `zines`,
@@ -299,7 +304,7 @@
               title: `12 Children's Books That Celebrate the Spirit of Mutual Aid`,
               author: `Decolonization Coven`,
               img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001824/zine_13_jrdqua.webp`,
-              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_13_open_cytzrf.png`,
+              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_13_open_cytzrf.png' : ''}`,
               link: ``,
               print: `https://www.dropbox.com/scl/fi/ko5ygz8fon7bsrsl5p1ou/Childrens-Book-Zine.pdf?rlkey=7976ewb2doofmjmpynaixqjoh&st=2pioybg1&e=1&dl=0`,
               shelf: `decolonization_coven`,
@@ -309,7 +314,7 @@
               title: `I Don’t Bash Back, I Shoot First`,
               author: `The Zine Squatte Shoppe`,
               img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001824/zine_14_gmygy4.webp`,
-              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_14_open_ujgi7j.png`,
+              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_14_open_ujgi7j.png' : ''}`,
               link: `https://zinesquatteshoppe.noblogs.org/i-dont-bash-back-i-shoot-first-on-queer-gangs`,
               print: `https://zinesquatteshoppe.noblogs.org/files/2025/07/i-dont-bash-back-print.pdf`,
               shelf: `zines`,
@@ -318,7 +323,7 @@
               title: `7 Myths about Police`,
               author: `Crimethinc`,
               img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001824/zine_15_jrnmef.webp`,
-              img_open: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_15_open_o1nzfc.png`,
+              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_15_open_o1nzfc.png' : ''}`,
               link: `https://crimethinc.com/zines/seven-myths-about-the-police`,
               print: `https://cdn.crimethinc.com/assets/zines/seven-myths-about-the-police/seven-myths-about-the-police_print_black_and_white.pdf`,
               shelf: `zines`,
@@ -410,6 +415,15 @@
           console.log('Mounted ... :)');
           init_countdown();
           init_truncate_text();
+          window.addEventListener('resize', () => {
+            screen_width.value = window.innerWidth
+          })
+        });
+
+        // watchers
+        watch(screen_width, (new_width) => {
+          // console.log('Screen width changed to:', new_width);
+          screen_width.value = window.innerWidth;
         });
 
 
@@ -417,6 +431,7 @@
         state,
         open_zine,
         close_zine,
+        screen_width,
       };
     }
   }).mount('#fnb-zines');
