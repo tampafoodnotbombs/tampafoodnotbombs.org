@@ -97,7 +97,7 @@
      >
       
      </div>
-     <div class="w-[85%] h-[85%] overflow-y-scroll lg:overflow-hidden absolute top-[4rem] rounded bg-center bg-contain bg-no-repeat no-repeat z-20 flex flex-col lg:flex-row justify-end items-end" :style="`background-image: url('${state.modal.zine.img_open}');`">
+     <div class="w-[85%] h-[85%] overflow-y-scroll lg:overflow-hidden absolute top-[4rem] rounded bg-center bg-contain bg-no-repeat no-repeat z-20 flex flex-col lg:flex-row justify-end items-end" :style="`background-image: url('${screen_width > 1024 ? state.modal.zine.img_open : ''}');`">
       <div class="flex flex-col w-full lg:w-1/2 justify-start h-full lg:px-5 lg:pe-[10%] gap-2">
        <div class="lg:hidden w-2/3 p-2">
         <img :src="state.modal.zine?.img" :alt="state.modal.zine?.title" class="w-full h-auto rounded-md object-cover object-center" />
