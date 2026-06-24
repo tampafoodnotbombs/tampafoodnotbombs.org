@@ -1,3 +1,4 @@
+/* Fonts: */
 @font-face {
     font-family: 'Sketchy';
     src: url('../fonts/sketchy-font/Sketchy-1jX4.ttf')  format('truetype');
@@ -7,6 +8,28 @@
     src: url('../fonts/witcher-handwriting-font/WitcherhandwritingRegular-jEDW9.otf')  format('opentype'),
         url('../fonts/witcher-handwriting-font/WitcherHandwritingRegular-GO5vO.ttf')  format('truetype');
 }
+@font-face {
+  font-family: 'Impact';
+  src: url('https://fonts.cdnfonts.com/css/impact')  format('truetype');
+}
+@font-face {
+  font-family: 'Tahoma';
+  src: url('../fonts/tahoma-font/tahoma.ttf')  format('truetype');
+}
+.impact {
+  font-family: 'Impact', sans-serif !important;
+}
+.font-witcher {
+  font-family: 'Witcher', sans-serif !important;
+}
+.font-sketchy {
+  font-family: 'Sketchy', sans-serif !important;
+}
+.font-tahoma {
+  font-family: 'Tahoma', sans-serif !important;
+}
+
+
 html, body {
   margin: 0;
   padding: 0;
@@ -70,18 +93,22 @@ h1, h2 {
 }
 #ctr-inf_scroll .scroll {
     top: 0;
+    left: 0;
     background: #000;
     display: flex;
     align-items: center;
     justify-content: space-around;
     width: fit-content;
     white-space: nowrap;
-    animation: loop 40s linear infinite;
+    animation: loop 60s linear infinite;
+}
+#ctr-inf_scroll .scroll#scroll-one {
+  transform:translateX(50%);
+  /* animation-delay: -10s; */
 }
 #ctr-inf_scroll .scroll#scroll-two {
   transform:translateX(100%);
-  animation-delay: -20s;
-
+  animation-delay: -30s;
 } 
 .fade {
     width: 100%;
@@ -103,12 +130,9 @@ h1, h2 {
 .item {
     display: flex;
     align-items: center;
-    gap: 0 0.2rem;
+ 
     color: #e2e8f0;
-    font-size: 2rem;
     font-family: 'Sketchy';
-    padding: 0.7rem 1rem;
-    margin: 0rem 1rem;
     border-radius: 0.4rem;
     white-space: nowrap;
     box-shadow:

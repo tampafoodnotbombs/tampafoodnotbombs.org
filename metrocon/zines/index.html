@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tampa Food Not Bombs - Zines</title>
   <link rel="stylesheet" href="../../static/css/metrocon.css">
+  <link href="https://fonts.cdnfonts.com/css/impact" rel="stylesheet">
+                
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <script src="https://unpkg.com/vue@3.5.38/dist/vue.global.prod.js"></script> 
   <style>
@@ -46,16 +48,18 @@
 <body id="fnb-zines">
   <main class="w-[100wh] h-[100vh] flex flex-col lg:block gap-4 lg:gap-0 overflow-hidden relative">
     <!-- Infinite Scroll -->
-    <div id="ctr-inf_scroll" class="top-0 absolute relative overflow-hidden h-[5rem] w-[100vw] z-10">
-      <div v-for="(unit, index) in state.inf_scroll.units" :id="unit.id" :class="unit.class">
-        <div v-for="counter in unit.count" class="flex flex-row">
+    <div v-show="state.mounted" id="ctr-inf_scroll" class="top-0 absolute relative overflow-hidden gap-0 w-[100vw] z-10">
+      <div v-for="(unit, index) in state.inf_scroll.units" :id="unit.id" :class="`h-[50px] text-lg ${unit.class}`">
+
+        <a href="https://metroconventions.com/" target="_blank" v-for="counter in unit.count" class="flex flex-row gap-0 justify-center items-center">
           <div class="item cursor-pointer">
-            <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
+            <p class="text-bold impact m-0 px-2">TFNB @ Metrocon in</p>
           </div>
-          <div class="counter-item item"></div>
-        </div>
+          <div class="counter-item item impact m-0 p-0"></div>
+          <div class="h-[15px] w-[15px] rounded-full bg-purple-400 mx-5"></div>
+        </a>
       </div>
-      <a href="https://metroconventions.com/" target="_blank" class="fade"></a>
+      </a>
     </div>
 
     <div class="w-full h-[100vh] lg:h-[80vh]   flex flex-col lg:flex-row gap-4 pt-10 absolute bottom-[-2rem] z-10">
@@ -136,6 +140,7 @@
           })
         })
         const state = reactive({
+          mounted: false,
           inf_scroll: {
             units: [
               {
@@ -375,10 +380,12 @@
             // Countdown items have class of "item"
             let countdownItems = document.querySelectorAll('.counter-item');
             countdownItems.forEach((item, index) => {
-              item.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+              item.innerHTML = `${days} Days ${hours} Hours ${minutes} Minutes ${seconds} Seconds`;
             });
 
           }, 1000);
+
+          state.mounted = true;
         }
         
         // truncate text in windows

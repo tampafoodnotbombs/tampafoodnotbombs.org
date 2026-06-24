@@ -6,45 +6,78 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tampa Food Not Bombs - Metrocon</title>
   <link rel="stylesheet" href="../static/css/metrocon.css">
+  <link href="https://fonts.cdnfonts.com/css/impact" rel="stylesheet">
+                
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <script src="https://unpkg.com/vue@3.5.38/dist/vue.global.prod.js"></script> 
+  <script src="https://unpkg.com/vue@3.5.38/dist/vue.global.prod.js"></script>  
 </head>
 <body id="fnb">
   <main  class="h-full w-full flex flex-col lg:block gap-4 lg:gap-0 ">
     <!-- Infinite Scroll -->
-    <div id="ctr-inf_scroll" class="top-0 absolute relative overflow-hidden h-[5rem] w-[100vw] z-10">
-      <div v-for="(unit, index) in state.inf_scroll.units" :id="unit.id" :class="unit.class">
-        <div v-for="counter in unit.count" class="flex flex-row">
+    <div v-show="state.mounted" id="ctr-inf_scroll" class="top-0 absolute relative overflow-hidden gap-0 w-[100vw] z-10">
+      <div v-for="(unit, index) in state.inf_scroll.units" :id="unit.id" :class="`h-[50px] text-lg ${unit.class}`">
+
+        <a href="https://metroconventions.com/" target="_blank" v-for="counter in unit.count" class="flex flex-row gap-0 justify-center items-center">
           <div class="item cursor-pointer">
-            <p class="text-bold uppercase">Food Not Bombs - MetroCon </p>
+            <p class="text-bold impact m-0 px-2">TFNB @ Metrocon in</p>
           </div>
-          <div class="counter-item item"></div>
-        </div>
+          <div class="counter-item item impact m-0 p-0"></div>
+          <div class="h-[15px] w-[15px] rounded-full bg-purple-400 mx-5"></div>
+        </a>
       </div>
-      <a href="https://metroconventions.com/" target="_blank" class="fade"></a>
+      </a>
     </div>
 
     <!-- Main Logo -->
     <div class="mx-auto flex flex-col gap-4 p-4 z-10 h-[350px] w-[350px] justify-center items-center translate-y-[6rem]">
-      <img src="../static/images/foodnotbombslogo.png" alt="" class="w-full h-full object-contain">
+      <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328477/2cloud_glow_xjrhpd.png" alt="" class="w-full h-full object-contain">
     </div>
-    <h1 class="text-xl lg:text-3xl text-white text-center mx-auto translate-y-[8rem]">Tampa Food Not Bombs</h1>
-    <p class="text-lg lg:text-xl text-white text-center mx-auto translate-y-[8.5rem]">Meet us @ Booth V712!</p>
+    <!-- <h1 class="text-xl lg:text-3xl text-white text-center mx-auto translate-y-[8rem]">Tampa Food Not Bombs</h1>
+    <p class="text-lg lg:text-xl text-white text-center mx-auto translate-y-[8.5rem]">Meet us @ Booth V712!</p> -->
 
-    <!-- Social Links -->
-    <div class="lg:absolute grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 gap-4 lg:left-[2vw] lg:top-[10vh] mt-[10rem] xl:mt-0 mx-auto p-4">
-      <a v-for="link in state.social_links"
-         :href="link.url"
-         :title="link.title"
-         class="text-indigo-200">
-          <span v-html="link.svg.html"></span>
-          {{ link.label }}
+    <div class="lg:absolute lg:top-[8vh] lg:left-[3vw] mt-[10rem] xl:mt-0 flex flex-col mx-4 lg:m-0 gap-8 py-5">
+      <a href="zines/index.html" class="flex flex-col gap-2 items-center justify-center">
+        <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328484/tfnb_zines_library_ipqtwv.png" alt="Zine Library folder icon" class="w-[50px]">
+        <div class="flex flex-row items-center justify-center rounded-md bg-black/40 px-2 w-full">
+          <p class="text-white text-sm p-0 m-0 font-tahoma">
+            Zine Library
+          </p>
+        </div>
+      </a>
+      <a href="https://www.instagram.com/tampafoodnotbombs/" class="flex flex-col gap-2 items-center justify-center">
+        <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328483/tfnb_peeps_cotfdb.png" alt="Instagram folder icon" class="w-[50px]">
+        <div class="flex flex-row items-center justify-center rounded-md bg-black/40 px-2 w-full">
+          <p class="text-white text-sm p-0 m-0 font-tahoma">
+            Follow Us
+          </p>
+        </div>
       </a>
     </div>
 
+    <!-- Social Links -->
+    <div class="lg:absolute lg:top-[8vh] lg:right-[3vw] mt-[10rem] xl:mt-0 flex flex-col mx-4 lg:m-0  w-[200px] lg:w-auto">
+      <div class="flex flex-row gap-2">
+        <a :href="state.social_links[0].url">
+          <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328479/tfnb_venmo_emzmxb.webp" alt="" class="w-[50px] h-[50px] object-contain">
+        </a>
+        <a :href="state.social_links[1].url">
+          <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328478/tfnb_cashapp_vaamdk.webp" alt="" class="w-[50px] h-[50px] object-contain">
+        </a>
+      </div>
+      <div class="flex flex-row items-center justify-center gap-2 rounded-md bg-black/60 px-2 pt-1 mt-2">
+        <p class="text-white uppercase p-0 m-0">
+          @TFNBFondos
+        </p>
+      </div>
+    </div>
+
+
+
     <!-- Draggable windows -->
     <div v-for="window, a in state.windows" :key="a" :id="`wndw-${window.id}`" :class="`window-comp lg:absolute shadow-xl text-center z-9 mx-auto ${window.class}`">
-      <div :id="`wndw-${window.id}-header`" class="window-header flex flex-row items-start justify-end z-10 bg-[#110174] h-[40x] ">
+      <div :id="`wndw-${window.id}-header`" class="window-header flex flex-row items-start justify-between z-10 bg-[#110174] h-[40x] ">
+        <h3 class="text-white lowercase flex-1 text-start mx-2 font-tahoma">{{ window.title }}</h3>
+        <!-- <div class="flex flex-1"></div> -->
         <div class="w-[62px] h-[25px] flex flex-row justify-end items-start p-[2px] m-0">
           <div class="window-btn w-[15px] h-[15px] mx-[1px] pb-1 inset-shadow-xl flex flex-col justify-center items-center bg-neutral-200 text-neutral-800">
             _
@@ -57,14 +90,14 @@
           </div>
         </div>
       </div>
-      <div v-if="window.type === 'info'" class="window-body flex flex-col text-start items-start p-[10px]" v-html="window.content"></div>
-      <div v-if="window.type === 'instagram'" class="window-body flex flex-col text-start items-start p-[10px]">
+      <div v-if="window.type === 'info'" class="window-body font-tahoma flex flex-col text-start items-start p-[10px]" v-html="window.content"></div>
+      <div v-if="window.type === 'instagram'" class="window-body font-tahoma flex flex-col text-start items-start p-[10px]">
         <a href="https://www.instagram.com/tampafoodnotbombs/" target="_blank" class="flex flex-col items-start lg:flex-row lg:items-center justify-center">
           <div 
             class="h-[100px] w-[100px] rounded-full overflow-hidden bg-no-repeat bg-cover bg-center"
             style="background-image: url('../static/images/insta_preview/pfp.png');"
           ></div>
-          <div class="flex flex-1 flex-col text-start justify-start items-start p-4   h-full">
+          <div class="flex flex-1 flex-col text-start justify-start items-start p-4 font-tahoma h-full">
             <p class="text-[22px] font-bold">tampafoodnotbombs</p>
             <p class="text-[14px]">Tampa Food Not Bombs</p>
             <div class="w-full flex flex-row gap-2 mb-2">
@@ -95,7 +128,7 @@
         </div>
 
       </div>
-      <div v-if="window.type === 'books_resources'" class="window-body flex flex-col text-start items-start p-[10px] gap-2 h-[700px] overflow-y-scroll">
+      <div v-if="window.type === 'books_resources'" class="window-body font-tahoma flex flex-col text-start items-start p-[10px] gap-2 h-[700px] overflow-y-scroll">
         <p class="text-[18px]">Books & Resources</p>
         <p class="text-[16px] mb-2">
           Books
@@ -119,15 +152,17 @@
         <a href="zines/index.html">
           <span class="text-sm">(Check out our zines ->)</span>
         </a>
-        <p class="text-[16px] mt-4 mb-2">Podcasts</p>
+        <p class="text-[16px] mt-4 mb-2 font-bold">Podcasts</p>
         <ul>
           <li v-for="podcast in window.podcasts">
             <a 
               :href="podcast.url"
               target="_blank"
-              class="w-full flex flex-col mb-2">
-              <div class="w-3/5 p-2">
-                <img :src="podcast.img" :alt="podcast.title" class="shadow-lg">
+              class="w-full flex flex-col mb-4 justify-between gap-2  ">
+              <div class="w-3/5 p-2 relative w-[12rem] min-h-[6rem] -rotate-2">
+                <img :src="podcast.img" :alt="podcast.title" class="absolute top-0 w-[70%] z-20">
+                <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782334516/disc_j5pgyn.png" alt="CD Disc" 
+                class="w-[38%] absolute top-[20%] right-[20%] z-10">
               </div>
               <p class="text-[14px]">{{ podcast.title }}</p>
             </a>
@@ -147,16 +182,17 @@
 
         // State
         const state = reactive({
+          mounted: false,
           inf_scroll: {
             units: [
               {
                 id: `scroll-one`,
-                class: `scroll fixed flex items-center jusifty-around w-fit-content text-2xl`,
+                class: `scroll fixed flex items-center justify-around w-fit-content impact`,
                 count: 5
               },
               {
                 id: `scroll-two`,
-                class: `scroll fixed cursor-pointer flex items-center jusifty-around w-fit-content`,
+                class: `scroll fixed cursor-pointer flex items-center justify-around w-fit-content impact`,
                 count: 5
               }
             ],
@@ -200,10 +236,11 @@
           windows: [
            {
              id: `metrocon`,
-             class: `w-[90%] lg:w-[200px] top-[8rem] 2xl:top-[10rem] left-[1rem]  lg:left-[78vw]`,
+             title: `Metrocon 2026!`,
+             class: `w-[90%] lg:w-[200px] top-[16rem] 2xl:top-[20rem] left-[1rem]  lg:left-[78vw]`,
              type: `info`,
              content: `
-                <p class="text-[18px]">Metrocon 2026</p>
+               <!-- <p class="text-[18px]">Metrocon 2026</p> -->
                 <p class="text-[12px]">Tampa Food Not Bombs will be at Metrocon 2026! Come find us in the Artist Alley, where we'll 
                   have zines, stickers, and more available for purchase. All proceeds go towards supporting
                   our mission of providing free food to those in need and advocating for social justice.</p>
@@ -219,6 +256,7 @@
       //      },
            {
             id: `about`,
+            title: `Who We Are`,
             class: `w-[95vw] lg:w-[300px] 3xl:top-[25rem] lg:left-[1vw]`,
             type: `info`,
             content: `
@@ -251,6 +289,7 @@
            },
            {
             id: `instagram-preview`,
+            title: `Instagram`,
             class: `w-[90vw] lg:w-[40vw] top-[70vh] 2xl:top-[55vh]  left-[5vw] lg:left-[10vw]`,
             type: `instagram`,
             content: ``,
@@ -295,6 +334,7 @@
            },
            {
             id: `books-resources`,
+            title: `Resource Starter Pack`,
             class: `w-[90vw] md:w-[300px] top-[47vh]  left-[5vw] lg:left-[75vw]`,
             type: `books_resources`,
             content: ``,
@@ -324,22 +364,57 @@
                 img: `../static/images/resources/books/book_4.webp`,
                 url: `https://www.7iber.com/wp-content/uploads/2022/07/Assata-An-Autobiography-Assata-Shakur-Angela-Y.-Davis-Lennox-S.-Hinds-z-lib.org_.pdf`
               },
+              {
+                title: `The Year of the Tiger`,
+                img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782333262/year-of-the-tiger-a-wong_nnuebn.webp`,
+                url: `https://www.penguinrandomhouse.com/books/688504/year-of-the-tiger-by-alice-wong/`
+              },
+              {
+                title: `Solidarity with Children, Madeleine Lane-McKinley`,
+                img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782333411/solidarity_with_children_if9y5y.webp`,
+                url: `https://www.haymarketbooks.org/books/2610-solidarity-with-children`
+              },
+              {
+                title: `The Managed Heart, Arlie Russel Hochschild`,
+                img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782333133/the-managed-heart_wytqye.jpg`,
+                url: `https://caringlabor.wordpress.com/wp-content/uploads/2012/09/the-managed-heart-arlie-russell-hochschild.pdf`
+              },
+              {
+                title: `Soup Street`,
+                img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782333597/Screenshot_2026-06-24_at_4.39.52_PM_rzywbs.png`,
+                url: `https://foodnotbombs.net/soup_street.html`
+              },
+              {
+                title: `The Anarchist Cookbook`,
+                img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782333680/Screenshot_2026-06-24_at_4.41.15_PM_wfh7qp.png`,
+                url: `https://foodnotbombs.net/new_site/anarchist_cookbook.html`
+              }
             ],
             podcasts:[
               {
                 title: `The Black Myths Podcast`,
-                img: `../static/images/resources/podcasts/podcast_1.webp`,
+                img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782333806/black-myths-cd_qnbwxk.png`,
                 url: `https://www.deezer.com/en/show/978172`
               },
               {
                 title: `Horn of Africa Leftists`,
-                img: `../static/images/resources/podcasts/podcast_2.webp`,
+                img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782333813/horn-of-africa-leftists-alt-cd_mn58fw.png`,
                 url: `https://redcircle.com/shows/b57ffe05-60bc-42bb-b2a8-549f33618186`
               },
               {
                 title: `The Red Nation Podcast`,
-                img: `../static/images/resources/podcasts/podcast_3.webp`,
+                img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782333816/the_red_nation_podcast-cd_th9f9p.png`,
                 url: `https://www.therednation.org/the-red-nation-podcast/`
+              },
+              {
+                title: `Disability Visibility`,
+                img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782333808/dis-vis-pod-cd_nkz8cq.png`,
+                url: `https://disabilityvisibilityproject.com/podcast-2/`
+              },
+              {
+                title: `Cool People who did Cool Stuff`,
+                img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782333811/coolpplwhodidcoolstuff-cd_ivag60.png`,
+                url: `https://www.iheart.com/podcast/1119-cool-people-who-did-cool-96003360/`
               }
             ]
            }
@@ -430,10 +505,12 @@
             // Countdown items have class of "item"
             let countdownItems = document.querySelectorAll('.counter-item');
             countdownItems.forEach((item, index) => {
-              item.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+              item.innerHTML = `${days} Days ${hours} Hours ${minutes} Minutes ${seconds} Seconds`;
             });
 
           }, 1000);
+
+          state.mounted = true;
         }
         
         // Insta previews:
@@ -495,6 +572,7 @@
             init_countdown();
             init_insta_previews();
             init_truncate_text();
+            
         });
 
 
