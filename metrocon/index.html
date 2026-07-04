@@ -7,14 +7,27 @@
   <title>Tampa Food Not Bombs - Metrocon</title>
   <link rel="stylesheet" href="../static/css/metrocon.css">
   <link href="https://fonts.cdnfonts.com/css/impact" rel="stylesheet">
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="manifest" href="../site.webmanifest">
                 
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <script src="https://unpkg.com/vue@3.5.38/dist/vue.global.prod.js"></script>  
+
 </head>
-<body id="fnb">
-  <main  class="h-full w-full flex flex-col lg:block gap-4 lg:gap-0 ">
+<body id="fnb" class="scroll-smooth">
+  <main  class="h-[100vh] scroll-smooth w-full flex flex-col lg:block pb-[100px]">
     <!-- Infinite Scroll -->
-    <div v-show="state.mounted" id="ctr-inf_scroll" class="top-0 absolute relative overflow-hidden gap-0 w-[100vw] z-10">
+    <div class="visible lg:invisible h-[50px] w-full bg-black absolute top-0 flex flex-col justify-start items-start z-50 p-2">
+      <div class="item cursor-pointer">
+        <p class="text-bold impact m-0 text-sm">TFNB @ Metrocon in</p>
+      </div>
+      <div class="counter-item font-thin item impact m-0 p-0 text-xs"></div>
+    </div>
+    <div v-show="state.mounted" id="ctr-inf_scroll" class="invisible lg:visible top-0 absolute relative overflow-hidden gap-0 w-[100vw] z-10">
       <div v-for="(unit, index) in state.inf_scroll.units" :id="unit.id" :class="`h-[50px] text-lg ${unit.class}`">
 
         <a href="https://metroconventions.com/" target="_blank" v-for="counter in unit.count" class="flex flex-row gap-0 justify-center items-center">
@@ -29,13 +42,13 @@
     </div>
 
     <!-- Main Logo -->
-    <div class="mx-auto flex flex-col gap-4 p-4 z-10 h-[350px] w-[350px] justify-center items-center translate-y-[6rem]">
-      <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328477/2cloud_glow_xjrhpd.png" alt="" class="w-full h-full object-contain">
+    <div class=" flex flex-col gap-4 p-4 z-10 h-[170px] w-[350px] mt-[50px] justify-start items-start">
+      <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1783189388/Cloud_Glow_Resize_tph5zp.png" alt="" class=" object-contain">
     </div>
     <!-- <h1 class="text-xl lg:text-3xl text-white text-center mx-auto translate-y-[8rem]">Tampa Food Not Bombs</h1>
     <p class="text-lg lg:text-xl text-white text-center mx-auto translate-y-[8.5rem]">Meet us @ Booth V712!</p> -->
 
-    <div class="lg:absolute lg:top-[8vh] lg:left-[3vw] mt-[10rem] xl:mt-0 flex flex-col mx-4 lg:m-0 gap-8 py-5">
+    <div id="main-links" class="lg:top-[20vh] lg:left-[3vw]  justify-center items-center flex flex-row   mx-auto lg:m-0 gap-8 pb-5">
       <a href="zines/index.html" class="flex flex-col gap-2 items-center justify-center">
         <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328484/tfnb_zines_library_ipqtwv.png" alt="Zine Library folder icon" class="w-[50px]">
         <div class="flex flex-row items-center justify-center rounded-md bg-black/40 px-2 w-full">
@@ -55,13 +68,13 @@
     </div>
 
     <!-- Social Links -->
-    <div class="lg:absolute lg:top-[8vh] lg:right-[3vw] mt-[10rem] xl:mt-0 flex flex-col mx-4 lg:m-0  w-[200px] lg:w-auto">
-      <div class="flex flex-row gap-2">
+    <div id="social-links" class="md:absolute md:top-[8vh] md:right-[3vw] xl:mt-0 flex flex-col mx-auto lg:mx-0 m-4 pt-4 lg:w-auto">
+      <div class="flex flex-row gap-2 justify-center items-center">
         <a :href="state.social_links[0].url">
-          <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328479/tfnb_venmo_emzmxb.webp" alt="" class="w-[50px] h-[50px] object-contain">
+          <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328479/tfnb_venmo_emzmxb.webp" alt="Venmo" class="w-[50px] h-[50px] object-contain">
         </a>
         <a :href="state.social_links[1].url">
-          <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328478/tfnb_cashapp_vaamdk.webp" alt="" class="w-[50px] h-[50px] object-contain">
+          <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328478/tfnb_cashapp_vaamdk.webp" alt="Cashapp" class="w-[50px] h-[50px] object-contain">
         </a>
       </div>
       <div class="flex flex-row items-center justify-center gap-2 rounded-md bg-black/60 px-2 pt-1 mt-2">
@@ -74,7 +87,7 @@
 
 
     <!-- Draggable windows -->
-    <div v-for="window, a in state.windows" :key="a" :id="`wndw-${window.id}`" :class="`window-comp lg:absolute shadow-xl text-center z-9 mx-auto ${window.class}`">
+    <div v-for="window, a in state.windows" :key="a" :id="`wndw-${window.id}`" :class="`window-comp lg:absolute shadow-xl text-center z-9 mx-auto mb-4 ${window.class}`">
       <div :id="`wndw-${window.id}-header`" class="window-header flex flex-row items-start justify-between z-10 bg-[#110174] h-[40x] ">
         <h3 class="text-white lowercase flex-1 text-start mx-2 font-tahoma">{{ window.title }}</h3>
         <!-- <div class="flex flex-1"></div> -->
@@ -128,31 +141,13 @@
         </div>
 
       </div>
-      <div v-if="window.type === 'books_resources'" class="window-body font-tahoma flex flex-col text-start items-start p-[10px] gap-2 h-[700px] overflow-y-scroll">
-        <p class="text-[18px]">Books & Resources</p>
-        <p class="text-[16px] mb-2">
-          Books
-          <a href="zines/index.html">
-            <span class="text-sm">(Check out our zines ->)</span>
-          </a>
-        </p>
-        <ul>
-          <li v-for="book in window.books">
-            <a 
-              :href="book.url"
-              target="_blank"
-              class="w-full flex flex-col mb-2">
-              <div class="w-3/5 p-2">
-                <img :src="book.img" :alt="book.title">
-              </div>
-              <p class="text-[14px]">{{ book.title }}</p>
-            </a>
-          </li>
-        </ul>
-        <a href="zines/index.html">
-          <span class="text-sm">(Check out our zines ->)</span>
+      <div v-if="window.type === 'books_resources'" class="window-body scroll-smooth font-tahoma flex flex-col text-start items-start p-[10px] gap-2 h-[700px] overflow-y-scroll">
+        <p id="top" class="text-2xl">Resources</p>
+       
+        <p id="podcasts" class="text-[20px] mt-4 mb-2 font-bold">Podcasts</p>
+        <a href="#books">
+          <span class="text-sm">(Jump to books ⬇️)</span>
         </a>
-        <p class="text-[16px] mt-4 mb-2 font-bold">Podcasts</p>
         <ul>
           <li v-for="podcast in window.podcasts">
             <a 
@@ -168,9 +163,36 @@
             </a>
           </li>
         </ul>
+        <div id="books" class="pt-[4vh]">
+          <p class="text-[20px] font-bold mb-2">
+          Books
+          <a href="#podcasts">
+            <span class="text-sm">(Jump to Podcasts ⬆️)</span>
+          </a>
+        </p>
+        <ul>
+          <li v-for="book in window.books">
+            <a 
+              :href="book.url"
+              target="_blank"
+              class="w-full flex flex-col mb-2">
+              <div class="w-3/5 p-2">
+                <img :src="book.img" :alt="book.title">
+              </div>
+              <p class="text-[14px]">{{ book.title }}</p>
+            </a>
+          </li>
+        </ul>
+        </div>
+        <a href="#top">
+          <span class="text-sm">(Back to top ⬆️)</span>
+        </a>
+        
       </div>
     </div> 
-  
+
+      
+  <!-- <div class="h-[50px] w-full absolute bottom-0 z-50"></div> -->
     </main>
 
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -240,10 +262,10 @@
              class: `w-[90%] lg:w-[200px] top-[16rem] 2xl:top-[20rem] left-[1rem]  lg:left-[78vw]`,
              type: `info`,
              content: `
-               <!-- <p class="text-[18px]">Metrocon 2026</p> -->
-                <p class="text-[12px]">Tampa Food Not Bombs will be at Metrocon 2026! Come find us in the Artist Alley, where we'll 
-                  have zines, stickers, and more available for purchase. All proceeds go towards supporting
-                  our mission of providing free food to those in need and advocating for social justice.</p>
+                <p class="text-[12px]">Tampa Food Not Bombs will be at Metrocon 2026! <br/> <br/>
+    - Come find us in the Artist Alley, where we'll have zines, stickers, and more!  <br/>
+    - Join us at our Mutual Aid panel on Day, Time: TBD at Location: TBD featuring speakers from FNB and other local orgs
+	All donations raised at Metrocon will go directly towards supporting our mission of providing free food to 	hungry folks and advocating for social justice.</p>
               `,
            },
       //      {
@@ -257,7 +279,7 @@
            {
             id: `about`,
             title: `Who We Are`,
-            class: `w-[95vw] lg:w-[300px] 3xl:top-[25rem] lg:left-[1vw]`,
+            class: `w-[95vw] lg:w-[300px] top-[30vh] lg:left-[1vw]`,
             type: `info`,
             content: `
               <p class="text-[18px]">We're Tampa Food Not Bombs</p>
@@ -290,7 +312,7 @@
            {
             id: `instagram-preview`,
             title: `Instagram`,
-            class: `w-[90vw] lg:w-[40vw] top-[70vh] 2xl:top-[55vh]  left-[5vw] lg:left-[10vw]`,
+            class: `w-[90vw] lg:w-[40vw] top-[50vh] 2xl:top-[45vh]  left-[5vw] lg:left-[10vw] `,
             type: `instagram`,
             content: ``,
             tiles: [
@@ -339,11 +361,6 @@
             type: `books_resources`,
             content: ``,
             books: [
-              {
-                title: ``,
-                img: `../static/images/resources/books/book_2.webp`,
-                url: ``
-              },
               {
                 title: `An Indigenous Peoples' History of the United States (10th Anniversary Edition) by Roxanne Dunbar-Ortiz`,
                 img: `../static/images/resources/books/book_1.webp`,
