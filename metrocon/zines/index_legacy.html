@@ -54,13 +54,7 @@
 <body id="fnb-zines">
   <main class="w-[100wh] h-[100vh] flex flex-col lg:block gap-4 lg:gap-0 overflow-hidden relative">
     <!-- Infinite Scroll -->
-    <div v-show="state.mounted && !state.metrocon_day" class="visible lg:invisible h-[50px] w-full bg-black absolute top-0 flex flex-col justify-start items-start z-50 p-2">
-      <div class="item cursor-pointer">
-        <p class="text-bold impact m-0 text-sm">TFNB @ Metrocon in</p>
-      </div>
-      <div class="counter-item font-thin item impact m-0 p-0 text-xs"></div>
-    </div>
-    <div v-show="state.mounted && !state.metrocon_day" id="ctr-inf_scroll" class="invisible lg:visible top-0 absolute relative overflow-hidden gap-0 w-[100vw] z-10">
+    <div v-show="state.mounted" id="ctr-inf_scroll" class="top-0 absolute relative overflow-hidden gap-0 w-[100vw] z-10">
       <div v-for="(unit, index) in state.inf_scroll.units" :id="unit.id" :class="`h-[50px] text-lg ${unit.class}`">
 
         <a href="https://metroconventions.com/" target="_blank" v-for="counter in unit.count" class="flex flex-row gap-0 justify-center items-center">
@@ -74,45 +68,65 @@
       </a>
     </div>
 
-    <div :class="`w-full flex flex-row p-2 gap-2 mb-8 ${!state.metrocon_day ? 'mt-[60px]' : ''}`">
-      <div class="w-1/5 flex flex-col justify-center align-center items-center p-2">
-        <a href="https://tampafoodnotbombs.org/metrocon/">
-          <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1783390031/back_prod_ncv08t.png" alt="Back to Metrocon page">
-        </a>
+    <div class="w-full h-[100vh] lg:h-[80vh]   flex flex-col lg:flex-row gap-4 pt-10 absolute bottom-[-2rem] z-10">
+      <div class="w-full   lg:w-1/5 flex flex-col p-2 lg:p-4 relative">
+        <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001822/everythings_fun_with_a_library_card_y15vqy.png" alt="Library Card" class="library_card absolute top-0 left-0 z-10">
+        <div class="absolute top-[50px] lg:top-[100px] flex flex-col z-20 px-4 xl:pt-10">
+          <a href="https://tampafoodnotbombs.org/metrocon/" class="text-sm md:text-lg text-bold uppercase -rotate-2 text-red-900 hover:text-red-600 mb-3">
+            <- back to Food Not <br/> Bombs - MetroCon 
+          </a>
+        </div>
       </div>
-      <div class="flex flex-1 justify-center align-center items-center p-2">
-        <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1783389382/zine-library-trans_bckt3d.png" alt="Zine Library">
-      </div>
-      <div class="w-1/5 flex flex-col justify-center align-center items-center p-2">
-        <a href="#" class="">
-          <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1783390031/media_arrow_prod_juvzpl.png" alt="Media">
-        </a>
+      <div class="w-full lg:w-4/5 h-[100vh] lg:h-auto flex flex-col overflow-y-scroll rounded-md mt-[45vh] lg:mt-0">
+        <div class="w-full flex flex-row lg:hidden items-end justify-end px-4">
+          <p class="text-lg text-white">Scroll for more ⬇️</p>
+        </div>
+        <div class="w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <div 
+            v-for="(zine, a) in state.zines" 
+            style="background-image: url('https://res.cloudinary.com/dpxmyueqi/image/upload/q_auto/f_auto/v1782001822/shelf_slot_ecqflv.webp');"
+            class="w-full h-full flex flex-col justify-end items-end bg-cover bg-no-repeat">
+              <button
+                :style="`background-image: url('${zine.img}');`"
+                class="w-[150px] mx-auto shadow-lg cursor-pointer h-[350px] lg:h-[85%] bg-contain bg-no-repeat bg-center mb-[10px] flex flex-col justify-end items-end"
+                @click="open_zine(zine, a)">
+                <span v-if="zine.shelf == 'palestine'" class="text-4xl">🇵🇸</span>
+              </button>
+          </div>
+          
+        </div>
       </div>
     </div>
 
-    <div v-show="state.zine_chunks.length" class="w-[95%] rounded-md overflow-hidden flex flex-1  h-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-      <div v-for="(zine, a) in Array(12)" 
-            style="background-image: url('https://res.cloudinary.com/dpxmyueqi/image/upload/q_auto/f_auto/v1782001822/shelf_slot_ecqflv.webp');"
-            class="w-full h-full flex flex-col justify-end items-end bg-cover bg-no-repeat">
-          <div  class="w-full h-full flex flex-row justify-end items-end">
-
-            <button
-              :style="`background-image: url('${state.zine_chunks?.[a]?.[0]?.img}');`"
-              class="w-[150px] mx-auto shadow-lg cursor-pointer h-[300px] lg:h-[80%] bg-contain bg-no-repeat bg-center flex flex-col justify-end items-end"
-              @click="open_zine(state.zine_chunks?.[a]?.[0], a * 2)">
-              <span v-if="state.zine_chunks?.[a]?.[0]?.shelf == 'palestine'" class="text-4xl">🇵🇸</span>
-            </button>
-
-            <button
-              :style="`background-image: url('${state.zine_chunks?.[a]?.[1]?.img}');`"
-              class="w-[150px] mx-auto shadow-lg cursor-pointer h-[300px] lg:h-[80%] bg-contain bg-no-repeat bg-center flex flex-col justify-end items-end"
-              @click="open_zine(state.zine_chunks?.[a]?.[1], a * 2 + 1)">
-              <span v-if="state.zine_chunks?.[a]?.[1]?.shelf == 'palestine'" class="text-4xl">🇵🇸</span>
-            </button>
-
-          </div>
-
+    <div v-if="state.modal.open"  class="absolute relative fixed top-0 left-0 right-0 w-full h-full flex items-center justify-center bg-black/80 z-10 p-[8%]">
+      <button aria-label="Close" @click="close_zine()" class="cursor-pointer absolute top-4 right-4">
+            <span class="text-lg text-white lowercase">x</span>
+          </button>
+      <div class="w-full h-full flex flex-col justify-center items-center relative absolute top-0 left-0 right-0 bottom-0 z-10"
+      @click="close_zine()"
+     >
+      
+     </div>
+     <div class="w-[85%] h-[85%] overflow-y-scroll lg:overflow-hidden absolute top-[4rem] rounded bg-center bg-contain bg-no-repeat no-repeat z-20 flex flex-col lg:flex-row justify-end items-end" :style="`background-image: url('${screen_width > 1024 ? state.modal.zine.img_open : ''}');`">
+      <div class="flex flex-col w-full lg:w-1/2 justify-start h-full lg:px-5 lg:pe-[10%] gap-2">
+       <div class="lg:hidden w-2/3 p-2">
+        <img :src="state.modal.zine?.img" :alt="state.modal.zine?.title" class="w-full h-auto rounded-md object-cover object-center" />
+       </div>
+        <h2 class="text-white lg:text-neutral-900 text-2xl mb-4 w-4/5 mt-2 lg:mt-8">{{ state.modal.zine?.title }}</h2>
+        <p class="text-white lg:text-neutral-800 mb-8">{{ state.modal.zine?.author }}</p>
+        <div class="w-full flex flex-row gap-2">
+          <a :href="state.modal.zine?.print" target="_blank" class="text-indigo-200 me-2">{{ state.modal.zine?.label }}
+            Download
+            <!-- Download symbol svg -->
+            <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17 17H17.01M17.4 14H18C18.9319 14 19.3978 14 19.7654 14.1522C20.2554 14.3552 20.6448 14.7446 20.8478 15.2346C21 15.6022 21 16.0681 21 17C21 17.9319 21 18.3978 20.8478 18.7654C20.6448 19.2554 20.2554 19.6448 19.7654 19.8478C19.3978 20 18.9319 20 18 20H6C5.06812 20 4.60218 20 4.23463 19.8478C3.74458 19.6448 3.35523 19.2554 3.15224 18.7654C3 18.3978 3 17.9319 3 17C3 16.0681 3 15.6022 3.15224 15.2346C3.35523 14.7446 3.74458 14.3552 4.23463 14.1522C4.60218 14 5.06812 14 6 14H6.6M12 15V4M12 15L9 12M12 15L15 12" :stroke="`${screen_width > 768 ? '#000000' : '#ffffff'}`" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+          </a>
+          <a :href="state.modal.zine?.link" target="_blank" class="text-indigo-200"> 
+            Read Online/Learn More ->
+          </a>
+        </div>
+         <div class="flex flex-1"></div>
       </div>
+     </div>
     </div>
 
 
@@ -120,7 +134,7 @@
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script>
 
-    const { createApp, ref, reactive, onMounted, onUnmounted, nextTick, watch, computed } = Vue
+    const { createApp, ref, reactive, onMounted, onUnmounted, nextTick, watch } = Vue
     createApp({
       setup() {
         
@@ -132,7 +146,6 @@
           })
         })
         const state = reactive({
-          metrocon_day: false,
           mounted: false,
           inf_scroll: {
             units: [
@@ -189,7 +202,6 @@
             zine: null,
             zine_bg: null
           },
-          zine_chunks: [],
           zines: [
             {
               title: `WTF is Mutual Aid @MC`,
@@ -354,24 +366,12 @@
             // },
           ]
         })
-        const zine_chunks = computed(() => {
-          state.zine_chunks = [];
-          for (let i = 0; i < state.zines.length; i += 2) {
-            state.zine_chunks.push(state.zines.slice(i, i + 2));
-          }
-          
-          return state.zine_chunks;
-        });
-        console.log('zine chunks', state.zine_chunks);
+
         // Methods/Functions
           // Countdown to July 31, 2026
         let init_countdown = () => {
 
           console.log('Countdown set ... :)')
-          for (let i = 0; i < state.zines.length; i += 2) {
-            state.zine_chunks.push(state.zines.slice(i, i + 2));
-          }
-          console.log('zine chunks', state.zine_chunks);
 
           let countdownDate = new Date("July 31, 2026 00:00:00").getTime();
           let x = setInterval(() => {
@@ -426,7 +426,6 @@
         // Lifecycle Hooks
         onMounted(() => {
           console.log('Mounted ... :)');
-          state.metrocon_day = new Date() >= new Date("July 31, 2026 00:00:00");
           init_countdown();
           init_truncate_text();
           window.addEventListener('resize', () => {
@@ -453,4 +452,4 @@
   </script>
   
 </body>
-</html> 
+</html>
