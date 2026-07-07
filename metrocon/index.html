@@ -19,15 +19,15 @@
 
 </head>
 <body id="fnb" class="scroll-smooth">
-  <main  class="h-[100vh] scroll-smooth w-full flex flex-col lg:block pb-[100px]">
+  <main class="h-[100vh] scroll-smooth w-full flex flex-col lg:block pb-[100px]">
     <!-- Infinite Scroll -->
-    <div class="visible lg:invisible h-[50px] w-full bg-black absolute top-0 flex flex-col justify-start items-start z-50 p-2">
+    <div v-show="state.mounted && !state.metrocon_day" class="visible lg:invisible h-[50px] w-full bg-black absolute top-0 flex flex-col justify-start items-start z-50 p-2">
       <div class="item cursor-pointer">
         <p class="text-bold impact m-0 text-sm">TFNB @ Metrocon in</p>
       </div>
       <div class="counter-item font-thin item impact m-0 p-0 text-xs"></div>
     </div>
-    <div v-show="state.mounted" id="ctr-inf_scroll" class="invisible lg:visible top-0 absolute relative overflow-hidden gap-0 w-[100vw] z-10">
+    <div v-show="state.mounted && !state.metrocon_day" id="ctr-inf_scroll" class="invisible lg:visible top-0 absolute relative overflow-hidden gap-0 w-[100vw] z-10">
       <div v-for="(unit, index) in state.inf_scroll.units" :id="unit.id" :class="`h-[50px] text-lg ${unit.class}`">
 
         <a href="https://metroconventions.com/" target="_blank" v-for="counter in unit.count" class="flex flex-row gap-0 justify-center items-center">
@@ -41,56 +41,69 @@
       </a>
     </div>
 
-    <!-- Main Logo -->
-    <div class=" flex flex-col gap-4 p-4 z-10 h-[170px] w-[350px] mt-[50px] justify-start items-start">
-      <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1783189388/Cloud_Glow_Resize_tph5zp.png" alt="" class=" object-contain">
+    <div :class="`${state.mounted && state.metrocon_day ? 'top-[50px]' : ''} w-full sticky flex flex-wrap `">
+
+      <!-- Main Logo -->
+      <div class="order-1 md:order-2 flex md:flex-1 flex-col gap-4 p-4 z-10 mt-[50px] justify-start items-start md:justify-center md:items-center w-[50vw] sm:w-[60vw]">
+        <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1783189388/Cloud_Glow_Resize_tph5zp.png" alt="TFNB Logo" class=" object-contain">
+      </div>
+
+      <!-- Main links -->
+      <div id="main-links" class="order-3 md:order-1 lg:top-[20vh] lg:left-[3vw] md:mt-[50px] justify-center items-center flex flex-row md:flex-col gap-8 p-5 mx-auto">
+        <a href="zines/index.html" class="flex flex-col gap-2 items-center justify-center">
+          <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328484/tfnb_zines_library_ipqtwv.png" alt="Zine Library folder icon" class="w-[50px]">
+          <div class="flex flex-row items-center justify-center rounded-md bg-black/40 px-2 w-full">
+            <p class="text-white text-sm p-0 m-0 font-tahoma">
+              Zine Library
+            </p>
+          </div>
+        </a>
+        <a href="https://www.instagram.com/tampafoodnotbombs/" class="flex flex-col gap-2 items-center justify-center">
+          <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328483/tfnb_peeps_cotfdb.png" alt="Instagram folder icon" class="w-[50px]">
+          <div class="flex flex-row items-center justify-center rounded-md bg-black/40 px-2 w-full">
+            <p class="text-white text-sm p-0 m-0 font-tahoma">
+              Follow Us
+            </p>
+          </div>
+        </a>
+        <!-- <a href="#" class="flex flex-col gap-2 items-center justify-center">
+          <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328481/tfnb_links_otyvnq.png" alt="Links folder icon" class="w-[50px]">
+          <div class="flex flex-row items-center justify-center rounded-md bg-black/40 px-2 w-full">
+            <p class="text-white text-sm p-0 m-0 font-tahoma">
+              Links
+            </p>
+          </div>
+        </a> -->
+      </div>
+
+
+      <!-- Social Links -->
+      <div id="social-links" class="order-2 gap-2 lg:order-3 md:absolute md:top-[4vh] md:right-[3vw] xl:mt-0 flex flex-col  mt-[50px] md:mt-[20px] mx-auto lg:mx-0 m-4 pt-4 lg:w-auto ">
+       <div class="flex flex-row items-center justify-center gap-2 rounded-md bg-black/60 px-2 pt-1 mt-2">
+          <p class="text-white uppercase p-0 m-0">
+            @TFNBFondos
+          </p>
+        </div>
+        <div class="flex flex-row gap-2 justify-center items-center">
+          <a :href="state.social_links[0].url">
+            <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328479/tfnb_venmo_emzmxb.webp" alt="Venmo" class="w-[35px] h-[35px] sm:w-[50px] sm:h-[50px] object-contain">
+          </a>
+          <a :href="state.social_links[1].url">
+            <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328478/tfnb_cashapp_vaamdk.webp" alt="Cashapp" class="w-[35px] h-[35px] sm:w-[50px] sm:h-[50px] object-contain">
+          </a>
+        </div>
+        
+      </div>
+
     </div>
+
+    
+    
     <!-- <h1 class="text-xl lg:text-3xl text-white text-center mx-auto translate-y-[8rem]">Tampa Food Not Bombs</h1>
     <p class="text-lg lg:text-xl text-white text-center mx-auto translate-y-[8.5rem]">Meet us @ Booth V712!</p> -->
 
-    <div id="main-links" class="lg:top-[20vh] lg:left-[3vw]  justify-center items-center flex flex-row   mx-auto lg:m-0 gap-8 pb-5">
-      <a href="zines/index.html" class="flex flex-col gap-2 items-center justify-center">
-        <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328484/tfnb_zines_library_ipqtwv.png" alt="Zine Library folder icon" class="w-[50px]">
-        <div class="flex flex-row items-center justify-center rounded-md bg-black/40 px-2 w-full">
-          <p class="text-white text-sm p-0 m-0 font-tahoma">
-            Zine Library
-          </p>
-        </div>
-      </a>
-      <a href="https://www.instagram.com/tampafoodnotbombs/" class="flex flex-col gap-2 items-center justify-center">
-        <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328483/tfnb_peeps_cotfdb.png" alt="Instagram folder icon" class="w-[50px]">
-        <div class="flex flex-row items-center justify-center rounded-md bg-black/40 px-2 w-full">
-          <p class="text-white text-sm p-0 m-0 font-tahoma">
-            Follow Us
-          </p>
-        </div>
-      </a>
-      <!-- <a href="#" class="flex flex-col gap-2 items-center justify-center">
-        <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328481/tfnb_links_otyvnq.png" alt="Links folder icon" class="w-[50px]">
-        <div class="flex flex-row items-center justify-center rounded-md bg-black/40 px-2 w-full">
-          <p class="text-white text-sm p-0 m-0 font-tahoma">
-            Links
-          </p>
-        </div>
-      </a> -->
-    </div>
+    
 
-    <!-- Social Links -->
-    <div id="social-links" class="md:absolute md:top-[4vh] md:right-[3vw] xl:mt-0 flex flex-col mx-auto lg:mx-0 m-4 pt-4 lg:w-auto">
-      <div class="flex flex-row gap-2 justify-center items-center">
-        <a :href="state.social_links[0].url">
-          <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328479/tfnb_venmo_emzmxb.webp" alt="Venmo" class="w-[50px] h-[50px] object-contain">
-        </a>
-        <a :href="state.social_links[1].url">
-          <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328478/tfnb_cashapp_vaamdk.webp" alt="Cashapp" class="w-[50px] h-[50px] object-contain">
-        </a>
-      </div>
-      <div class="flex flex-row items-center justify-center gap-2 rounded-md bg-black/60 px-2 pt-1 mt-2">
-        <p class="text-white uppercase p-0 m-0">
-          @TFNBFondos
-        </p>
-      </div>
-    </div>
 
 
 
@@ -212,6 +225,7 @@
 
         // State
         const state = reactive({
+          metrocon_day: false,
           mounted: false,
           inf_scroll: {
             units: [
@@ -267,7 +281,7 @@
            {
              id: `metrocon`,
              title: `Metrocon 2026!`,
-             class: `w-[90%] lg:w-[200px] top-[16rem] 2xl:top-[20rem] left-[1rem]  lg:left-[78vw]`,
+             class: `w-[90%] lg:w-[200px] top-[16rem] 2xl:top-[20rem] left-[1rem]  lg:left-[78vw] mt-[15vh] lg:mt-0`,
              type: `info`,
              content: `
                 <p class="text-[12px]">Tampa Food Not Bombs will be at Metrocon 2026! <br/> <br/>
@@ -287,7 +301,7 @@
            {
             id: `about`,
             title: `Who We Are`,
-            class: `w-[95vw] lg:w-[300px] top-[30vh] lg:left-[1vw]`,
+            class: `w-[95vw] lg:w-[300px] top-[30vh] lg:left-[1vw] mt-[40vh] lg:mt-0`,
             type: `info`,
             content: `
               <p class="text-[18px]">We're Tampa Food Not Bombs</p>
@@ -593,6 +607,7 @@
         // Lifecycle Hooks
         onMounted(() => {
           console.log('Mounted ... :)');
+          state.metrocon_day = new Date() >= new Date("July 31, 2026 00:00:00");
             init_draggable_windows();
             init_countdown();
             init_insta_previews();
