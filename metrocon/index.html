@@ -97,16 +97,6 @@
 
     </div>
 
-    
-    
-    <!-- <h1 class="text-xl lg:text-3xl text-white text-center mx-auto translate-y-[8rem]">Tampa Food Not Bombs</h1>
-    <p class="text-lg lg:text-xl text-white text-center mx-auto translate-y-[8.5rem]">Meet us @ Booth V712!</p> -->
-
-    
-
-
-
-
     <!-- Draggable windows -->
     <div v-for="window, a in state.windows" :key="a" :id="`wndw-${window.id}`" :class="`window-comp lg:absolute shadow-xl text-center z-9 mx-auto mb-4 ${window.class}`">
       <div :id="`wndw-${window.id}-header`" class="window-header flex flex-row items-start justify-between z-10 bg-[#110174] h-[40x] ">
@@ -281,7 +271,7 @@
            {
              id: `metrocon`,
              title: `Metrocon 2026!`,
-             class: `w-[90%] lg:w-[200px] top-[16rem] 2xl:top-[20rem] left-[1rem]  lg:left-[78vw] mt-[15vh] lg:mt-0`,
+             class: `w-[90%] lg:w-[200px] top-[16rem] 2xl:top-[12rem] left-[1rem]  lg:left-[78vw] mt-[15vh] lg:mt-0`,
              type: `info`,
              content: `
                 <p class="text-[12px]">Tampa Food Not Bombs will be at Metrocon 2026! <br/> <br/>
@@ -379,7 +369,7 @@
            {
             id: `books-resources`,
             title: `Resource Starter Pack`,
-            class: `w-[90vw] md:w-[300px] top-[47vh]  left-[5vw] lg:left-[75vw]`,
+            class: `w-[90vw] md:w-[300px] top-[50vh]  left-[5vw] lg:left-[75vw]`,
             type: `books_resources`,
             content: ``,
             books: [
