@@ -195,24 +195,24 @@ h1, h2 {
 
 /* Scrollbar */
 /* width */
-::-webkit-scrollbar {
+#fnb ::-webkit-scrollbar {
   width: 15px;
 }
 
 /* Track */
-::-webkit-scrollbar-track {
+#fnb ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 5px #dedede; 
   border-radius: 0px;
 }
  
 /* Handle */
-::-webkit-scrollbar-thumb {
+#fnb ::-webkit-scrollbar-thumb {
   background: #928d8d; 
   border-radius: 0px;
 }
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+#fnb ::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
 

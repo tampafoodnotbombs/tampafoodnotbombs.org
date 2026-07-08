@@ -16,58 +16,10 @@
                 
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <script src="https://unpkg.com/vue@3.5.38/dist/vue.global.prod.js"></script> 
-  <style>
-    /* .library_card {
-      max-width: 370px !important;
-      width: 370px !important;
-    } */
-    /* On small screen: */
-    @media (max-width: 300px) {
-      .library_card {
-        max-width: 150px !important;
-        width: 150px !important;
-      }
-    }
-    @media (max-width: 640px) {
-      .library_card {
-        max-width: 150px !important;
-        width: 150px !important;
-      }
-    }
-    /* On medium screens: */
-    @media (max-width: 1024px) {
-      .library_card {
-        max-width: 250px !important;
-        width: 250px !important;
-      }
-    }
-
-    /* On large screens: */
-    @media (min-width: 1025px) {
-      .library_card {
-        max-width: 120% !important;
-        width: 120% !important;
-      }
-    }
-
-    .zine-modal-enter-active, .zine-modal-leave-active {
-      transition: opacity 0.2s ease;
-    }
-    .zine-modal-enter-from, .zine-modal-leave-to {
-      opacity: 0;
-    }
-    .zine-modal-enter-active .relative,
-    .zine-modal-leave-active .relative {
-      transition: transform 0.2s ease;
-    }
-    .zine-modal-enter-from .relative,
-    .zine-modal-leave-to .relative {
-      transform: scale(0.95);
-    }
-  </style>
+ 
 </head>
 <body id="fnb-zines">
-  <main class="w-[100wh] h-[100vh] flex flex-col lg:block gap-4 lg:gap-0 overflow-hidden relative">
+  <main class="w-[100wh] h-[100vh] flex flex-col pb-0 mb-0 relative overflow-y-scroll justify-between">
     <!-- Infinite Scroll -->
     <div v-show="state.mounted && !state.metrocon_day" class="visible lg:invisible h-[50px] w-full bg-black absolute top-0 flex flex-col justify-start items-start z-50 p-2">
       <div class="item cursor-pointer">
@@ -89,26 +41,28 @@
       </a>
     </div>
 
-    <div :class="`w-full flex flex-row p-2 gap-2 mb-8 ${!state.metrocon_day ? 'mt-[60px]' : ''}`">
+    <div id="header" :class="`w-full flex flex-row p-2 gap-2 mb-10 ${!state.metrocon_day ? 'mt-[50px]' : ''}`">
       <div class="w-1/5 flex flex-col justify-center align-center items-center p-2">
         <a href="https://tampafoodnotbombs.org/metrocon/">
-          <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1783390031/back_prod_ncv08t.png" alt="Back to Metrocon page">
+          <img class="lg:w-3/4" src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1783390031/back_prod_ncv08t.png" alt="Back to Metrocon page">
         </a>
       </div>
       <div class="flex flex-1 justify-center align-center items-center p-2">
-        <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1783389382/zine-library-trans_bckt3d.png" alt="Zine Library">
+        <img class="lg:w-1/2" src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1783389382/zine-library-trans_bckt3d.png" alt="Zine Library">
       </div>
       <div class="w-1/5 flex flex-col justify-center align-center items-center p-2">
-        <a href="#" class="">
+        <!-- <a href="#" class="">
           <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1783390031/media_arrow_prod_juvzpl.png" alt="Media">
-        </a>
+        </a> -->
       </div>
     </div>
 
-    <div id="shelf"  v-show="state.zine_shelves.length" class="w-[95%] mt-[-4vh] bottom-[-5vh] h-[65vh] left-auto right-auto rounded-md overflow-y-scroll lg:overflow-hidden flex flex-1  h-full mx-auto grid grid-cols-1  lg:grid-cols-3">
+    <div class="flex flex-1"></div>
+
+    <div id="shelf" v-show="state.zine_shelves.length" class="w-[90%] h-full  pb-0 mb-0   h-[65vh] rounded-md mx-auto  flex flex-1   grid grid-cols-1  lg:grid-cols-3">
       <div v-for="(shelf, a) in state.zine_shelves" 
         style="background-image: url('https://res.cloudinary.com/dpxmyueqi/image/upload/q_auto/f_auto/v1782001822/shelf_slot_ecqflv.webp');"
-        class="hidden lg:flex w-full h-full flex-col justify-end items-end bg-cover bg-no-repeat"
+        :class="`${ shelf.length ? 'h-[20vh]' : 'h-[100px]' } hidden lg:flex w-full flex-col justify-end items-end bg-cover bg-no-repeat`"
       >
         <div class="w-full h-full flex flex-row justify-end items-end">
           <button
