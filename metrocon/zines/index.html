@@ -49,6 +49,21 @@
         width: 120% !important;
       }
     }
+
+    .zine-modal-enter-active, .zine-modal-leave-active {
+      transition: opacity 0.2s ease;
+    }
+    .zine-modal-enter-from, .zine-modal-leave-to {
+      opacity: 0;
+    }
+    .zine-modal-enter-active .relative,
+    .zine-modal-leave-active .relative {
+      transition: transform 0.2s ease;
+    }
+    .zine-modal-enter-from .relative,
+    .zine-modal-leave-to .relative {
+      transform: scale(0.95);
+    }
   </style>
 </head>
 <body id="fnb-zines">
@@ -90,31 +105,68 @@
       </div>
     </div>
 
-    <div v-show="state.zine_chunks.length" class="w-[95%] rounded-md overflow-hidden flex flex-1  h-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-      <div v-for="(zine, a) in Array(12)" 
-            style="background-image: url('https://res.cloudinary.com/dpxmyueqi/image/upload/q_auto/f_auto/v1782001822/shelf_slot_ecqflv.webp');"
-            class="w-full h-full flex flex-col justify-end items-end bg-cover bg-no-repeat">
-          <div  class="w-full h-full flex flex-row justify-end items-end">
-
-            <button
-              :style="`background-image: url('${state.zine_chunks?.[a]?.[0]?.img}');`"
-              class="w-[150px] mx-auto shadow-lg cursor-pointer h-[300px] lg:h-[80%] bg-contain bg-no-repeat bg-center flex flex-col justify-end items-end"
-              @click="open_zine(state.zine_chunks?.[a]?.[0], a * 2)">
-              <span v-if="state.zine_chunks?.[a]?.[0]?.shelf == 'palestine'" class="text-4xl">🇵🇸</span>
-            </button>
-
-            <button
-              :style="`background-image: url('${state.zine_chunks?.[a]?.[1]?.img}');`"
-              class="w-[150px] mx-auto shadow-lg cursor-pointer h-[300px] lg:h-[80%] bg-contain bg-no-repeat bg-center flex flex-col justify-end items-end"
-              @click="open_zine(state.zine_chunks?.[a]?.[1], a * 2 + 1)">
-              <span v-if="state.zine_chunks?.[a]?.[1]?.shelf == 'palestine'" class="text-4xl">🇵🇸</span>
-            </button>
-
-          </div>
-
+    <div id="shelf"  v-show="state.zine_shelves.length" class="w-[95%] mt-[-4vh] bottom-[-5vh] h-[65vh] left-auto right-auto rounded-md overflow-y-scroll lg:overflow-hidden flex flex-1  h-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div v-for="(shelf, a) in state.zine_shelves" 
+        style="background-image: url('https://res.cloudinary.com/dpxmyueqi/image/upload/q_auto/f_auto/v1782001822/shelf_slot_ecqflv.webp');"
+        class="w-full h-full flex flex-col justify-end items-end bg-cover bg-no-repeat"
+      >
+        <div class="w-full h-full flex flex-row justify-end items-end">
+          <button
+            v-for="zine in shelf"
+            :style="`background-image: url('${zine?.img}');`"
+            class="w-[140px] mx-auto shadow-lg cursor-pointer h-[300px] lg:h-[80%] bg-contain bg-no-repeat bg-center flex flex-col justify-end items-end overflow-hidden rounded-md"
+            @click="open_zine(zine)">
+            <span v-if="zine?.shelf == 'palestine'" class="text-4xl">🇵🇸</span>
+          </button>
+        </div>
       </div>
     </div>
 
+    <!-- Modal -->
+    <Transition name="zine-modal">
+      <div v-if="state.modal.open"
+        class="fixed inset-0 z-[200] flex items-center justify-center p-4"
+        @click.self="close_zine()">
+
+        <div class="absolute inset-0 bg-black/85" @click="close_zine()"></div>
+
+        <div class="relative z-10 w-full max-w-2xl h-[80vh] overflow-hidden shadow-2xl flex flex-col items-center justify-center bg-contain bg-center bg-no-repeat "
+          style="background-image: url(https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001822/everythings_fun_with_a_library_card_y15vqy.png);"
+        >
+
+          <!-- Close -->
+          <button @click="close_zine()"
+            class="absolute top-3 right-4 text-white hover:text-white text-3xl leading-none z-20 cursor-pointer">
+            &times;
+          </button>
+
+
+
+          <!-- Info & links -->
+          <div class="p-5 flex flex-col gap-3 w-3/5 mx-auto">
+            <div class="w-full text-center">
+              <h2 class="text-neutral-900 text-2xl leading-snug">{{ state.modal.zine?.title }}</h2>
+              <p class="text-neutral-900 mt-1">{{ state.modal.zine?.author }}</p>
+            </div>
+            <div class="flex gap-3 flex-col text-center">
+              
+              <a v-if="state.modal.zine?.print"
+                :href="state.modal.zine.print"
+                target="_blank" rel="noopener"
+                class="underline text-purple-800 text-xl">
+                Print / Download
+              </a>
+              <a v-if="state.modal.zine?.link"
+                :href="state.modal.zine.link"
+                target="_blank" rel="noopener"
+                class="underline text-purple-800 text-xl">
+                 Learn More
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Transition>
 
  </main>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -189,12 +241,13 @@
             zine: null,
             zine_bg: null
           },
-          zine_chunks: [],
-          zines: [
+
+          zine_shelves: [
+            [
             {
               title: `WTF is Mutual Aid @MC`,
               author: `Oh Shit! What Now? ATX`,
-              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001824/zine_1_ohej5d.webp`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1783483755/wtf_is_mutual_aid_mdzjta.png`,
               img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_1_open_xcnhgn.png' : ''}`,
               link: `https://www.ohshitwhatnow.org/category/resource-guides/`,
               print: `https://www.ohshitwhatnow.org/wp-content/uploads/2017/08/wtfismutualaid.pdf`,
@@ -203,16 +256,37 @@
              {
               title: `11 Reasons I’m Wearing a Mask in 2025 @MC`,
               author: `Violet B. Fox`,
-              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001823/zine_2_sdcfen.webp`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1783483588/11_Reasons_Photopea_rwpm74.png`,
               img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001827/zine_2_open_ctacss.png' : ''}`,
               link: `https://violetbfox.info/11reasons/`,
               print: `https://drive.google.com/file/d/174tIwsjyrWaeI2RRxBhMTqa-oNiYReBt/view`,
               shelf: `zines`,
             },
+            ],
+            
+            [{
+              title: `12 Things to Do Instead of Calling the Cops @MC`,
+              author: `Mayday Collective Washtenaw, Solidarity & Defense`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1783483579/Do_Something_Photopea_vptuwz.png`,
+              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_6_open_fvuuaj.png' : ''}`,
+              link: `https://www.facebook.com/MayDayCollectiveWashtenaw`,
+              print: `https://files.sproutdistro.com/12things-print.pdf `,
+              shelf: `zines`,
+            },
             {
+              title: `Food is the First Frontier of The Israeli-Palestinian Conflict @MC`,
+              author: `Carly Graf`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1783483953/Food_First_Frontier_qrmxo9.png`,
+              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_5_open_tsn1o8.png' : ''}`,
+              link: `https://perma.cc/HVB3-8X7J`,
+              print: `https://static1.squarespace.com/static/667ca6a15f58f502d2f31024/t/67e1c99fb4ffe12130c46ed3/1742850467364/food-booklet.pdf`,
+              shelf: `zines`,  
+            },],
+            [
+              {
               title: `How to Do a Guerrilla Sharing @MC`,
               author: `Food Not Bombs`,
-              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001823/zine_3_vk5hvj.webp`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1783483577/Guerilla_Sharing_Guide_vvb2al.png`,
               img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001827/zine_3_open_at3ssu.png' : ''}`,
               link: `https://theanarchistlibrary.org/library/food-not-bombs-how-to-do-a-guerilla-sharing.lt.pdf`,
               print: `https://theanarchistlibrary.org/library/food-not-bombs-how-to-do-a-guerilla-sharing.lt.pdf`,
@@ -221,43 +295,37 @@
             {
               title: `Mutual Aid, The commons, and the Revolutionary Abolition of Capitalism @MC`,
               author: `Crimethinc`,
-              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001822/zine_4_nuzj4i.webp`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1783484106/Mutual_Aid_The_Commons_y7k5gs.png`,
               img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_4_open_s6pmyk.png' : ''}`,
               link: `https://crimethinc.com/zines/mutual-aid-the-commons-and-the-revolutionary-abolition-of-capitalism`,
               print: `https://cdn.crimethinc.com/assets/zines/mutual-aid-the-commons-and-the-revolutionary-abolition-of-capitalism/mutual-aid-the-commons-and-the-revolutionary-abolition-of-capitalism_print_black_and_white.pdf`,
               shelf: `zines`,
             },
-            {
-              title: `Food is the First Frontier of The Israeli-Palestinian Conflict @MC`,
-              author: `Carly Graf`,
-              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001822/zine_5_o9ka0w.webp`,
-              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_5_open_tsn1o8.png' : ''}`,
-              link: `https://perma.cc/HVB3-8X7J`,
-              print: `https://static1.squarespace.com/static/667ca6a15f58f502d2f31024/t/67e1c99fb4ffe12130c46ed3/1742850467364/food-booklet.pdf`,
-              shelf: `zines`,  
-            },
-            {
-              title: `12 Things to Do Instead of Calling the Cops @MC`,
-              author: `Mayday Collective Washtenaw, Solidarity & Defense`,
-              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001824/zine_6_b6dta5.webp`,
-              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_6_open_fvuuaj.png' : ''}`,
-              link: `https://www.facebook.com/MayDayCollectiveWashtenaw`,
-              print: `https://files.sproutdistro.com/12things-print.pdf `,
-              shelf: `zines`,
+            ],
+            [
+{
+              title: `Free Palestine: Resources Inside`,
+              author: `Various`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1783484441/Free_Palestine_Photopea_jgxpuz.png`,
+              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_10_open_zdqcew.png' : ''}`,
+              link: `https://www.pleasurepie.org/articles/free-zines-about-palestine`,
+              print: `https://www.pleasurepie.org/uploads/4/0/9/8/40981383/free_palestine_resources_zine_tc_2023.pdf`,
+              shelf: `palestine`,
             },
             {
               title: `Sex Education in Gaza`,
               author: `Pleasure Pie`,
-              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001827/zine_7_dz7hpu.webp`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1783483592/Sex_Ed_in_Gaza_lvzdgq.png`,
               img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_7_open_pysjup.png' : ''}`,
               link: `https://www.pleasurepie.org/printables.html`,
               print: `https://www.pleasurepie.org/uploads/4/0/9/8/40981383/sex_ed_in_gaza_zine__2_.pdf`,
               shelf: `palestine`,
             },
-            {
+            ],
+            [{
               title: `A Care Centered Guide to Digitally Archiving Palestine`,
               author: `Librarians with Palestine`,
-              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001822/zine_8_sfdq3i.webp`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1783483598/Care_Centered_Guide_bfoip6.png`,
               img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001827/zine_8_open_vuw2yb.png' : ''}`,
               link: `https://librarianswithpalestine.org/`,
               print: `https://librarianswithpalestine.org/wp-content/uploads/2024/06/LAPCareZineWeb.pdf`,
@@ -266,53 +334,36 @@
             {
               title: `To The World, A Comic from Gaza`,
               author: `Jehad Abu Dayya, Esraa Al-Banna`,
-              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001822/zine_9_nyjb3t.webp`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1783483599/To_the_World_xdyttw.png`,
               img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_9_open_lck8v0.png' : ''}`,
               link: ``,
               print: ``,
               shelf: `palestine`,  
-            },
-            {
-              title: `Free Palestine: Resources Inside`,
-              author: `Various`,
-              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001823/zine_10_qiz7fu.webp`,
-              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_10_open_zdqcew.png' : ''}`,
-              link: `https://www.pleasurepie.org/articles/free-zines-about-palestine`,
-              print: `https://www.pleasurepie.org/uploads/4/0/9/8/40981383/free_palestine_resources_zine_tc_2023.pdf`,
-              shelf: `palestine`,
-            },
-            {
-              title: `Why We Mask`,
-              author: `Laurel Lynn Leake, 2025`,
-              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001823/zine_11_louvjc.webp`,
-              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_11_open_me5tvg.png' : ''}`,
-              link: `https://laurel-lynn-leake.itch.io/why-we-mask/devlog/941782/why-we-mask-2025-edition`,
-              print: `https://laurel-lynn-leake.itch.io/why-we-mask/purchase`,
-              shelf: `zines`,
-            },
-            {
+            },],
+              [{
               title: `Mutual Aid: A Primer`,
               author: `@Slybadges`,
-              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001824/zine_12_nbjh8d.webp`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1783483581/mutual_aid_primer_iept0m.png`,
               img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_12_open_yh1du4.png' : ''}`,
               link: `https://www.instagram.com/slybadges/`,
               print: ``,
               shelf: `zines`,
             },
+            
             {
-              title: `12 Children's Books That Celebrate the Spirit of Mutual Aid`,
-              author: `Decolonization Coven`,
-              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001824/zine_13_jrdqua.webp`,
-              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_13_open_cytzrf.png' : ''}`,
-              link: ``,
-              print: `https://www.dropbox.com/scl/fi/ko5ygz8fon7bsrsl5p1ou/Childrens-Book-Zine.pdf?rlkey=7976ewb2doofmjmpynaixqjoh&st=2pioybg1&e=1&dl=0`,
-              shelf: `decolonization_coven`,
-            },
- 
-            {
+              title: `Why We Mask`,
+              author: `Laurel Lynn Leake, 2025`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1783483595/Why_We_Mask_uzzv6f.png`,
+              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_11_open_me5tvg.png' : ''}`,
+              link: `https://laurel-lynn-leake.itch.io/why-we-mask/devlog/941782/why-we-mask-2025-edition`,
+              print: `https://laurel-lynn-leake.itch.io/why-we-mask/purchase`,
+              shelf: `zines`,
+            },],
+            [
+{
               title: `I Don’t Bash Back, I Shoot First`,
               author: `The Zine Squatte Shoppe`,
-              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001824/zine_14_gmygy4.webp`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1783483589/Queer_Gangs_zbbknm.png`,
               img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_14_open_ujgi7j.png' : ''}`,
               link: `https://zinesquatteshoppe.noblogs.org/i-dont-bash-back-i-shoot-first-on-queer-gangs`,
               print: `https://zinesquatteshoppe.noblogs.org/files/2025/07/i-dont-bash-back-print.pdf`,
@@ -321,57 +372,73 @@
             {
               title: `7 Myths about Police`,
               author: `Crimethinc`,
-              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001824/zine_15_jrnmef.webp`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1783483584/7_Myths_Photopea_z7zho6.png`,
               img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_15_open_o1nzfc.png' : ''}`,
               link: `https://crimethinc.com/zines/seven-myths-about-the-police`,
               print: `https://cdn.crimethinc.com/assets/zines/seven-myths-about-the-police/seven-myths-about-the-police_print_black_and_white.pdf`,
               shelf: `zines`,
             },
-                       // {
-            //   title: `Building Community`,
-            //   author: `Decolonization Coven`,
-            //   img: `../../static/images/zines/shelf/zine_16.webp`,
-            // 
-            //   link: ``,
-            //   print: ``,
-            //   shelf: `decolonization_coven`,
-            // },
-            // {
-            //   title: `Dirt Cheap`,
-            //   author: `Decolonization Coven`,
-            //   img: `../../static/images/zines/shelf/zine_17.webp`,
-            //   link: ``,
-            //   print: ``,
-            //   shelf: `decolonization_coven`,
-            // },
-            // {
-            //   title: `Sisters? Not Yet! A Beginner’s Guide to White Feminism (And why it is a problem)`,
-            //   author: `Decolonization Coven`,
-            //   img: `../../static/images/zines/shelf/zine_18.webp`,
-            //   link: ``,
-            //   print: ``,
-            //   shelf: `decolonization_coven`,
-            // },
+            ],
+            [
+              {
+              title: `Building Community`,
+              author: `Decolonization Coven`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1783483594/Building_Community_Alternatives_yv8oe4.png`,
+              link: `https://drive.proton.me/urls/840WP9N0D4#57ey4RKlhVOb`,
+              print: `https://drive.proton.me/urls/840WP9N0D4#57ey4RKlhVOb`,
+              shelf: `decolonization_coven`,
+            },
+            {
+              title: `12 Children's Books That Celebrate the Spirit of Mutual Aid`,
+              author: `Decolonization Coven`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1783483585/Children_s_Books_otrbgi.png`,
+              img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001825/zine_13_open_cytzrf.png' : ''}`,
+              link: ``,
+              print: `https://www.dropbox.com/scl/fi/ko5ygz8fon7bsrsl5p1ou/Childrens-Book-Zine.pdf?rlkey=7976ewb2doofmjmpynaixqjoh&st=2pioybg1&e=1&dl=0`,
+              shelf: `decolonization_coven`,
+            },
+             {
+              title: `Decolonize 101`,
+              author: `Decolonization Coven`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1783483587/Decolonize_101_ef4cdl.png`,
+              link: `https://drive.proton.me/urls/YPN3B2V24R#E25AVQJ7Wy4z`,
+              print: `https://drive.proton.me/urls/YPN3B2V24R#E25AVQJ7Wy4z`,
+              shelf: `decolonization_coven`,
+             }
+            ],
+            [
+              {
+              title: `Sisters? Not Yet! A Beginner’s Guide to White Feminism (And why it is a problem)`,
+              author: `Decolonization Coven`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1783483591/Sisters_Not_Yet_n43okl.png`,
+              link: `https://drive.proton.me/urls/4TPYHKAJEW#JnUItyD6COgh`,
+              print: ``,
+              shelf: `decolonization_coven`,
+            },
+            {
+              title: `Dirt Cheap`,
+              author: `Decolonization Coven`,
+              img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1783483596/Dirt_Cheap_Photopea_aixkpe.png`,
+              link: `https://drive.proton.me/urls/HF4TWKRC6M#3j7RxT1ZlDQd`,
+              print: `https://drive.proton.me/urls/HF4TWKRC6M#3j7RxT1ZlDQd`,
+              shelf: `decolonization_coven`,
+            },
+            ],
+            [],
+            [],
+            []
+            
+            
           ]
         })
-        const zine_chunks = computed(() => {
-          state.zine_chunks = [];
-          for (let i = 0; i < state.zines.length; i += 2) {
-            state.zine_chunks.push(state.zines.slice(i, i + 2));
-          }
-          
-          return state.zine_chunks;
-        });
-        console.log('zine chunks', state.zine_chunks);
+
+        // console.log('zine chunks', state.zine_chunks);
         // Methods/Functions
           // Countdown to July 31, 2026
         let init_countdown = () => {
 
           console.log('Countdown set ... :)')
-          for (let i = 0; i < state.zines.length; i += 2) {
-            state.zine_chunks.push(state.zines.slice(i, i + 2));
-          }
-          console.log('zine chunks', state.zine_chunks);
+
 
           let countdownDate = new Date("July 31, 2026 00:00:00").getTime();
           let x = setInterval(() => {
