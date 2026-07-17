@@ -13,9 +13,9 @@
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
   <link rel="manifest" href="../site.webmanifest">
-                
+
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <script src="https://unpkg.com/vue@3.5.38/dist/vue.global.prod.js"></script>  
+  <script src="https://unpkg.com/vue@3.5.38/dist/vue.global.prod.js"></script>
 
 </head>
 <body id="fnb" class="scroll-smooth">
@@ -92,7 +92,7 @@
             <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328478/tfnb_cashapp_vaamdk.webp" alt="Cashapp" class="w-[35px] h-[35px] sm:w-[50px] sm:h-[50px] object-contain">
           </a>
         </div>
-        
+
       </div>
 
     </div>
@@ -117,7 +117,7 @@
       <div v-if="window.type === 'info'" class="window-body font-tahoma flex flex-col text-start items-start p-[10px]" v-html="window.content"></div>
       <div v-if="window.type === 'instagram'" class="window-body font-tahoma flex flex-col text-start items-start p-[10px]">
         <a href="https://www.instagram.com/tampafoodnotbombs/" target="_blank" class="flex flex-col items-start lg:flex-row lg:items-center justify-center">
-          <div 
+          <div
             class="h-[100px] w-[100px] rounded-full overflow-hidden bg-no-repeat bg-cover bg-center"
             style="background-image: url('../static/images/insta_preview/pfp.png');"
           ></div>
@@ -134,10 +134,10 @@
         </a>
         <div class="w-full grid grid-cols-2 md:grid-cols-3 gap-0">
 
-          <button 
+          <button
             v-for="tile, b in window.tiles"
             :id="`btn-insta-${b + 1}`"
-            class="w-full h-[200px] md:h-[300px] bg-cover bg-center bg-no-repeat flex flex-col justify-center items-center cursor-pointer" 
+            class="w-full h-[200px] md:h-[300px] bg-cover bg-center bg-no-repeat flex flex-col justify-center items-center cursor-pointer"
             :style="`background-image: url('${tile.img}');`">
               <div class="w-[99%] h-[99%] rounded-md opacity-0 hover:opacity-100 text-white bg-transparent hover:bg-black/30 font-bold text-6xl flex flex-col justify-center items-center">+</div>
             <div :id="`modal-insta-${b + 1}`" class="modal">
@@ -154,20 +154,20 @@
       </div>
       <div v-if="window.type === 'books_resources'" class="window-body scroll-smooth font-tahoma flex flex-col text-start items-start p-[10px] gap-2 h-[700px] overflow-y-scroll">
         <p id="top" class="text-2xl">Resources</p>
-       
+
         <p id="podcasts" class="text-[20px] mt-4 mb-2 font-bold">Podcasts</p>
         <a href="#books">
           <span class="text-sm">(Jump to books ⬇️)</span>
         </a>
         <ul>
           <li v-for="podcast in window.podcasts">
-            <a 
+            <a
               :href="podcast.url"
               target="_blank"
               class="w-full flex flex-col mb-4 justify-between gap-2  ">
               <div class="w-3/5 p-2 relative w-[12rem] min-h-[6rem] -rotate-2">
                 <img :src="podcast.img" :alt="podcast.title" class="absolute top-0 w-[70%] z-20">
-                <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782334516/disc_j5pgyn.png" alt="CD Disc" 
+                <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782334516/disc_j5pgyn.png" alt="CD Disc"
                 class="w-[38%] absolute top-[20%] right-[20%] z-10">
               </div>
               <p class="text-[14px]">{{ podcast.title }}</p>
@@ -183,7 +183,7 @@
         </p>
         <ul>
           <li v-for="book in window.books">
-            <a 
+            <a
               :href="book.url"
               target="_blank"
               class="w-full flex flex-col mb-2">
@@ -198,11 +198,11 @@
         <a href="#top">
           <span class="text-sm">(Back to top ⬆️)</span>
         </a>
-        
-      </div>
-    </div> 
 
-      
+      </div>
+    </div>
+
+
   <!-- <div class="h-[50px] w-full absolute bottom-0 z-50"></div> -->
     </main>
 
@@ -236,7 +236,7 @@
               title: `Support us on Venmo`,
               class: `text-indigo-200`,
               url: `https://venmo.com/tfnbfondos`,
-              label: `@TFNBFondos`,  
+              label: `@TFNBFondos`,
               svg: {
                 html: `<svg class="niftybutton-ven" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="display: block; fill: rgb(195, 161, 246); width: 58px; height: 58px; color: rgb(195, 161, 246);" width="58" height="58" role="img"><path d="M21.428 4.4c.77 1.281 1.119 2.601 1.119 4.27 0 5.32-4.541 12.23-8.227 17.08H6.15L2.776 5.563l7.37-.7 1.792 14.362c1.65-2.67 3.815-6.648 3.815-9.52 0-1.594-.273-2.678-.7-3.57z" fill="#000000" style="fill: rgb(195, 161, 246);"></path></svg>`
               }
@@ -245,16 +245,16 @@
               title: `Support us on Cashapp`,
               class: `text-indigo-200`,
               url: `https://cash.app/$TFNBFondos`,
-              label: `$TFNBFondos`,  
+              label: `$TFNBFondos`,
               svg: {
                 html: `<svg class="niftybutton-cashapp" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="display: block; fill: rgb(195, 161, 246); width: 58px; height: 58px; color: rgb(195, 161, 246);" width="58" height="58" role="img"><path d="M21.428 4.4c.77 1.281 1.119 2.601 1.119 4.27 0 5.32-4.541 12.23-8.227 17.08H6.15L2.776 5.563l7.37-.7 1.792 14.362c1.65-2.67 3.815-6.648 3.815-9.52 0-1.594-.273-2.678-.7-3.57z" fill="#000000" style="fill: rgb(195, 161, 246);"></path></svg>`
-              } 
+              }
             },
             {
               title: `Find us on Instagram`,
               class: `text-indigo-200`,
               url: `https://www.instagram.com/tampafoodnotbombs`,
-              label: `@tampafoodnotbombs`,  
+              label: `@tampafoodnotbombs`,
               svg: {
                 html: `<svg id="instagram" fill="rgb(217, 50, 117)" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="58px" height="58px" viewBox="0 0 169.063 169.063" xml:space="preserve"><g><path d="M122.406,0H46.654C20.929,0,0,20.93,0,46.655v75.752c0,25.726,20.929,46.655,46.654,46.655h75.752
                           c25.727,0,46.656-20.93,46.656-46.655V46.655C169.063,20.93,148.133,0,122.406,0z M154.063,122.407
@@ -271,54 +271,123 @@
            {
              id: `metrocon`,
              title: `Metrocon 2026!`,
-             class: `w-[90%] lg:w-[200px] top-[16rem] 2xl:top-[12rem] left-[1rem]  lg:left-[78vw] mt-[15vh] lg:mt-0`,
+             class: `w-[90%] lg:w-[300px] top-[16rem] 2xl:top-[12rem] left-[1rem]  lg:left-[78vw] mt-[15vh] lg:mt-0`,
              type: `info`,
              content: `
-                <p class="text-[12px]">Tampa Food Not Bombs will be at Metrocon 2026! <br/> <br/>
-    - Come find us in the Artist Alley, where we'll have zines, stickers, and more!  <br/>
-    - Join us at our <span class="font-bold">Mutual Aid panel on Saturday Aug 1st, @11am - 11:50am at Panel Room 107-109 </span>, featuring speakers from FNB and other local orgs <br/>
-	  - All donations raised at Metrocon will go directly towards supporting our mission of providing free food to 	hungry folks and advocating for social justice.</p>
+                <p class="text-md">Tampa Food Not Bombs will be at Metrocon 2026! <br/> <br/>
+                <ul class="list-disc ps-4 text-sm">
+                  <li>
+                    Come find us in the Artist Alley at <span class="impact">booth V712</span>, where we'll have zines, stickers, and more!
+                    <button id="btn-insta-madonna" class="cursor-pointer underline">View Booth Map</button>
+                  </li>
+                  <li>
+                    Join us at our Mutual Aid panel on <span class="impact">Saturday Aug 1st, @ 11:00 - 11:50am</span> in
+                    <span class="impact text-md">Panel Room 107-109</span>, featuring speakers from TFNB and other local orgs
+                  </li>
+                  <li>
+                    All donations raised at Metrocon will go directly towards supporting our mission of providing free food to hungry folks and advocating for social justice
+                  </li>
+                </ul>
+
+                <div class="modal z-90 flex flex-col min-h-[400px] w-[400px]">
+                  <div class="w-full flex flex-1 flex-row p-2 justify-end items-start bg-white mt-[10vh] mx-auto max-w-[400px] top-[10vh] left-auto right-auto">
+                    <div>
+                      <button class="close font-bold mb-2">x</button>
+                      <img class="z-100 w-[400px]" src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1784254686/mconmap_cfwoki.jpg" />
+                    </div>
+                  </div>
+                </div>
+      <br/>
               `,
            },
-      //      {
-      //       id: `who-we-are`,
-      //       class: `w-[200px] top-[10vh] left-[80vw]`,
-      //       type: `info`,
-      //       content: `
-      //        <p class="text-[18px]">Who we are</p>
-      // <p class="text-[12px]">Tampa FNB provides mutual aid survival programs assisting the houseless and hungry, and stands in opposition to the violence of war and poverty.</p>`
-      //      },
+           {
+            id: `get-involved`,
+            title: `Get Involved`,
+            class: `w-[250px] lg:top-[34vh] lg:left-[25vw]`,
+            type: `info`,
+            content: `
+              <p class="text-[12px]">
+                Do you have an hour a week to lend a hand? We could use your help! Reach out to us through
+                <a class="underline" href="https://www.instagram.com/tampafoodnotbombs/" target="_blank">instagram</a>
+                messaging or email us at <a href="https://mailto:tampafoodnotbombs@proton.me/">tampafoodnotbombs@proton.me</a>
+              </p>`
+           },
            {
             id: `about`,
             title: `Who We Are`,
             class: `w-[95vw] lg:w-[300px]  lg:left-[1vw]   lg:mt-0`,
             type: `info`,
             content: `
-              <p class="text-[18px]">We're Tampa Food Not Bombs</p>
+              <p class="text-[20px] mb-2">We're Tampa Food Not Bombs</p>
               <div id="content-2" class="line-clamp">
-                <p class="text-[12px]">
-                  Tampa FNB provides mutual aid survival programs assisting the houseless and hungry, 
-                  and stands in opposition to the violence of war and poverty. Grassroots organization 
-                  (NOT a non profit) - We are by the people, for the people We have learned that organizing 
-                  our community allows us to change our material conditions and meet our needs. We take care 
-                  of us Tampa Chapter over 12 years Anti: White supremacy Capitalism Settler-colonialism 
-                  Neocolonialism Racism Patriarchy Xenophobia Ableism Homophobia Transphobia And all 
-                  other oppressive systems … imperialism. 
-                  
-                  <br/><br/>
-                  We are dedicated to serving our community. We 
-                  share resources with our community. We engage in conversation with our community. We 
-                  provide free laundry services to all. We practice zero waste by rescuing surplus food 
-                  items from local restaurants and grocers. We gather to watch documentaries and engage 
-                  in meaningful discussions We ensure accommodations are available for non-native English
-                  speakers and disabilities We mask to keep our community safe during the ongoing covid 19 
-                  pandemic. We mask during our shares, at indoor gatherings, and agree to stay home if we are 
-                  sick. We are not affiliated with any religion or religious entity. We are committed to centering
-                  BIPOC perspectives. We follow through not only with words, but with our actions. We are anti-carceral. 
-                  We do not throw people away. We treat everyone with respect.</p>
-                  
+                <p class="text-[14px] mb-4">
+                Tampa Food Not Bombs (TFNB) is one of many chapters of a grassroots mutual aid
+                organization that helps our unhoused and hungry neighbors. We're not a charity or
+                a nonprofit. We're volunteers who organize so we can meet the needs of our community
+                while opposing war and poverty.
+                </p>
+
+                <p class="text-[18px] mb-2">Our Principles</p>
+                <ol class="list-decimal text-[14px] ps-4 mb-4">
+                  <li>
+                    We share free vegan/vegetarian meals with anyone who wants them.
+                  </li>
+                  <li>
+                    We run ourselves and make decisions together by consensus.
+                  </li>
+                  <li>
+                    We believe in nonviolent action and social justice through mutual aid.
+                  </li>
+                </ol>
+
+                <p class="text-[18px] mb-2">What We Do</p>
+                <p class="text-[14px] mb-2">
+                  The food share is at the center of our work; we hand out food, water, and other
+                  basics to unhoused neighbors. We provide other programs, such as:
+                </p>
+                <ul class="list-disc ps-4 mb-4 text-[14px]">
+                  <li>
+                    political education
+                  </li>
+                  <li>
+                    hygiene and safety, and
+                  </li>
+                  <li>
+                    outreach
+                  </li>
+                </ul>
+                <p class="text-[14px] mb-2">
+                These are decided with our members and neighbors as a part of community building. We share food, knowledge, labor, and leadership because mutual aid takes many hands. <br/>
+                We have learned that the best way to reach our community is by getting to know our neighbors, by meeting them where they are and sharing resources freely. Our aid is unconditional.
+                </p>
+
+                <p class="text-[18px] mb-2">How We Show Up</p>
+                <ul class="list-disc ps-4 mb-4 text-[14px]">
+                  <li>
+                    We keep our community safe during the ongoing COVID-19 pandemic by masking at shares and gatherings and by staying home when we are sick
+                  </li>
+                  <li>
+                    We're not tied to any religion
+                  </li>
+                  <li>
+                    We center BIPOC voices
+                  </li>
+                  <li>
+                    We mean what we say and follow through. We fight for our friends!
+                  </li>
+                  <li>
+                    We're anti-carceral
+                  </li>
+                  <li>
+                    We treat <span class="impact text-[14px]">everyone</span> with respect
+                  </li>
+                </ul>
+                  <p class="text-[14px] mb-2">
+                    TFNB is opposed to capitalism, patriarchy, imperialism, white supremacy, and the all other oppressive systems. TFNB works towards liberation, justice, and community.
+                  </p>
+
               </div>
-              <button id="toggle-text-2" class="read_more_btn text-indigo-500 cursor-pointer">Read More</button> 
+              <button id="toggle-text-2" class="read_more_btn text-indigo-500 cursor-pointer">Read More</button>
             `
            },
            {
@@ -451,22 +520,22 @@
         })
 
         // Methods/Functions
-          /* 
-                
-          I ripped the foundation for this straight up from several sources, mostly from W3Schools. I aint gonna lie, I 
+          /*
+
+          I ripped the foundation for this straight up from several sources, mostly from W3Schools. I aint gonna lie, I
           refuse to re-invent the wheel:
-                
+
             - The windows: W3Schools: https://www.w3schools.com/howto/howto_js_draggable.asp
             - Infinite scrolling banner: https://medium.com/@archielister/make-an-infinitely-scrolling-banner-with-html-and-css-e7918506c496
 
-              
+
         */
 
           // Draggable Windows
         let init_draggable_windows = () => {
           console.log('Draggable windows set ... :)')
 
-          const draggable_elements = document.querySelectorAll('.window-comp'), 
+          const draggable_elements = document.querySelectorAll('.window-comp'),
             dragElement = (elmnt) => {
 
             let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -513,8 +582,8 @@
             dragElement(el);
           });
 
-        }  
-      
+        }
+
 
           // Countdown to July 31, 2026
         let init_countdown = () => {
@@ -541,11 +610,11 @@
 
           state.mounted = true;
         }
-        
+
         // Insta previews:
         let init_insta_previews = () => {
           console.log('Insta previews set ... :)')
-          
+
           // Grab all the modals
           let modals = document.querySelectorAll('.modal');
           let btns = document.querySelectorAll('[id^="btn-insta-"]');
@@ -570,15 +639,15 @@
               }
             });
           };
-          
+
 
         }
-        
+
 
         // truncate text in windows
         let init_truncate_text = () => {
           console.log('Truncate text set ... :)')
-          
+
           let line_clamps = document.querySelectorAll('.line-clamp');
           let read_more_btns = document.querySelectorAll('.read_more_btn');
 
@@ -589,9 +658,9 @@
             }
           });
 
-          
+
         }
-        
+
 
 
         // Lifecycle Hooks
@@ -602,7 +671,7 @@
             init_countdown();
             init_insta_previews();
             init_truncate_text();
-            
+
         });
 
 
@@ -612,6 +681,6 @@
     }
   }).mount('#fnb');
 
-</script> 
+</script>
 </body>
 </html>
