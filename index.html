@@ -1,70 +1,686 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tampa Food Not Bombs</title>
-  <link rel="stylesheet" href="static/css/main.css">
-    <!-- Favicons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tampa Food Not Bombs - Metrocon</title>
+  <link rel="stylesheet" href="static/css/metrocon.css">
+  <link href="https://fonts.cdnfonts.com/css/impact" rel="stylesheet">
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
   <link rel="manifest" href="/site.webmanifest">
+
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://unpkg.com/vue@3.5.38/dist/vue.global.prod.js"></script>
+
 </head>
-<body>
-    <div>
-        <h1 style="margin-left:1em; margin-bottom: 0; font-size: 5vw">🚧 Under Construction 🚧</h1>
+<body id="fnb" class="scroll-smooth">
+  <main class="h-[100vh] scroll-smooth w-full flex flex-col lg:block pb-[100px]">
+    <!-- Infinite Scroll -->
+    <div v-show="state.mounted && !state.metrocon_day" class="visible lg:invisible h-[50px] w-full bg-black absolute top-0 flex flex-col justify-start items-start z-50 p-2">
+      <div class="item cursor-pointer">
+        <p class="text-bold impact m-0 text-sm">TFNB @ Metrocon in</p>
+      </div>
+      <div class="counter-item font-thin item impact m-0 p-0 text-xs"></div>
     </div>
-    <main>
-        <div class="shadow">
-            <section class="hero">
-                <header>
-                    <img src="static/images/foodnotbombslogo.png">
-                    <h1>Tampa Food Not Bombs</h1>
-                    <h2>
-                        Tampa FNB provides mutual aid survival programs assisting the houseless and hungry, and stands in opposition to the violence of war and poverty.
-                    </h2>
-                </header>
-            </section>
-        </div>
-        <div class="shadow">
-            <section class="socials">
-                <h1>Follow us for updates!</h1>
-                <ul>
-                    <li>
-                        <a href="https://instagram.com/tampafoodnotbombs" title="Find us on Instagram">
-                            <svg data-donate="true" data-tag="ins" data-name="Instagram" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet" style="display: block; fill: rgb(0, 0, 0); width: 86px; height: 86px; color: rgb(0, 0, 0);" role="img" aria-label="instagram">
-                                <path d="M256 109.3c47.8 0 53.4 0.2 72.3 1 17.4 0.8 26.9 3.7 33.2 6.2 8.4 3.2 14.3 7.1 20.6 13.4 6.3 6.3 10.1 12.2 13.4 20.6 2.5 6.3 5.4 15.8 6.2 33.2 0.9 18.9 1 24.5 1 72.3s-0.2 53.4-1 72.3c-0.8 17.4-3.7 26.9-6.2 33.2 -3.2 8.4-7.1 14.3-13.4 20.6 -6.3 6.3-12.2 10.1-20.6 13.4 -6.3 2.5-15.8 5.4-33.2 6.2 -18.9 0.9-24.5 1-72.3 1s-53.4-0.2-72.3-1c-17.4-0.8-26.9-3.7-33.2-6.2 -8.4-3.2-14.3-7.1-20.6-13.4 -6.3-6.3-10.1-12.2-13.4-20.6 -2.5-6.3-5.4-15.8-6.2-33.2 -0.9-18.9-1-24.5-1-72.3s0.2-53.4 1-72.3c0.8-17.4 3.7-26.9 6.2-33.2 3.2-8.4 7.1-14.3 13.4-20.6 6.3-6.3 12.2-10.1 20.6-13.4 6.3-2.5 15.8-5.4 33.2-6.2C202.6 109.5 208.2 109.3 256 109.3M256 77.1c-48.6 0-54.7 0.2-73.8 1.1 -19 0.9-32.1 3.9-43.4 8.3 -11.8 4.6-21.7 10.7-31.7 20.6 -9.9 9.9-16.1 19.9-20.6 31.7 -4.4 11.4-7.4 24.4-8.3 43.4 -0.9 19.1-1.1 25.2-1.1 73.8 0 48.6 0.2 54.7 1.1 73.8 0.9 19 3.9 32.1 8.3 43.4 4.6 11.8 10.7 21.7 20.6 31.7 9.9 9.9 19.9 16.1 31.7 20.6 11.4 4.4 24.4 7.4 43.4 8.3 19.1 0.9 25.2 1.1 73.8 1.1s54.7-0.2 73.8-1.1c19-0.9 32.1-3.9 43.4-8.3 11.8-4.6 21.7-10.7 31.7-20.6 9.9-9.9 16.1-19.9 20.6-31.7 4.4-11.4 7.4-24.4 8.3-43.4 0.9-19.1 1.1-25.2 1.1-73.8s-0.2-54.7-1.1-73.8c-0.9-19-3.9-32.1-8.3-43.4 -4.6-11.8-10.7-21.7-20.6-31.7 -9.9-9.9-19.9-16.1-31.7-20.6 -11.4-4.4-24.4-7.4-43.4-8.3C310.7 77.3 304.6 77.1 256 77.1L256 77.1z" style="fill: rgb(0, 0, 0);" fill="#000000"></path>
-                                <path d="M256 164.1c-50.7 0-91.9 41.1-91.9 91.9s41.1 91.9 91.9 91.9 91.9-41.1 91.9-91.9S306.7 164.1 256 164.1zM256 315.6c-32.9 0-59.6-26.7-59.6-59.6s26.7-59.6 59.6-59.6 59.6 26.7 59.6 59.6S288.9 315.6 256 315.6z" style="fill: rgb(0, 0, 0);" fill="#000000"></path>
-                                <circle cx="351.5" cy="160.5" r="21.5" style="fill: rgb(0, 0, 0);" fill="#000000"></circle>
-                            </svg>
-                            @tampafoodnotbombs
-                        </a>
-                    </li>
-                </ul>
-            </section>
-        </div>
+    <div v-show="state.mounted && !state.metrocon_day" id="ctr-inf_scroll" class="invisible lg:visible top-0 absolute relative overflow-hidden gap-0 w-[100vw] z-10">
+      <div v-for="(unit, index) in state.inf_scroll.units" :id="unit.id" :class="`h-[50px] text-lg ${unit.class}`">
+
+        <a href="https://metroconventions.com/" target="_blank" v-for="counter in unit.count" class="flex flex-row gap-0 justify-center items-center">
+          <div class="item cursor-pointer">
+            <p class="text-bold impact m-0 px-2">TFNB @ Metrocon in</p>
+          </div>
+          <div class="counter-item item impact m-0 p-0"></div>
+          <div class="h-[15px] w-[15px] rounded-full bg-purple-400 mx-5"></div>
+        </a>
+      </div>
+      </a>
+    </div>
+
+    <div :class="`${state.mounted && state.metrocon_day ? 'top-[50px]' : ''} w-full sticky flex flex-wrap `">
+
+      <!-- Main Logo -->
+      <div class="order-1 md:order-2 flex md:flex-1 flex-col gap-4 p-4 z-10 mt-[50px] justify-start items-start md:justify-center md:items-center w-[50vw] sm:w-[60vw]">
+        <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1783189388/Cloud_Glow_Resize_tph5zp.png" alt="TFNB Logo" class=" object-contain">
+      </div>
+
+      <!-- Main links -->
+      <div id="main-links" class="order-3 md:order-1 lg:top-[20vh] lg:left-[3vw] md:mt-[50px] justify-center items-center flex flex-row md:flex-col gap-8 p-5 mx-auto">
+        <a href="metrocon/zines/index.html" class="flex flex-col gap-2 items-center justify-center">
+          <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328484/tfnb_zines_library_ipqtwv.png" alt="Zine Library folder icon" class="w-[50px]">
+          <div class="flex flex-row items-center justify-center rounded-md bg-black/40 px-2 w-full">
+            <p class="text-white text-sm p-0 m-0 font-tahoma">
+              Zine Library
+            </p>
+          </div>
+        </a>
+        <a href="https://www.instagram.com/tampafoodnotbombs/" class="flex flex-col gap-2 items-center justify-center">
+          <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328483/tfnb_peeps_cotfdb.png" alt="Instagram folder icon" class="w-[50px]">
+          <div class="flex flex-row items-center justify-center rounded-md bg-black/40 px-2 w-full">
+            <p class="text-white text-sm p-0 m-0 font-tahoma">
+              Follow Us
+            </p>
+          </div>
+        </a>
+        <!-- <a href="#" class="flex flex-col gap-2 items-center justify-center">
+          <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328481/tfnb_links_otyvnq.png" alt="Links folder icon" class="w-[50px]">
+          <div class="flex flex-row items-center justify-center rounded-md bg-black/40 px-2 w-full">
+            <p class="text-white text-sm p-0 m-0 font-tahoma">
+              Links
+            </p>
+          </div>
+        </a> -->
+      </div>
 
 
-        <div class="shadow">
-            <section class="socials">
-                <h1>Where to Donate</h1>
-                <ul>
-                    <li>
-                        <a href="https://venmo.com/tfnbfondos" title="Support us on Venmo">
-                            <svg class="niftybutton-ven" data-donate="true" data-tag="ven" data-name="Venmo" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="display: block; fill: rgb(0, 0, 0); width: 58px; height: 58px; color: rgb(0, 0, 0);" role="img"><path d="M21.428 4.4c.77 1.281 1.119 2.601 1.119 4.27 0 5.32-4.541 12.23-8.227 17.08H6.15L2.776 5.563l7.37-.7 1.792 14.362c1.65-2.67 3.815-6.648 3.815-9.52 0-1.594-.273-2.678-.7-3.57z" fill="#000000" style="fill: rgb(0, 0, 0);"></path></svg>
-                            @TFNBFondos
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://cash.app/$TFNBFondos" title="Support us on Cashapp">
-                            <svg fill="#00C244" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="niftybutton-csh" data-donate="true" data-tag="csh" data-name="Cash App" preserveAspectRatio="xMidYMid meet" style="display: block; fill: rgb(0, 0, 0); width: 58px; height: 58px; color: rgb(0, 0, 0);"><path d="M23.59 3.475a5.1 5.1 0 00-3.05-3.05c-1.31-.42-2.5-.42-4.92-.42H8.36c-2.4 0-3.61 0-4.9.4a5.1 5.1 0 00-3.05 3.06C0 4.765 0 5.965 0 8.365v7.27c0 2.41 0 3.6.4 4.9a5.1 5.1 0 003.05 3.05c1.3.41 2.5.41 4.9.41h7.28c2.41 0 3.61 0 4.9-.4a5.1 5.1 0 003.06-3.06c.41-1.3.41-2.5.41-4.9v-7.25c0-2.41 0-3.61-.41-4.91zm-6.17 4.63l-.93.93a.5.5 0 01-.67.01 5 5 0 00-3.22-1.18c-.97 0-1.94.32-1.94 1.21 0 .9 1.04 1.2 2.24 1.65 2.1.7 3.84 1.58 3.84 3.64 0 2.24-1.74 3.78-4.58 3.95l-.26 1.2a.49.49 0 01-.48.39H9.63l-.09-.01a.5.5 0 01-.38-.59l.28-1.27a6.54 6.54 0 01-2.88-1.57v-.01a.48.48 0 010-.68l1-.97a.49.49 0 01.67 0c.91.86 2.13 1.34 3.39 1.32 1.3 0 2.17-.55 2.17-1.42 0-.87-.88-1.1-2.54-1.72-1.76-.63-3.43-1.52-3.43-3.6 0-2.42 2.01-3.6 4.39-3.71l.25-1.23a.48.48 0 01.48-.38h1.78l.1.01c.26.06.43.31.37.57l-.27 1.37c.9.3 1.75.77 2.48 1.39l.02.02c.19.2.19.5 0 .68z" style="fill: rgb(0, 0, 0);" fill="#000000"></path></svg>
-                            @TFNBFondos
-                        </a>
-                    </li>
-                </ul>
-            </section>
+      <!-- Social Links -->
+      <div id="social-links" class="order-2 gap-2 z-20 lg:order-3 md:absolute md:top-[4vh] md:right-[3vw] xl:mt-0 flex flex-col  mt-[50px] md:mt-[20px] mx-auto lg:mx-0 m-4 pt-4 lg:w-auto ">
+       <div class="flex flex-row items-center justify-center gap-2 rounded-md bg-black/60 px-2 pt-1 mt-2">
+          <p class="text-white uppercase p-0 m-0">
+            @TFNBFondos
+          </p>
         </div>
+        <div class="flex flex-row gap-2 justify-center items-center">
+          <a :href="state.social_links[0].url">
+            <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328479/tfnb_venmo_emzmxb.webp" alt="Venmo" class="w-[35px] h-[35px] sm:w-[50px] sm:h-[50px] object-contain">
+          </a>
+          <a :href="state.social_links[1].url">
+            <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782328478/tfnb_cashapp_vaamdk.webp" alt="Cashapp" class="w-[35px] h-[35px] sm:w-[50px] sm:h-[50px] object-contain">
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Draggable windows -->
+    <div v-for="window, a in state.windows" :key="a" :id="`wndw-${window.id}`" :class="`window-comp lg:absolute shadow-xl text-center z-9 mx-auto mb-4 ${window.class}`">
+      <div :id="`wndw-${window.id}-header`" class="window-header flex flex-row items-start justify-between z-10 bg-[#110174] h-[40x] ">
+        <h3 class="text-white lowercase flex-1 text-start mx-2 font-tahoma">{{ window.title }}</h3>
+        <!-- <div class="flex flex-1"></div> -->
+        <div class="w-[62px] h-[25px] flex flex-row justify-end items-start p-[2px] m-0">
+          <div class="window-btn w-[15px] h-[15px] mx-[1px] pb-1 inset-shadow-xl flex flex-col justify-center items-center bg-neutral-200 text-neutral-800">
+            _
+          </div>
+          <div class="window-btn w-[15px] h-[15px] mx-[1px] inset-shadow-xl flex flex-col justify-center items-center bg-neutral-200 text-neutral-800">
+           ❒︎
+          </div>
+          <div class="window-btn w-[15px] h-[15px] mx-[1px] inset-shadow-xl flex flex-col justify-center items-center bg-neutral-200 text-neutral-800">
+            ×`
+          </div>
+        </div>
+      </div>
+      <div v-if="window.type === 'info'" class="window-body font-tahoma flex flex-col text-start items-start p-[10px]" v-html="window.content"></div>
+      <div v-if="window.type === 'instagram'" class="window-body font-tahoma flex flex-col text-start items-start p-[10px]">
+        <a href="https://www.instagram.com/tampafoodnotbombs/" target="_blank" class="flex flex-col items-start lg:flex-row lg:items-center justify-center">
+          <div
+            class="h-[100px] w-[100px] rounded-full overflow-hidden bg-no-repeat bg-cover bg-center"
+            style="background-image: url('static/images/insta_preview/pfp.png');"
+          ></div>
+          <div class="flex flex-1 flex-col text-start justify-start items-start p-4 font-tahoma h-full">
+            <p class="text-[22px] font-bold">tampafoodnotbombs</p>
+            <p class="text-[14px]">Tampa Food Not Bombs</p>
+            <div class="w-full flex flex-row gap-2 mb-2">
+                <p class="text-[12px]">220 posts</p>
+                <p class="text-[12px]">3,927 Followers</p>
+                <p class="text-[12px]">938 Following</p>
+            </div>
+            <p class="text-[12px]">Tampa FNB provides mutual aid survival programs assisting the houseless <br/> and hungry, and stands in opposition to the violence of war and poverty.</p>
+          </div>
+        </a>
+        <div class="w-full grid grid-cols-2 md:grid-cols-3 gap-0">
+
+          <button
+            v-for="tile, b in window.tiles"
+            :id="`btn-insta-${b + 1}`"
+            class="w-full h-[200px] md:h-[300px] bg-cover bg-center bg-no-repeat flex flex-col justify-center items-center cursor-pointer"
+            :style="`background-image: url('${tile.img}');`">
+              <div class="w-[99%] h-[99%] rounded-md opacity-0 hover:opacity-100 text-white bg-transparent hover:bg-black/30 font-bold text-6xl flex flex-col justify-center items-center">+</div>
+            <div :id="`modal-insta-${b + 1}`" class="modal">
+              <div class="modal-content">
+                <a :href="tile.url"  target="_blank">
+                  <img :src="tile.img" :alt="`Insta Preview ${b + 1}`" class="w-full h-auto">
+                </a>
+              </div>
+            </div>
+          </button>
+
+        </div>
+
+      </div>
+      <div v-if="window.type === 'books_resources'" class="window-body scroll-smooth font-tahoma flex flex-col text-start items-start p-[10px] gap-2 h-[700px] overflow-y-scroll">
+        <p id="top" class="text-2xl">Resources</p>
+
+        <p id="podcasts" class="text-[20px] mt-4 mb-2 font-bold">Podcasts</p>
+        <a href="#books">
+          <span class="text-sm">(Jump to books ⬇️)</span>
+        </a>
+        <ul>
+          <li v-for="podcast in window.podcasts">
+            <a
+              :href="podcast.url"
+              target="_blank"
+              class="w-full flex flex-col mb-4 justify-between gap-2  ">
+              <div class="w-3/5 p-2 relative w-[12rem] min-h-[6rem] -rotate-2">
+                <img :src="podcast.img" :alt="podcast.title" class="absolute top-0 w-[70%] z-20">
+                <img src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1782334516/disc_j5pgyn.png" alt="CD Disc"
+                class="w-[38%] absolute top-[20%] right-[20%] z-10">
+              </div>
+              <p class="text-[14px]">{{ podcast.title }}</p>
+            </a>
+          </li>
+        </ul>
+        <div id="books" class="pt-[4vh]">
+          <p class="text-[20px] font-bold mb-2">
+          Books
+          <a href="#podcasts">
+            <span class="text-sm">(Jump to Podcasts ⬆️)</span>
+          </a>
+        </p>
+        <ul>
+          <li v-for="book in window.books">
+            <a
+              :href="book.url"
+              target="_blank"
+              class="w-full flex flex-col mb-2">
+              <div class="w-3/5 p-2">
+                <img :src="book.img" :alt="book.title">
+              </div>
+              <p class="text-[14px]">{{ book.title }}</p>
+            </a>
+          </li>
+        </ul>
+        </div>
+        <a href="#top">
+          <span class="text-sm">(Back to top ⬆️)</span>
+        </a>
+
+      </div>
+    </div>
+
+
+  <!-- <div class="h-[50px] w-full absolute bottom-0 z-50"></div> -->
     </main>
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script>
+
+    const { createApp, ref, reactive, onMounted, onUnmounted } = Vue
+    createApp({
+      setup() {
+
+        // State
+        const state = reactive({
+          metrocon_day: false,
+          mounted: false,
+          inf_scroll: {
+            units: [
+              {
+                id: `scroll-one`,
+                class: `scroll fixed flex items-center justify-around w-fit-content impact`,
+                count: 5
+              },
+              {
+                id: `scroll-two`,
+                class: `scroll fixed cursor-pointer flex items-center justify-around w-fit-content impact`,
+                count: 5
+              }
+            ],
+          },
+          social_links: [
+            {
+              title: `Support us on Venmo`,
+              class: `text-indigo-200`,
+              url: `https://venmo.com/tfnbfondos`,
+              label: `@TFNBFondos`,
+              svg: {
+                html: `<svg class="niftybutton-ven" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="display: block; fill: rgb(195, 161, 246); width: 58px; height: 58px; color: rgb(195, 161, 246);" width="58" height="58" role="img"><path d="M21.428 4.4c.77 1.281 1.119 2.601 1.119 4.27 0 5.32-4.541 12.23-8.227 17.08H6.15L2.776 5.563l7.37-.7 1.792 14.362c1.65-2.67 3.815-6.648 3.815-9.52 0-1.594-.273-2.678-.7-3.57z" fill="#000000" style="fill: rgb(195, 161, 246);"></path></svg>`
+              }
+            },
+            {
+              title: `Support us on Cashapp`,
+              class: `text-indigo-200`,
+              url: `https://cash.app/$TFNBFondos`,
+              label: `$TFNBFondos`,
+              svg: {
+                html: `<svg class="niftybutton-cashapp" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="display: block; fill: rgb(195, 161, 246); width: 58px; height: 58px; color: rgb(195, 161, 246);" width="58" height="58" role="img"><path d="M21.428 4.4c.77 1.281 1.119 2.601 1.119 4.27 0 5.32-4.541 12.23-8.227 17.08H6.15L2.776 5.563l7.37-.7 1.792 14.362c1.65-2.67 3.815-6.648 3.815-9.52 0-1.594-.273-2.678-.7-3.57z" fill="#000000" style="fill: rgb(195, 161, 246);"></path></svg>`
+              }
+            },
+            {
+              title: `Find us on Instagram`,
+              class: `text-indigo-200`,
+              url: `https://www.instagram.com/tampafoodnotbombs`,
+              label: `@tampafoodnotbombs`,
+              svg: {
+                html: `<svg id="instagram" fill="rgb(217, 50, 117)" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="58px" height="58px" viewBox="0 0 169.063 169.063" xml:space="preserve"><g><path d="M122.406,0H46.654C20.929,0,0,20.93,0,46.655v75.752c0,25.726,20.929,46.655,46.654,46.655h75.752
+                          c25.727,0,46.656-20.93,46.656-46.655V46.655C169.063,20.93,148.133,0,122.406,0z M154.063,122.407
+                          c0,17.455-14.201,31.655-31.656,31.655H46.654C29.2,154.063,15,139.862,15,122.407V46.655C15,29.201,29.2,15,46.654,15h75.752
+                          c17.455,0,31.656,14.201,31.656,31.655V122.407z"></path><path d="M84.531,40.97c-24.021,0-43.563,19.542-43.563,43.563c0,24.02,19.542,43.561,43.563,43.561s43.563-19.541,43.563-43.561
+                          C128.094,60.512,108.552,40.97,84.531,40.97z M84.531,113.093c-15.749,0-28.563-12.812-28.563-28.561
+                          c0-15.75,12.813-28.563,28.563-28.563s28.563,12.813,28.563,28.563C113.094,100.281,100.28,113.093,84.531,113.093z"></path><path d="M129.921,28.251c-2.89,0-5.729,1.17-7.77,3.22c-2.051,2.04-3.23,4.88-3.23,7.78c0,2.891,1.18,5.73,3.23,7.78
+                          c2.04,2.04,4.88,3.22,7.77,3.22c2.9,0,5.73-1.18,7.78-3.22c2.05-2.05,3.22-4.89,3.22-7.78c0-2.9-1.17-5.74-3.22-7.78
+                          C135.661,29.421,132.821,28.251,129.921,28.251z"></path></g></svg>`
+              }
+            }
+          ],
+          windows: [
+           {
+             id: `metrocon`,
+             title: `Metrocon 2026!`,
+             class: `w-[90%] lg:w-[300px] top-[16rem] 2xl:top-[12rem] left-[1rem]  lg:left-[78vw] mt-[15vh] lg:mt-0`,
+             type: `info`,
+             content: `
+                <p class="text-md">Tampa Food Not Bombs will be at Metrocon 2026! <br/> <br/>
+                <ul class="list-disc ps-4 text-sm">
+                  <li>
+                    Come find us in the Artist Alley at <span class="impact">booth V712</span>, where we'll have zines, stickers, and more!
+                    <button id="btn-insta-madonna" class="cursor-pointer underline">View Booth Map</button>
+                  </li>
+                  <li>
+                    Join us at our Mutual Aid panel on <span class="impact">Saturday Aug 1st, @ 11:00 - 11:50am</span> in
+                    <span class="impact text-md">Panel Room 107-109</span>, featuring speakers from TFNB and other local orgs
+                  </li>
+                  <li>
+                    All donations raised at Metrocon will go directly towards supporting our mission of providing free food to hungry folks and advocating for social justice
+                  </li>
+                </ul>
+
+                <div class="modal z-90 flex flex-col min-h-[400px] w-[400px]">
+                  <div class="w-full flex flex-1 flex-row p-2 justify-end items-start bg-white mt-[10vh] mx-auto max-w-[400px] top-[10vh] left-auto right-auto">
+                    <div>
+                      <button class="close font-bold mb-2">x</button>
+                      <img class="z-100 w-[400px]" src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1784254686/mconmap_cfwoki.jpg" />
+                    </div>
+                  </div>
+                </div>
+      <br/>
+              `,
+           },
+           {
+            id: `get-involved`,
+            title: `Get Involved`,
+            class: `w-[250px] lg:top-[34vh] lg:left-[25vw]`,
+            type: `info`,
+            content: `
+              <p class="text-[12px]">
+                Do you have an hour a week to lend a hand? We could use your help! Reach out to us through
+                <a class="underline" href="https://www.instagram.com/tampafoodnotbombs/" target="_blank">instagram</a>
+                messaging or email us at <a class="underline" href="mailto:tampafoodnotbombs@proton.me/">tampafoodnotbombs@proton.me</a>
+              </p>`
+           },
+           {
+            id: `about`,
+            title: `Who We Are`,
+            class: `w-[95vw] lg:w-[300px]  lg:left-[1vw]   lg:mt-0`,
+            type: `info`,
+            content: `
+              <p class="text-[20px] mb-2">We're Tampa Food Not Bombs</p>
+              <div id="content-2" class="line-clamp">
+                <p class="text-[14px] mb-4">
+                Tampa Food Not Bombs (TFNB) is one of many chapters of a grassroots mutual aid
+                organization that helps our unhoused and hungry neighbors. We're not a charity or
+                a nonprofit. We're volunteers who organize so we can meet the needs of our community
+                while opposing war and poverty.
+                </p>
+
+                <p class="text-[18px] mb-2">Our Principles</p>
+                <ol class="list-decimal text-[14px] ps-4 mb-4">
+                  <li>
+                    We share free vegan/vegetarian meals with anyone who wants them.
+                  </li>
+                  <li>
+                    We run ourselves and make decisions together by consensus.
+                  </li>
+                  <li>
+                    We believe in nonviolent action and social justice through mutual aid.
+                  </li>
+                </ol>
+
+                <p class="text-[18px] mb-2">What We Do</p>
+                <p class="text-[14px] mb-2">
+                  The food share is at the center of our work; we hand out food, water, and other
+                  basics to unhoused neighbors. We provide other programs, such as:
+                </p>
+                <ul class="list-disc ps-4 mb-4 text-[14px]">
+                  <li>
+                    political education
+                  </li>
+                  <li>
+                    hygiene and safety, and
+                  </li>
+                  <li>
+                    outreach
+                  </li>
+                </ul>
+                <p class="text-[14px] mb-2">
+                These are decided with our members and neighbors as a part of community building. We share food, knowledge, labor, and leadership because mutual aid takes many hands. <br/>
+                We have learned that the best way to reach our community is by getting to know our neighbors, by meeting them where they are and sharing resources freely. Our aid is unconditional.
+                </p>
+
+                <p class="text-[18px] mb-2">How We Show Up</p>
+                <ul class="list-disc ps-4 mb-4 text-[14px]">
+                  <li>
+                    We keep our community safe during the ongoing COVID-19 pandemic by masking at shares and gatherings and by staying home when we are sick
+                  </li>
+                  <li>
+                    We're not tied to any religion
+                  </li>
+                  <li>
+                    We center BIPOC voices
+                  </li>
+                  <li>
+                    We mean what we say and follow through. We fight for our friends!
+                  </li>
+                  <li>
+                    We're anti-carceral
+                  </li>
+                  <li>
+                    We treat <span class="impact text-[14px]">everyone</span> with respect
+                  </li>
+                </ul>
+                  <p class="text-[14px] mb-2">
+                    TFNB is opposed to capitalism, patriarchy, imperialism, white supremacy, and the all other oppressive systems. TFNB works towards liberation, justice, and community.
+                  </p>
+
+              </div>
+              <button id="toggle-text-2" class="read_more_btn text-indigo-500 cursor-pointer">Read More</button>
+            `
+           },
+           {
+            id: `instagram-preview`,
+            title: `Instagram`,
+            class: `w-[90vw] lg:w-[40vw] top-[50vh] 2xl:top-[45vh]  left-[5vw] lg:left-[10vw] `,
+            type: `instagram`,
+            content: ``,
+            tiles: [
+              {
+                img: `static/images/insta_preview/insta_1.webp`,
+                url: `https://www.instagram.com/p/DIMbBaGxpUG/`
+              },
+              {
+                img: `static/images/insta_preview/insta_2.webp`,
+                url: `https://www.instagram.com/p/DYovjdFDHbX/?img_index=1`
+              },
+              {
+                img: `static/images/insta_preview/insta_3.webp`,
+                url: `https://www.instagram.com/p/DYkCYQogjCa/`
+              },
+              {
+                img: `static/images/insta_preview/insta_4.webp`,
+                url: `https://www.instagram.com/p/DYjvSLUDFWn/?img_index=1`
+              },
+              {
+                img: `static/images/insta_preview/insta_5.webp`,
+                url: `https://www.instagram.com/p/DXefAMBDP-x/`
+              },
+              {
+                img: `static/images/insta_preview/insta_6.webp`,
+                url: `https://www.instagram.com/p/CFuHiwnsVMI/`
+              },
+              {
+                img: `static/images/insta_preview/insta_7.webp`,
+                url: `https://www.instagram.com/p/CFuHiwnsVMI/?img_index=2`
+              },
+              {
+                img: `static/images/insta_preview/insta_8.webp`,
+                url: `https://www.instagram.com/p/CFuHiwnsVMI/?img_index=3`
+              },
+              {
+                img: `static/images/insta_preview/insta_9.webp`,
+                url: `https://www.instagram.com/p/CFuHiwnsVMI/?img_index=4`
+              }
+            ]
+           },
+           {
+            id: `books-resources`,
+            title: `Resource Starter Pack`,
+            class: `w-[90vw] md:w-[300px] top-[50vh]  left-[5vw] lg:left-[75vw]`,
+            type: `books_resources`,
+            content: ``,
+            books: [
+              {
+                title: `An Indigenous Peoples' History of the United States (10th Anniversary Edition) by Roxanne Dunbar-Ortiz`,
+                img: `static/images/resources/books/book_1.webp`,
+                url: `https://www.penguinrandomhouse.com/books/738844/an-indigenous-peoples-history-of-the-united-states-10th-anniversary-edition-by-roxanne-dunbar-ortiz/`
+              },
+              {
+                title: `How Europe Underdeveloped Africa`,
+                img: `static/images/resources/books/book_2.webp`,
+                url: `https://www.penguinrandomhouse.com/books/586504/how-europe-underdeveloped-africa-by-walter-rodney/`
+              },
+              {
+                title: `Blood In My Eye, by George Jackson`,
+                img: `static/images/resources/books/book_3.webp`,
+                url: `https://files.libcom.org/files/2022-08/BloodInMyEye_text_0.pdf`
+              },
+              {
+                title: `Assata, an Autobiography: Assata Shakur`,
+                img: `static/images/resources/books/book_4.webp`,
+                url: `https://www.7iber.com/wp-content/uploads/2022/07/Assata-An-Autobiography-Assata-Shakur-Angela-Y.-Davis-Lennox-S.-Hinds-z-lib.org_.pdf`
+              },
+              {
+                title: `The Year of the Tiger`,
+                img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782333262/year-of-the-tiger-a-wong_nnuebn.webp`,
+                url: `https://www.penguinrandomhouse.com/books/688504/year-of-the-tiger-by-alice-wong/`
+              },
+              {
+                title: `Solidarity with Children, Madeleine Lane-McKinley`,
+                img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782333411/solidarity_with_children_if9y5y.webp`,
+                url: `https://www.haymarketbooks.org/books/2610-solidarity-with-children`
+              },
+              {
+                title: `The Managed Heart, Arlie Russel Hochschild`,
+                img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782333133/the-managed-heart_wytqye.jpg`,
+                url: `https://caringlabor.wordpress.com/wp-content/uploads/2012/09/the-managed-heart-arlie-russell-hochschild.pdf`
+              },
+              {
+                title: `Soup Street`,
+                img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782333597/Screenshot_2026-06-24_at_4.39.52_PM_rzywbs.png`,
+                url: `https://foodnotbombs.net/soup_street.html`
+              },
+              {
+                title: `The Anarchist Cookbook`,
+                img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782333680/Screenshot_2026-06-24_at_4.41.15_PM_wfh7qp.png`,
+                url: `https://foodnotbombs.net/new_site/anarchist_cookbook.html`
+              }
+            ],
+            podcasts:[
+              {
+                title: `The Black Myths Podcast`,
+                img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782333806/black-myths-cd_qnbwxk.png`,
+                url: `https://www.deezer.com/en/show/978172`
+              },
+              {
+                title: `Horn of Africa Leftists`,
+                img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782333813/horn-of-africa-leftists-alt-cd_mn58fw.png`,
+                url: `https://redcircle.com/shows/b57ffe05-60bc-42bb-b2a8-549f33618186`
+              },
+              {
+                title: `The Red Nation Podcast`,
+                img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782333816/the_red_nation_podcast-cd_th9f9p.png`,
+                url: `https://www.therednation.org/the-red-nation-podcast/`
+              },
+              {
+                title: `Disability Visibility`,
+                img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782333808/dis-vis-pod-cd_nkz8cq.png`,
+                url: `https://disabilityvisibilityproject.com/podcast-2/`
+              },
+              {
+                title: `Cool People who did Cool Stuff`,
+                img: `https://res.cloudinary.com/dpxmyueqi/image/upload/v1782333811/coolpplwhodidcoolstuff-cd_ivag60.png`,
+                url: `https://www.iheart.com/podcast/1119-cool-people-who-did-cool-96003360/`
+              }
+            ]
+           }
+          ]
+        })
+
+        // Methods/Functions
+          /*
+
+          I ripped the foundation for this straight up from several sources, mostly from W3Schools. I aint gonna lie, I
+          refuse to re-invent the wheel:
+
+            - The windows: W3Schools: https://www.w3schools.com/howto/howto_js_draggable.asp
+            - Infinite scrolling banner: https://medium.com/@archielister/make-an-infinitely-scrolling-banner-with-html-and-css-e7918506c496
+
+
+        */
+
+          // Draggable Windows
+        let init_draggable_windows = () => {
+          console.log('Draggable windows set ... :)')
+
+          const draggable_elements = document.querySelectorAll('.window-comp'),
+            dragElement = (elmnt) => {
+
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+            const dragMouseDown = (e) => {
+              e = e || window.event;
+              e.preventDefault();
+              // get the mouse cursor position at startup:
+              pos3 = e.clientX;
+              pos4 = e.clientY;
+              document.onmouseup = closeDragElement;
+              // call a function whenever the cursor moves:
+              document.onmousemove = elementDrag;
+            }
+
+            const elementDrag = (e) => {
+              e = e || window.event;
+              e.preventDefault();
+              // calculate the new cursor position:
+              pos1 = pos3 - e.clientX;
+              pos2 = pos4 - e.clientY;
+              pos3 = e.clientX;
+              pos4 = e.clientY;
+              // set the element's new position:
+              elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+              elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+            }
+
+            const closeDragElement = () => {
+              /* stop moving when mouse button is released:*/
+              document.onmouseup = null;
+              document.onmousemove = null;
+            }
+
+              if (elmnt.querySelector('.window-header')) {
+              /* if present, the header is where you move the DIV from:*/
+              elmnt.querySelector('.window-header').onmousedown = dragMouseDown;
+            } else {
+              /* otherwise, move the DIV from anywhere inside the DIV:*/
+              elmnt.onmousedown = dragMouseDown;
+            }
+          }
+          draggable_elements.forEach(el => {
+            dragElement(el);
+          });
+
+        }
+
+
+          // Countdown to July 31, 2026
+        let init_countdown = () => {
+
+          console.log('Countdown set ... :)')
+
+          let countdownDate = new Date("July 31, 2026 00:00:00").getTime();
+          let x = setInterval(() => {
+            let now = new Date().getTime();
+            let distance = countdownDate - now;
+
+            let days = Math.floor(distance / (1000 * 60 * 60 * 24)),
+                hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+                minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+                seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Countdown items have class of "item"
+            let countdownItems = document.querySelectorAll('.counter-item');
+            countdownItems.forEach((item, index) => {
+              item.innerHTML = `${days} Days ${hours} Hours ${minutes} Minutes ${seconds} Seconds`;
+            });
+
+          }, 1000);
+
+          state.mounted = true;
+        }
+
+        // Insta previews:
+        let init_insta_previews = () => {
+          console.log('Insta previews set ... :)')
+
+          // Grab all the modals
+          let modals = document.querySelectorAll('.modal');
+          let btns = document.querySelectorAll('[id^="btn-insta-"]');
+          let spans = document.querySelectorAll('.close');
+
+          btns.forEach((btn, index) => {
+            btn.onclick = () => {
+              modals[index].style.display = "block";
+            }
+          });
+
+          spans.forEach((span, index) => {
+            span.onclick = () => {
+              modals[index].style.display = "none";
+            }
+          });
+
+          window.onclick = (event) => {
+            modals.forEach((modal) => {
+              if (event.target == modal) {
+                modal.style.display = "none";
+              }
+            });
+          };
+
+
+        }
+
+
+        // truncate text in windows
+        let init_truncate_text = () => {
+          console.log('Truncate text set ... :)')
+
+          let line_clamps = document.querySelectorAll('.line-clamp');
+          let read_more_btns = document.querySelectorAll('.read_more_btn');
+
+          read_more_btns.forEach((btn, index) => {
+            btn.onclick = () => {
+              line_clamps[index].classList.toggle('line-clamp');
+              btn.textContent = line_clamps[index].classList.contains('line-clamp') ? 'Read More' : 'Read Less';
+            }
+          });
+
+
+        }
+
+
+
+        // Lifecycle Hooks
+        onMounted(() => {
+          console.log('Mounted ... :)');
+          state.metrocon_day = new Date() >= new Date("July 31, 2026 00:00:00");
+            init_draggable_windows();
+            init_countdown();
+            init_insta_previews();
+            init_truncate_text();
+
+        });
+
+
+      return {
+        state
+      };
+    }
+  }).mount('#fnb');
+
+</script>
 </body>
 </html>

@@ -13,10 +13,10 @@
   <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
   <link rel="manifest" href="../../site.webmanifest">
-                
+
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <script src="https://unpkg.com/vue@3.5.38/dist/vue.global.prod.js"></script> 
- 
+  <script src="https://unpkg.com/vue@3.5.38/dist/vue.global.prod.js"></script>
+
 </head>
 <body id="fnb-zines">
   <main class="w-[100wh] h-[100vh] flex flex-col pb-0 mb-0 relative overflow-y-scroll justify-between">
@@ -43,7 +43,7 @@
 
     <div id="header" :class="`w-full flex flex-row p-2 gap-2 mb-10 ${!state.metrocon_day ? 'mt-[50px]' : ''}`">
       <div class="w-1/5 flex flex-col justify-center align-center items-center p-2">
-        <a href="https://tampafoodnotbombs.org/metrocon/">
+        <a href="https://tampafoodnotbombs.org">
           <img class="lg:w-3/4" src="https://res.cloudinary.com/dpxmyueqi/image/upload/v1783390031/back_prod_ncv08t.png" alt="Back to Metrocon page">
         </a>
       </div>
@@ -60,7 +60,7 @@
     <div class="flex flex-1"></div>
 
     <div id="shelf" v-show="state.zine_shelves.length" class="w-[90%] h-full  pb-0 mb-0   h-[65vh] rounded-md mx-auto  flex flex-1   grid grid-cols-1  lg:grid-cols-3">
-      <div v-for="(shelf, a) in state.zine_shelves" 
+      <div v-for="(shelf, a) in state.zine_shelves"
         style="background-image: url('https://res.cloudinary.com/dpxmyueqi/image/upload/q_auto/f_auto/v1782001822/shelf_slot_ecqflv.webp');"
         :class="`${ shelf.length ? 'h-[20vh]' : 'h-[100px]' } hidden lg:flex w-full flex-col justify-end items-end bg-cover bg-no-repeat`"
       >
@@ -75,11 +75,11 @@
         </div>
       </div>
 
-      <div v-for="(shelf, b) in state.zine_shelves_mobile" 
+      <div v-for="(shelf, b) in state.zine_shelves_mobile"
         style="background-image: url('https://res.cloudinary.com/dpxmyueqi/image/upload/q_auto/f_auto/v1782001822/shelf_slot_ecqflv.webp');"
         class=" lg:hidden w-full relative  flex flex-row justify-end items-end bg-cover bg-no-repeat"
       >
-      
+
         <button
           v-for="zine in shelf"
           :style="`background-image: url('${zine?.img}');`"
@@ -119,7 +119,7 @@
               <p class="text-neutral-900 mt-1">{{ state.modal.zine?.author }}</p>
             </div>
             <div class="flex gap-3 flex-col text-center">
-              
+
               <a v-if="state.modal.zine?.print"
                 :href="state.modal.zine.print"
                 target="_blank" rel="noopener"
@@ -145,7 +145,7 @@
     const { createApp, ref, reactive, onMounted, onUnmounted, nextTick, watch, computed } = Vue
     createApp({
       setup() {
-        
+
         // State
         const screen_width = ref(window.innerWidth)
         onUnmounted(() => {
@@ -175,7 +175,7 @@
               title: `Support us on Venmo`,
               class: `text-indigo-200`,
               url: `https://venmo.com/tfnbfondos`,
-              label: `@TFNBFondos`,  
+              label: `@TFNBFondos`,
               svg: {
                 html: `<svg class="niftybutton-ven" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="display: block; fill: rgb(195, 161, 246); width: 58px; height: 58px; color: rgb(195, 161, 246);" width="58" height="58" role="img"><path d="M21.428 4.4c.77 1.281 1.119 2.601 1.119 4.27 0 5.32-4.541 12.23-8.227 17.08H6.15L2.776 5.563l7.37-.7 1.792 14.362c1.65-2.67 3.815-6.648 3.815-9.52 0-1.594-.273-2.678-.7-3.57z" fill="#000000" style="fill: rgb(195, 161, 246);"></path></svg>`
               }
@@ -184,16 +184,16 @@
               title: `Support us on Cashapp`,
               class: `text-indigo-200`,
               url: `https://cash.app/$TFNBFondos`,
-              label: `$TFNBFondos`,  
+              label: `$TFNBFondos`,
               svg: {
                 html: `<svg class="niftybutton-cashapp" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="display: block; fill: rgb(195, 161, 246); width: 58px; height: 58px; color: rgb(195, 161, 246);" width="58" height="58" role="img"><path d="M21.428 4.4c.77 1.281 1.119 2.601 1.119 4.27 0 5.32-4.541 12.23-8.227 17.08H6.15L2.776 5.563l7.37-.7 1.792 14.362c1.65-2.67 3.815-6.648 3.815-9.52 0-1.594-.273-2.678-.7-3.57z" fill="#000000" style="fill: rgb(195, 161, 246);"></path></svg>`
-              } 
+              }
             },
             {
               title: `Find us on Instagram`,
               class: `text-indigo-200`,
               url: `https://www.instagram.com/tampafoodnotbombs`,
-              label: `@tampafoodnotbombs`,  
+              label: `@tampafoodnotbombs`,
               svg: {
                 html: `<svg id="instagram" fill="rgb(217, 50, 117)" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="58px" height="58px" viewBox="0 0 169.063 169.063" xml:space="preserve"><g><path d="M122.406,0H46.654C20.929,0,0,20.93,0,46.655v75.752c0,25.726,20.929,46.655,46.654,46.655h75.752
                           c25.727,0,46.656-20.93,46.656-46.655V46.655C169.063,20.93,148.133,0,122.406,0z M154.063,122.407
@@ -246,7 +246,7 @@
               img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_5_open_tsn1o8.png' : ''}`,
               link: `https://perma.cc/HVB3-8X7J`,
               print: `https://static1.squarespace.com/static/667ca6a15f58f502d2f31024/t/67e1c99fb4ffe12130c46ed3/1742850467364/food-booklet.pdf`,
-              shelf: `zines`,  
+              shelf: `zines`,
             },],
             [{
               title: `How to Do a Guerrilla Sharing @MC`,
@@ -300,7 +300,7 @@
               img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_9_open_lck8v0.png' : ''}`,
               link: ``,
               print: ``,
-              shelf: `palestine`,  
+              shelf: `palestine`,
             }
             ],
             [{
@@ -361,7 +361,7 @@
               print: `https://drive.google.com/file/d/174tIwsjyrWaeI2RRxBhMTqa-oNiYReBt/view`,
               shelf: `zines`,
             },
-            ],        
+            ],
             [{
               title: `12 Things to Do Instead of Calling the Cops @MC`,
               author: `Mayday Collective Washtenaw, Solidarity & Defense`,
@@ -378,7 +378,7 @@
               img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_5_open_tsn1o8.png' : ''}`,
               link: `https://perma.cc/HVB3-8X7J`,
               print: `https://static1.squarespace.com/static/667ca6a15f58f502d2f31024/t/67e1c99fb4ffe12130c46ed3/1742850467364/food-booklet.pdf`,
-              shelf: `zines`,  
+              shelf: `zines`,
             },],
             [
               {
@@ -436,7 +436,7 @@
               img_open: `${screen_width.value > 1024 ? 'https://res.cloudinary.com/dpxmyueqi/image/upload/v1782001826/zine_9_open_lck8v0.png' : ''}`,
               link: ``,
               print: ``,
-              shelf: `palestine`,  
+              shelf: `palestine`,
             },],
               [{
               title: `Mutual Aid: A Primer`,
@@ -447,7 +447,7 @@
               print: ``,
               shelf: `zines`,
             },
-            
+
             {
               title: `Why We Mask`,
               author: `Laurel Lynn Leake, 2025`,
@@ -525,8 +525,8 @@
             [],
             [],
             []
-            
-            
+
+
           ]
         })
 
@@ -558,11 +558,11 @@
 
           state.mounted = true;
         }
-        
+
         // truncate text in windows
         let init_truncate_text = () => {
           console.log('Truncate text set ... :)')
-          
+
           let line_clamps = document.querySelectorAll('.line-clamp');
           let read_more_btns = document.querySelectorAll('.read_more_btn');
 
@@ -573,9 +573,9 @@
             }
           });
 
-          
+
         }
-        
+
         let open_zine = (zine, index) => {
           state.modal.zine = zine;
 
@@ -616,6 +616,6 @@
   }).mount('#fnb-zines');
 
   </script>
-  
+
 </body>
-</html> 
+</html>
